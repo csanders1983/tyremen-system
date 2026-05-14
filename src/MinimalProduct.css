@@ -1,0 +1,234 @@
+.minimalProductWrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px 20px 55px;
+}
+
+.minimalBackBtn {
+  border: none;
+  background: none;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #555;
+  cursor: pointer;
+}
+
+.minimalProductTop {
+  display: grid;
+  grid-template-columns: 1fr 430px;
+  gap: 44px;
+  align-items: center;
+  border-top: 4px solid #ffd000;
+  padding-top: 28px;
+}
+
+.minimalImageSide {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle, rgba(255,208,0,0.14), transparent 45%);
+}
+
+.minimalImageSide img {
+  width: 100%;
+  max-width: 390px;
+  max-height: 390px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 12px 14px rgba(0,0,0,0.12));
+}
+
+.minimalBrand {
+  display: inline-block;
+  background: #ffd000;
+  color: #000;
+  padding: 7px 11px;
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.minimalInfoSide h1 {
+  font-size: 40px;
+  line-height: 0.98;
+  margin: 0;
+  font-weight: 1000;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+.minimalSize {
+  margin: 14px 0;
+  color: #555;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.minimalIncluded {
+  padding: 13px 0;
+  border-top: 1px solid #e3e3e3;
+  border-bottom: 1px solid #e3e3e3;
+  color: #111;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.minimalPriceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.minimalPriceRow span {
+  display: block;
+  color: #666;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.minimalPriceRow strong {
+  display: block;
+  color: #111;
+  font-size: 44px;
+  line-height: 1;
+  margin-top: 6px;
+  letter-spacing: -1px;
+}
+
+.minimalQty {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+}
+
+.minimalQty button {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: #ffd000;
+  color: #000;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.minimalQty span {
+  width: 44px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 900;
+  color: #111;
+}
+
+.minimalAddBtn {
+  width: 100%;
+  height: 50px;
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  border-bottom: 4px solid #ffd000;
+}
+
+.minimalStock {
+  margin-top: 14px;
+  color: #555;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.minimalLower {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 44px;
+  margin-top: 44px;
+}
+
+.minimalSection h2 {
+  font-size: 18px;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #ffd000;
+  text-transform: uppercase;
+}
+
+.minimalSpecRow,
+.minimalLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid #ececec;
+}
+
+.minimalSpecRow span,
+.minimalLabelRow span {
+  color: #666;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.minimalSpecRow strong,
+.minimalLabelRow strong {
+  font-size: 15px;
+  font-weight: 900;
+}
+
+@media (max-width: 900px) {
+  .minimalProductTop,
+  .minimalLower {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .minimalImageSide {
+    min-height: 320px;
+  }
+
+  .minimalImageSide img {
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .minimalInfoSide h1 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 520px) {
+  .minimalProductWrap {
+    padding: 20px 16px 45px;
+  }
+
+  .minimalProductTop {
+    padding-top: 20px;
+  }
+
+  .minimalPriceRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .minimalPriceRow strong {
+    font-size: 40px;
+  }
+
+  .minimalQty {
+    width: 100%;
+  }
+
+  .minimalQty span {
+    flex: 1;
+  }
+}

@@ -1,0 +1,145 @@
+.confirmationPage {
+  min-height: 100vh;
+  background: #f4f4f4;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.confirmationHero {
+  background: linear-gradient(90deg, #050505, #151515);
+  min-height: calc(100vh - 124px);
+  padding: 60px 24px;
+  display: grid;
+  place-items: center;
+}
+
+.confirmationCard {
+  width: 100%;
+  max-width: 760px;
+  background: #fff;
+  color: #111;
+  border-radius: 14px;
+  padding: 38px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+  text-align: center;
+  border-top: 6px solid #ffd000;
+}
+
+.successBadge {
+  display: inline-block;
+  background: #22c55e;
+  color: #000;
+  font-weight: 1000;
+  padding: 9px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.confirmationCard h1 {
+  margin: 0;
+  font-size: 48px;
+  font-style: italic;
+  font-weight: 1000;
+}
+
+.confirmationSub {
+  color: #555;
+  font-size: 18px;
+  max-width: 620px;
+  margin: 16px auto 26px;
+  line-height: 1.5;
+}
+
+.confirmationSummary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.confirmationSummary div {
+  background: #050505;
+  color: #fff;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.confirmationSummary span {
+  display: block;
+  color: #ffd000;
+  font-size: 12px;
+  font-weight: 1000;
+  margin-bottom: 6px;
+}
+
+.confirmationSummary strong {
+  font-size: 18px;
+}
+
+.confirmationNotice {
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 14px;
+  border-radius: 8px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.locationBox {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  background: #fafafa;
+}
+
+.locationBox h3 {
+  margin-top: 0;
+}
+
+.locationBox p {
+  color: #444;
+}
+
+.locationBox a {
+  color: #000;
+  font-weight: 1000;
+}
+
+.confirmationActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.confirmationActions button {
+  flex: 1;
+  background: #ffd000;
+  color: #000;
+  border: none;
+  padding: 15px;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.confirmationActions .darkBtn {
+  background: #050505;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .confirmationCard {
+    padding: 26px;
+  }
+
+  .confirmationCard h1 {
+    font-size: 36px;
+  }
+
+  .confirmationSummary {
+    grid-template-columns: 1fr;
+  }
+
+  .confirmationActions {
+    flex-direction: column;
+  }
+}

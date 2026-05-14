@@ -1,0 +1,1027 @@
+.landingPage {
+  background: #fff;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* HERO */
+
+.landingHero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #050505, #171717);
+  color: #fff;
+  padding: 70px 48px;
+  display: grid;
+  grid-template-columns: 1.3fr 420px;
+  gap: 40px;
+  align-items: center;
+  min-height: 430px;
+}
+
+.imageHero {
+  background-size: cover !important;
+  background-position: right center !important;
+}
+
+.imageHero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.96) 0%,
+    rgba(0,0,0,0.88) 34%,
+    rgba(0,0,0,0.58) 58%,
+    rgba(0,0,0,0.2) 78%,
+    rgba(0,0,0,0.05) 100%
+  );
+  z-index: 1;
+}
+
+.imageHero > * {
+  position: relative;
+  z-index: 2;
+}
+
+.landingEyebrow {
+  color: #ffd000;
+  font-weight: 1000;
+  letter-spacing: 2px;
+  margin: 0 0 12px;
+}
+
+.landingHero h1 {
+  font-size: 58px;
+  line-height: 0.95;
+  margin: 0;
+  font-style: italic;
+  max-width: 850px;
+}
+
+.landingIntro {
+  font-size: 20px;
+  color: #ddd;
+  max-width: 760px;
+  margin: 24px 0 0;
+}
+
+.heroTrust {
+  margin-top: 12px;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.landingButtons {
+  margin-top: 22px;
+  display: flex;
+  gap: 14px;
+}
+
+.landingButtons button,
+.landingCTA button {
+  background: #ffd000;
+  color: #000;
+  border: none;
+  padding: 16px 28px;
+  font-weight: 1000;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.landingButtons button:hover,
+.landingCTA button:hover {
+  background: #ffea00;
+}
+
+.landingButtons .outline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.landingButtons .outline:hover {
+  background: #fff;
+  color: #000;
+}
+
+.landingPanel {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 22px;
+}
+
+.landingPanel h3 {
+  color: #ffd000;
+  margin-top: 0;
+  font-size: 26px;
+}
+
+.landingBullet {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  font-weight: 800;
+}
+
+/* DEAL STRIPS */
+
+.tyreDealStrip,
+.motDealStrip,
+.quoteConvertStrip {
+  margin: -24px 38px 30px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+  border-radius: 10px;
+  padding: 26px;
+  position: relative;
+  z-index: 5;
+}
+
+.tyreDealStrip {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 24px;
+}
+
+.motDealStrip,
+.quoteConvertStrip {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 24px;
+}
+
+.salesMot {
+  border-top: 5px solid #ffd000;
+}
+
+/* TYRE CARDS */
+
+.tyreDealText span,
+.motDealText span,
+.quoteConvertText span {
+  color: #ffd000;
+  font-weight: 1000;
+  letter-spacing: 1px;
+}
+
+.tyreDealText h2,
+.motDealText h2,
+.quoteConvertText h2 {
+  margin: 8px 0;
+  font-size: 30px;
+}
+
+.tyreDealText p,
+.motDealText p,
+.quoteConvertText p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.tyreDealCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.tyreDealCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 18px;
+  background: #fafafa;
+}
+
+.tyreDealCard h3 {
+  margin: 0 0 8px;
+}
+
+.tyreDealCard p {
+  color: #555;
+  min-height: 44px;
+}
+
+.tyreDealCard strong {
+  color: #111;
+}
+
+.tyreDealCard.featured {
+  background: #050505;
+  color: #fff;
+  border-color: #ffd000;
+}
+
+.tyreDealCard.featured p {
+  color: #ddd;
+}
+
+.tyreDealCard.featured strong {
+  color: #ffd000;
+}
+
+/* MOT / SERVICE / AIR CON / ALIGNMENT CARDS */
+
+.motDealCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.serviceSalesCards {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.airconSalesCards {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.motCard {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background: #fafafa;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.motCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 55px rgba(0,0,0,0.2);
+  border-color: #ffd000;
+}
+
+.motCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,208,0,0.22),
+    transparent
+  );
+  transition: 0.6s;
+}
+
+.motCard:hover::before {
+  left: 130%;
+}
+
+.motCard h3 {
+  margin: 0 0 8px;
+}
+
+.motCard p {
+  color: #555;
+}
+
+.motCard ul {
+  margin: 10px 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: 14px;
+}
+
+.motCard li {
+  margin-bottom: 6px;
+}
+
+.motCard button {
+  margin-top: 12px;
+  background: #ffd000;
+  color: #000;
+  border: none;
+  padding: 12px;
+  font-weight: 1000;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.motCard button:hover {
+  transform: scale(1.02);
+  
+}
+
+.motCard.featured,
+.serviceSalesCards .motCard:nth-child(2) {
+  background: #050505;
+  color: #fff;
+  border: 2px solid #ffd000;
+
+  /* premium glow */
+  box-shadow: 
+    0 12px 30px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(255,208,0,0.15),
+    0 0 18px rgba(255,208,0,0.08);
+
+  transition: all 0.25s ease;
+}
+.motCard.featured h3,
+.motCard.featured p,
+.motCard.featured li,
+.serviceSalesCards .motCard:nth-child(2) p,
+.serviceSalesCards .motCard:nth-child(2) li {
+  color: #fff !important;
+}
+
+.motCard.featured .motPrice,
+.serviceSalesCards .motCard:nth-child(2) .motPrice {
+  color: #ffd000 !important;
+}
+
+.motTag {
+  display: inline-block;
+  background: #050505;
+  color: #ffd000;
+  font-size: 12px;
+  font-weight: 1000;
+  padding: 7px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  transition: 0.2s;
+}
+
+.motCard.featured .motTag,
+.serviceSalesCards .motCard:nth-child(2) .motTag {
+  background: #ffd000;
+  color: #000;
+}
+
+.motCard:hover .motTag {
+  transform: translateY(-3px);
+}
+
+.motPrice {
+  font-size: 36px;
+  font-weight: 1000;
+  margin: 12px 0;
+  letter-spacing: -1px;
+  color: #111;
+  transition: 0.2s;
+}
+
+
+/* OFFER BANNER */
+
+.motOfferBanner {
+  margin-top: 18px;
+  background: #ffd000;
+  color: #000;
+  padding: 18px 20px;
+  border-radius: 8px;
+  font-weight: 1000;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.motOfferBanner strong {
+  display: block;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.motOfferBanner span {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  color: #000;
+}
+
+.motOfferBanner button {
+  width: auto !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px !important;
+  margin-top: 0 !important;
+  background: #050505 !important;
+  color: #ffd000 !important;
+  border: none !important;
+  font-size: 13px !important;
+  font-weight: 1000 !important;
+  border-radius: 4px;
+  min-width: 150px;
+}
+
+.motOfferBadge {
+  display: inline-block;
+  margin-top: 16px;
+  background: #ffd000;
+  color: #000;
+  font-weight: 1000;
+  padding: 12px 16px;
+  border-radius: 999px;
+}
+
+/* QUOTE FORM */
+
+.quoteConvertStrip {
+  margin-top: -60px;
+}
+
+.quoteChecklist {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+  font-weight: 1000;
+}
+
+.quoteForm {
+  background: #050505;
+  color: #fff;
+  padding: 26px;
+  border-radius: 10px;
+  border: 2px solid #ffd000;
+  display: grid;
+  gap: 12px;
+}
+
+.quoteForm h3 {
+  margin: 0;
+  font-size: 28px;
+  color: #ffd000;
+}
+
+.quoteForm p {
+  margin: 0 0 6px;
+  color: #ddd;
+}
+
+.quoteForm input,
+.quoteForm textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.quoteForm textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.quoteForm button {
+  background: #ffd000;
+  color: #000;
+  border: none;
+  padding: 15px;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.quoteSource {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.quoteSource strong {
+  color: #ffd000;
+}
+
+.quoteContactOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.quoteContactOptions a {
+  text-align: center;
+  background: #fff;
+  color: #000;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 1000;
+}
+
+/* CONTENT */
+
+.landingContent {
+  padding: 46px 38px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.contentCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 28px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.contentCard h2 {
+  margin-top: 0;
+  font-size: 30px;
+}
+
+.contentCard p {
+  color: #444;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.faqSection {
+  background: #f5f5f5;
+  padding: 52px 38px;
+}
+
+.faqSection h2 {
+  text-align: center;
+  font-size: 38px;
+  margin-top: 0;
+}
+
+.faqGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.faqCard {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  border: 1px solid #ddd;
+}
+
+.faqCard h3 {
+  margin-top: 0;
+}
+
+.faqCard p {
+  color: #555;
+}
+
+.landingCTA {
+  background: #050505;
+  color: #fff;
+  text-align: center;
+  padding: 58px 24px;
+}
+
+.landingCTA h2 {
+  font-size: 42px;
+  margin: 0;
+}
+
+.landingCTA p {
+  color: #ddd;
+  font-size: 18px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .landingHero,
+  .motDealStrip,
+  .tyreDealStrip,
+  .quoteConvertStrip,
+  .landingContent,
+  .faqGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .motDealCards,
+  .tyreDealCards,
+  .serviceSalesCards,
+  .airconSalesCards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .landingPanel {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 650px) {
+  .landingHero {
+    padding: 44px 22px;
+    min-height: auto;
+  }
+
+  .landingHero h1 {
+    font-size: 40px;
+  }
+
+  .landingButtons,
+  .motOfferBanner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .motDealCards,
+  .tyreDealCards,
+  .serviceSalesCards,
+  .airconSalesCards,
+  .quoteContactOptions {
+    grid-template-columns: 1fr;
+  }
+
+  .motDealStrip,
+  .tyreDealStrip,
+  .quoteConvertStrip {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+}
+
+/* AIRCON HERO CLEANUP */
+.airconHero::after {
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.96) 0%,
+    rgba(0,0,0,0.88) 35%,
+    rgba(0,30,55,0.65) 58%,
+    rgba(0,85,130,0.30) 78%,
+    rgba(0,120,180,0.18) 100%
+  );
+}
+
+.airconHero .landingEyebrow {
+  color: #7fe7ff !important;
+  font-weight: 900 !important;
+}
+
+.airconHero .landingIntro {
+  color: #ffffff !important;
+  font-size: 21px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.55 !important;
+  max-width: 760px;
+}
+
+.airconHero .heroTrust {
+  color: #dddddd !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+}
+
+.airconHero .landingPanel {
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(255, 208, 0, 0.35);
+}
+/* ============================= */
+/* AIRCON HERO MOTION + CTA GLOW */
+/* ============================= */
+
+/* Subtle hero movement */
+.airconHero {
+  background-size: 110% auto !important;
+  animation: heroPan 18s ease-in-out infinite alternate;
+}
+
+@keyframes heroPan {
+  0% {
+    background-position: right center;
+  }
+  100% {
+    background-position: center center;
+  }
+}
+
+/* Subtle CTA glow (primary button only) */
+.landingButtons button:first-child:hover {
+  box-shadow: 0 0 14px rgba(255, 208, 0, 0.4);
+}
+/* ICE BUTTON STYLE */
+.airconHero .landingButtons button:first-child {
+  background: linear-gradient(135deg, #b9f3ff, #6fd8ff);
+  color: #00303a;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 
+    0 6px 18px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  transition: all 0.25s ease;
+}
+
+/* HOVER */
+.airconHero .landingButtons button:first-child:hover {
+  background: linear-gradient(135deg, #d8fbff, #8fe6ff);
+  box-shadow: 
+    0 10px 28px rgba(0,0,0,0.35),
+    0 0 14px rgba(120,220,255,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  transform: translateY(-2px);
+}
+
+/* ACTIVE (click feel) */
+.airconHero .landingButtons button:first-child:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 4px 12px rgba(0,0,0,0.25),
+    inset 0 2px 4px rgba(0,0,0,0.2);
+}
+/* ============================= */
+/* AIRCON FROSTED BUTTON PANEL   */
+/* ============================= */
+
+/* ============================= */
+/* AIRCON FROSTED BUTTON PANEL   */
+/* ============================= */
+
+.airconHero .landingButtons {
+  position: relative;
+  display: inline-flex;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,0.18);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+/* ICE PRIMARY BUTTON */
+.airconHero .landingButtons button:first-child {
+  background: linear-gradient(135deg, #b9f3ff, #6fd8ff);
+  color: #00303a;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  transition: all 0.30s ease;
+}
+
+.airconHero .landingButtons button:first-child:hover {
+  background: linear-gradient(135deg, #d8fbff, #8fe6ff);
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.35),
+    0 0 14px rgba(120,220,255,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  transform: translateY(-2px);
+}
+
+.airconHero .landingButtons button:first-child:active {
+  transform: translateY(0);
+}
+
+/* CONTAINED LIGHT SWEEP */
+.airconHero .landingButtons::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 35%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.22),
+    transparent
+  );
+
+  animation: glassSweep 4s ease-in-out infinite;
+}
+
+.airconHero .landingButtons button {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes glassSweep {
+  0% {
+    left: -120%;
+  }
+
+  20% {
+    left: 130%;
+  }
+
+  100% {
+    left: 130%;
+  }
+}
+.alignmentHero::after {
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.95) 0%,
+    rgba(0,0,0,0.85) 35%,
+    rgba(0,60,100,0.55) 60%,
+    rgba(0,120,180,0.25) 80%,
+    rgba(0,180,255,0.15) 100%
+  );
+}
+.quoteConvertStrip {
+  max-width: 1180px;
+  margin: 34px auto;
+  padding: 34px;
+  display: grid;
+  grid-template-columns: 1.05fr 430px;
+  gap: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(255,208,0,0.14), transparent 34%),
+    linear-gradient(135deg, #171717 0%, #070707 100%);
+  border: 1px solid rgba(255,208,0,0.28);
+  border-radius: 32px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+}
+
+.quoteConvertText span {
+  color: #ffd000;
+  font-weight: 1000;
+  letter-spacing: 3px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.quoteSource {
+  color: #aaa;
+  font-weight: 800;
+  margin: 12px 0 0;
+}
+
+.quoteSource strong {
+  color: #ffd000;
+}
+
+.quoteConvertText h2 {
+  font-size: 52px;
+  line-height: 0.95;
+  margin: 18px 0;
+  font-weight: 1000;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  color: #fff;
+  text-shadow:
+    0 0 18px rgba(255,208,0,0.18),
+    0 4px 20px rgba(0,0,0,0.65);
+}
+
+.quoteConvertText h2::after {
+  content: "";
+  display: block;
+  width: 110px;
+  height: 5px;
+  margin-top: 16px;
+  border-radius: 999px;
+  background: #ffd000;
+}
+
+.quoteConvertText p {
+  color: #ddd;
+  font-size: 17px;
+  line-height: 1.55;
+  max-width: 660px;
+}
+
+.quoteChecklist {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.quoteChecklist div {
+  background: #0b0b0b;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-left: 5px solid #ffd000;
+  border-radius: 16px;
+  padding: 15px 18px;
+  color: #fff;
+  font-weight: 1000;
+}
+
+.quoteForm {
+  background: #fff;
+  color: #000;
+  border-radius: 28px;
+  padding: 26px;
+  box-shadow: 0 20px 55px rgba(0,0,0,0.45);
+}
+
+.quoteForm h3 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 1000;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.quoteForm p {
+  margin: 8px 0 18px;
+  color: #555;
+  font-weight: 800;
+}
+
+.quoteForm input,
+.quoteForm textarea {
+  width: 100%;
+  margin-bottom: 12px;
+  background: #f3f3f3;
+  color: #000;
+  border: 2px solid #e1e1e1;
+  border-radius: 16px;
+  padding: 15px 16px;
+  font-size: 16px;
+  font-weight: 900;
+  outline: none;
+}
+
+.quoteForm textarea {
+  min-height: 115px;
+  resize: vertical;
+}
+
+.quoteForm input:focus,
+.quoteForm textarea:focus {
+  border-color: #ffd000;
+  box-shadow: 0 0 0 5px rgba(255,208,0,0.22);
+  background: #fff;
+}
+
+.quoteForm button {
+  width: 100%;
+  border: none;
+  background: #ffd000;
+  color: #000;
+  border-radius: 999px;
+  padding: 17px 22px;
+  font-size: 16px;
+  font-weight: 1000;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.quoteForm button:hover {
+  transform: translateY(-2px);
+}
+
+.quoteSentMessage {
+  background: #111;
+  color: #ffd000 !important;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  margin-top: 14px !important;
+}
+
+.quoteContactOptions {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.quoteContactOptions a {
+  color: #000;
+  font-weight: 1000;
+  text-decoration: none;
+  background: #f0f0f0;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.quoteContactOptions a:hover {
+  background: #111;
+  color: #ffd000;
+}
+
+@media (max-width: 900px) {
+  .quoteConvertStrip {
+    grid-template-columns: 1fr;
+    margin: 24px 14px;
+    padding: 22px;
+    border-radius: 26px;
+  }
+
+  .quoteConvertText h2 {
+    font-size: 38px;
+  }
+
+  .quoteForm {
+    padding: 20px;
+  }
+}

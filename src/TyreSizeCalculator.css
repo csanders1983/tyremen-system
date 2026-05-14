@@ -1,0 +1,473 @@
+header,
+.siteHeader,
+.header {
+  position: relative;
+  z-index: 99999;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.tyreCalcPage {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 208, 0, 0.14), transparent 32%),
+    linear-gradient(180deg, #050505 0%, #121212 55%, #050505 100%);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 105px;
+}
+
+.tyreCalcWrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+/* HERO */
+
+.tyreCalcHero {
+  position: relative;
+  overflow: hidden;
+  min-height: 430px;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.82) 45%, rgba(0,0,0,0.38) 100%),
+    url("/public/images/tyre-science-bg.jpg");
+  background-size: cover;
+  background-position: center right;
+  border-radius: 0 0 34px 34px;
+  border: 1px solid rgba(255, 208, 0, 0.28);
+  padding: 64px 46px;
+  margin-bottom: 28px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+}
+
+.tyreCalcHero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255,208,0,0.16), transparent 34%),
+    radial-gradient(circle at 78% 28%, rgba(255,208,0,0.2), transparent 18%);
+  pointer-events: none;
+}
+
+.tyreCalcHero::after {
+  content: "TYREMEN";
+  position: absolute;
+  right: -28px;
+  bottom: -20px;
+  font-size: 118px;
+  font-weight: 1000;
+  font-style: italic;
+  letter-spacing: -6px;
+  color: rgba(255,255,255,0.035);
+  pointer-events: none;
+}
+
+.tyreCalcHero p,
+.tyreCalcHero h1,
+.tyreCalcHero span {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.tyreCalcHero p {
+  color: #ffd000;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.tyreCalcHero h1 {
+  font-size: 72px;
+  line-height: 0.88;
+  font-weight: 1000;
+  font-style: italic;
+  text-transform: uppercase;
+  margin: 16px 0;
+  color: #fff;
+  letter-spacing: -4px;
+  text-shadow: 0 10px 28px rgba(0,0,0,0.75);
+}
+
+.tyreCalcHero h1 span {
+  color: #ffd000;
+}
+
+.tyreCalcHero > span {
+  color: #e6e6e6;
+  display: block;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+/* INPUTS */
+
+.tyreCalcInputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.tyreInputBox,
+.tyreTableBox,
+.speedBox,
+.tyreStatCard {
+  background:
+    linear-gradient(180deg, #1b1b1b 0%, #101010 100%);
+  border: 1px solid rgba(255, 208, 0, 0.24);
+  border-radius: 26px;
+  padding: 22px;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.42);
+}
+
+.tyreInputBox {
+  position: relative;
+  overflow: hidden;
+}
+
+.tyreInputBox::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,208,0,0.08), transparent 42%);
+  pointer-events: none;
+}
+
+.tyreInputBox label {
+  position: relative;
+  z-index: 2;
+  display: block;
+  color: #ffd000;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.tyreInputBox input {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: #fff;
+  color: #000;
+  border: 3px solid transparent;
+  border-radius: 18px;
+  padding: 18px 20px;
+  font-size: 30px;
+  font-weight: 1000;
+  outline: none;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.tyreInputBox input:focus {
+  border-color: #ffd000;
+  box-shadow: 0 0 0 5px rgba(255,208,0,0.15);
+}
+
+.tyreInputBox p {
+  position: relative;
+  z-index: 2;
+  color: #aaa;
+  margin: 12px 0 0;
+  font-weight: 700;
+}
+
+/* RESULT MESSAGE */
+
+.tyreWarning,
+.tyreSafe,
+.tyreDanger {
+  margin-top: 26px;
+  border-radius: 26px;
+  padding: 24px;
+  font-weight: 900;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.42);
+}
+
+.tyreWarning,
+.tyreDanger {
+  background:
+    linear-gradient(135deg, #4b0707, #170303);
+  border: 1px solid #ef4444;
+}
+
+.tyreSafe {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: 1px solid rgba(255, 208, 0, 0.28);
+  border-left: 6px solid #ffd000;
+  box-shadow: 0 18px 42px rgba(0,0,0,0.42);
+}
+
+.tyreSafe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255,208,0,0.10), transparent 38%);
+  pointer-events: none;
+}
+
+.tyreSafe h2 {
+  position: relative;
+  z-index: 2;
+  color: #ffd000;
+  margin: 0 0 10px;
+  font-size: 30px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -1px;
+}
+
+.tyreSafe p {
+  position: relative;
+  z-index: 2;
+  color: #d8d8d8;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+/* STATS */
+
+.tyreStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.tyreStatCard {
+  min-height: 145px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.tyreStatCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 208, 0, 0.65);
+}
+
+.tyreStatCard p {
+  color: #aaa;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.tyreStatCard strong {
+  display: block;
+  color: #ffd000;
+  font-size: 36px;
+  margin-top: 10px;
+  line-height: 1;
+}
+
+.tyreStatCard span {
+  display: block;
+  color: #d5d5d5;
+  font-size: 14px;
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+/* TABLE */
+
+.tyreTableBox {
+  margin-top: 26px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.tyreTableHead {
+  padding: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(90deg, rgba(255,208,0,0.12), transparent);
+}
+
+.tyreTableHead h2,
+.speedBox h2 {
+  color: #ffd000;
+  font-size: 30px;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 1000;
+  font-style: italic;
+  letter-spacing: -1px;
+}
+
+.tyreTableScroll {
+  overflow-x: auto;
+}
+
+.tyreTableBox table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tyreTableBox thead {
+  background: #ffd000;
+  color: #000;
+}
+
+.tyreTableBox th,
+.tyreTableBox td {
+  padding: 17px 18px;
+  white-space: nowrap;
+}
+
+.tyreTableBox th {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 1000;
+}
+
+.tyreTableBox tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.tyreTableBox tbody tr:hover {
+  background: rgba(255,208,0,0.06);
+}
+
+.tyreTableBox tbody tr:last-child {
+  border-bottom: none;
+}
+
+.tyreTableBox td {
+  font-weight: 900;
+}
+
+.tyreTableBox td:first-child {
+  color: #ccc;
+}
+
+.tyreTableBox td:last-child {
+  color: #ffd000;
+}
+
+/* SPEED BOX */
+
+.speedBox {
+  margin-top: 26px;
+}
+
+.speedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.speedCard {
+  background: #070707;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 20px;
+  transition: 0.2s ease;
+}
+
+.speedCard:hover {
+  border-color: rgba(255,208,0,0.6);
+  transform: translateY(-3px);
+}
+
+.speedCard p {
+  color: #aaa;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.speedCard strong {
+  display: block;
+  color: #fff;
+  font-size: 30px;
+  margin-top: 8px;
+}
+
+.speedCard span {
+  display: block;
+  color: #ffd000;
+  font-weight: 1000;
+  margin-top: 8px;
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+  .tyreCalcPage {
+    padding-top: 88px;
+  }
+
+  .tyreCalcWrap {
+    padding: 18px 14px 60px;
+  }
+
+  .tyreCalcHero {
+    min-height: auto;
+    padding: 48px 24px;
+    border-radius: 0 0 26px 26px;
+  }
+
+  .tyreCalcHero h1 {
+    font-size: 44px;
+    letter-spacing: -2px;
+  }
+
+  .tyreCalcHero > span {
+    font-size: 16px;
+  }
+
+  .tyreCalcInputs,
+  .tyreStats,
+  .speedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .tyreInputBox input {
+    font-size: 24px;
+  }
+
+  .tyreStatCard strong {
+    font-size: 32px;
+  }
+
+  .tyreTableHead h2,
+  .speedBox h2 {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tyreCalcHero h1 {
+    font-size: 38px;
+  }
+
+  .tyreCalcHero p {
+    font-size: 12px;
+  }
+
+  .tyreInputBox,
+  .tyreTableBox,
+  .speedBox,
+  .tyreStatCard {
+    border-radius: 20px;
+  }
+}

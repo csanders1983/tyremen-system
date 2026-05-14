@@ -1,0 +1,154 @@
+.summaryPage {
+  min-height: 100vh;
+  background: #f4f4f4;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.summaryHero {
+  background: linear-gradient(90deg, #050505, #151515);
+  color: #fff;
+  padding: 56px 38px;
+}
+
+.summaryHero p {
+  color: #ffd000;
+  font-weight: 1000;
+  letter-spacing: 2px;
+  margin: 0 0 10px;
+}
+
+.summaryHero h1 {
+  margin: 0;
+  font-size: 48px;
+  font-style: italic;
+}
+
+.summaryHero span {
+  color: #ccc;
+  font-size: 18px;
+}
+
+.summaryMain {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.summaryCard {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border-top: 5px solid #ffd000;
+}
+
+.summaryCard h2 {
+  margin-top: 0;
+  font-size: 32px;
+}
+
+.basketLine {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fafafa;
+}
+
+.basketIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #ffd000;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+
+.basketLine span {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  font-weight: 900;
+}
+
+.basketLine strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 20px;
+}
+
+.basketLine small {
+  display: block;
+  margin-top: 4px;
+  color: #666;
+}
+
+.basketPrice {
+  font-size: 24px;
+  font-weight: 1000;
+}
+
+.summaryTotal {
+  margin-top: 18px;
+  background: #050505;
+  color: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summaryTotal span {
+  color: #ddd;
+  font-weight: 800;
+}
+
+.summaryTotal strong {
+  color: #ffd000;
+  font-size: 28px;
+}
+
+.summaryNotice {
+  margin-top: 20px;
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 14px;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+
+.summaryContinue {
+  margin-top: 20px;
+  width: 100%;
+  background: #ffd000;
+  border: none;
+  padding: 16px;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+@media (max-width: 700px) {
+  .summaryHero h1 {
+    font-size: 36px;
+  }
+
+  .summaryMain {
+    padding: 20px;
+  }
+
+  .basketLine {
+    grid-template-columns: 52px 1fr;
+  }
+
+  .basketPrice {
+    grid-column: 1 / -1;
+  }
+}

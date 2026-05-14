@@ -1,0 +1,384 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function Home() {
+  const navigate = useNavigate();
+  const [loaded, setLoaded] = useState(false);
+  const [reg, setReg] = useState("");
+  const [validReg, setValidReg] = useState(false);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    setTimeout(() => setLoaded(true), 200);
+
+    const handleMove = (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      setOffset({ x, y });
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+
+  useEffect(() => {
+    const clean = reg.replace(/\s/g, "");
+    setValidReg(clean.length >= 5);
+  }, [reg]);
+
+  const goToTyres = () => {
+    if (!validReg) return;
+    window.location.href = `/tyres?reg=${reg}`;
+  };
+
+  const goToBooking = (type = "") => {
+    window.location.href = `/booking${type ? `?service=${type}` : ""}`;
+  };
+
+  return (
+    <div style={styles.page}>
+
+      {/* HEADER */}
+      <div style={styles.header}>
+        <div style={styles.headerInner}>
+          <div style={styles.headerLeft}>
+            <img
+              src="/logo.png"
+              alt="Tyremen"
+              style={styles.headerLogo}
+              onClick={() => (window.location.href = "/")}
+            />
+            <span style={styles.address}>
+              Witty Street, Hull HU3 4TX
+            </span>
+          </div>
+
+          {/* 🔥 MENU ADDED */}
+          <div style={styles.menu}>
+            <span onClick={() => (window.location.href = "/tyres")} style={styles.menuItem}>Tyres</span>
+            <span onClick={() => (window.location.href = "/service")} style={styles.menuItem}>car service</span>
+            <span onClick={() => (window.location.href = "/service")} style={styles.menuItem}>Van service</span>
+             <span onClick={() => (window.location.href = "/mot")} style={styles.menuItem}>MOT</span>
+            <span onClick={() => goToBooking("timing")} style={styles.menuItem}>Timing Belt</span>
+            <span onClick={() => goToBooking("clutch")} style={styles.menuItem}>Clutch</span>
+          </div>
+
+          <div style={styles.headerRight}>
+            <span style={styles.hours}>Mon–Sat 8:30–17:30</span>
+            <span style={styles.phone}>01482 328800</span>
+          </div>
+        </div>
+      </div>
+
+      {/* HERO */}
+      <section style={styles.hero}>
+        <div
+          style={{
+            ...styles.heroBg,
+            transform: `scale(1.1) translate(${offset.x}px, ${offset.y}px)`
+          }}
+        />
+        <div style={styles.darkOverlay} />
+        <div style={styles.gridOverlay} />
+        <div style={styles.yellowGlow} />
+
+        <div style={{
+          ...styles.heroContent,
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? "translateY(0)" : "translateY(30px)",
+        }}>
+
+          <div style={styles.brandHero}>TYREMEN</div>
+
+          <div style={styles.offer}>
+            FREE MOT WITH ANY FULL SERVICE
+          </div>
+
+          <h1 style={styles.heading}>
+            DRIVE AWAY WITH<br />
+            <span style={styles.highlight}>CONFIDENCE</span>
+          </h1>
+
+          <p style={styles.sub}>
+            Tyres, servicing & repairs in Hull & East Yorkshire
+          </p>
+
+          <div style={styles.trustRow}>
+            <span>⭐ 4.8 Google</span>
+            <span>✔ Same Day</span>
+            <span>✔ Price Match</span>
+          </div>
+
+          <div style={{
+            ...styles.search,
+            boxShadow: validReg
+              ? "0 0 20px rgba(34,197,94,0.5)"
+              : "0 0 15px rgba(250,204,21,0.3)"
+          }}>
+            <div style={styles.regWrap}>
+              <span style={styles.regPrefix}>UK</span>
+              <input
+                value={reg}
+                onChange={(e) => setReg(e.target.value.toUpperCase())}
+                placeholder="ENTER REG"
+                style={styles.input}
+              />
+            </div>
+
+            <button
+              style={{
+                ...styles.searchBtn,
+                opacity: validReg ? 1 : 0.6
+              }}
+              onClick={goToTyres}
+            >
+              FIND TYRES →
+            </button>
+          </div>
+
+          <div style={styles.buttons}>
+            <button style={styles.primary} onClick={() => window.location.href = "/service"}>
+              BOOK SERVICE
+            </button>
+            <button style={styles.secondary} onClick={() => window.location.href = "/mot"}
+              >BOOK MOT
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section style={styles.servicesSection}>
+        <h2 style={styles.servicesTitle}>OUR SERVICES</h2>
+
+        <div style={styles.servicesGrid}>
+          {services.map((s) => (
+            <div
+              key={s.name}
+              style={styles.serviceCard}
+              onClick={() => window.location.href = "/service"}
+            >
+              <div style={styles.serviceIcon}>{s.icon}</div>
+              <h3 style={styles.serviceName}>{s.name}</h3>
+              <p style={styles.serviceDesc}>{s.desc}</p>
+              <span style={styles.serviceLink}>Book Now →</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* TYRE CARDS */}
+      <section style={styles.servicesSection}>
+        <h2 style={styles.servicesTitle}>TOP TYRE DEALS</h2>
+
+        <div style={styles.servicesGrid}>
+          {tyres.map((t, i) => (
+            <div key={i} style={styles.serviceCard}>
+
+              <img src={t.img} alt={t.name} style={styles.tyreImg} />
+
+              <h3 style={styles.serviceName}>{t.name}</h3>
+              <p style={styles.serviceDesc}>{t.size}</p>
+
+              <p style={{ color: "#facc15", fontWeight: "800" }}>
+                £{t.price} per tyre
+              </p>
+
+              <span style={styles.serviceLink} onClick={goToTyres}>
+                Book & Fit →
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  );
+}
+
+/* DATA */
+const services = [
+  { name: "MOT", slug: "mot", icon: "🧪", desc: "DVSA-approved MOT testing" },
+  { name: "SERVICING", slug: "service", icon: "🔧", desc: "Full & interim servicing" },
+  { name: "BRAKES", slug: "brakes", icon: "🛑", desc: "Pads, discs & repairs" },
+  { name: "AIR CON", slug: "aircon", icon: "❄️", desc: "Recharge & diagnostics" },
+  { name: "CLUTCH", slug: "clutch", icon: "⚙️", desc: "Repairs & replacements" },
+  { name: "TYRES", slug: "tyres", icon: "🛞", desc: "Huge stock fitted same day" }
+];
+
+const tyres = [
+  { name: "Michelin Primacy 4", size: "205/55 R16", price: "72.50", img: "/mich.png" },
+  { name: "Pirelli Powergy", size: "205/55 R16", price: "65.00", img: "/pirelli.png" },
+  { name: "Goodyear EfficientGrip", size: "205/55 R16", price: "61.50", img: "/goodyear.png" },
+  { name: "Budget Tyre", size: "205/55 R16", price: "45.00", img: "/budget.png" }
+];
+
+/* STYLES */
+const styles = {
+  page: { background: "#000", color: "#fff", fontFamily: "Inter" },
+
+  header: {
+    position: "fixed",
+    top: 0,
+    width: "100%",
+    zIndex: 100,
+    background: "rgba(0,0,0,0.7)",
+    backdropFilter: "blur(10px)"
+  },
+
+  headerInner: {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "30px 60px",
+    alignItems: "center"
+  },
+
+  headerLeft: { display: "flex", alignItems: "center", gap: "14px" },
+  headerLogo: { height: "34px", cursor: "pointer" },
+  address: { color: "#ccc" },
+
+  headerRight: { display: "flex", gap: "18px" },
+  hours: { color: "#888" },
+  phone: { color: "#facc15", fontWeight: "800" },
+
+  /* 🔥 NEW MENU STYLES */
+  menu: {
+    display: "flex",
+    gap: "18px"
+  },
+
+  menuItem: {
+    color: "#fff",
+    cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "500"
+  },
+
+  hero: {
+    position: "relative",
+    height: "65vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    paddingTop: "80px"
+  },
+
+  heroBg: {
+    position: "absolute",
+    inset: 0,
+    backgroundImage: "url('/hero-wheel.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center"
+  },
+
+  darkOverlay: { position: "absolute", inset: 0, background: "rgba(0,0,0,0.7)" },
+
+  gridOverlay: {
+    position: "absolute",
+    inset: 0,
+    backgroundImage:
+      "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+    backgroundSize: "60px 60px"
+  },
+
+  yellowGlow: {
+    position: "absolute",
+    width: "500px",
+    height: "500px",
+    background: "radial-gradient(circle, rgba(250,204,21,0.25), transparent)",
+    filter: "blur(100px)"
+  },
+
+  heroContent: { position: "relative", zIndex: 2, maxWidth: "700px" },
+
+  brandHero: {
+    fontSize: "72px",
+    fontWeight: "900",
+    color: "#facc15"
+  },
+
+  offer: {
+    background: "#facc15",
+    color: "#000",
+    padding: "6px 14px",
+    marginBottom: "15px"
+  },
+
+  heading: { fontSize: "56px", fontWeight: "900" },
+  highlight: { color: "#facc15" },
+  sub: { marginTop: "10px", color: "#ccc" },
+
+  trustRow: {
+    display: "flex",
+    justifyContent: "center",
+    gap: "20px",
+    marginTop: "15px"
+  },
+
+  search: {
+    marginTop: "25px",
+    display: "flex",
+    justifyContent: "center",
+    gap: "10px",
+    padding: "10px",
+    background: "#111",
+    borderRadius: "10px"
+  },
+
+  regWrap: { display: "flex", background: "#facc15" },
+  regPrefix: { background: "#1e40af", color: "#fff", padding: "10px" },
+  input: { border: "none", padding: "12px" },
+
+  searchBtn: {
+    background: "#facc15",
+    padding: "12px 20px",
+    cursor: "pointer"
+  },
+
+  buttons: {
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "center",
+    gap: "12px"
+  },
+
+  primary: { background: "#facc15", padding: "14px 26px" },
+  secondary: { border: "1px solid #fff", padding: "14px 26px" },
+
+  servicesSection: { padding: "30px 40px", background: "#050505" },
+
+  servicesTitle: {
+    textAlign: "center",
+    marginBottom: "40px",
+    fontSize: "28px"
+  },
+
+  servicesGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+    gap: "25px"
+  },
+
+  serviceCard: {
+    background: "#111",
+    padding: "30px",
+    borderRadius: "16px",
+    cursor: "pointer",
+    transition: "0.3s"
+  },
+
+  serviceIcon: { fontSize: "32px" },
+  serviceName: { fontWeight: "700" },
+  serviceDesc: { color: "#aaa" },
+  serviceLink: { color: "#facc15" },
+
+  tyreImg: {
+    width: "90px",
+    display: "block",
+    margin: "0 auto 10px"
+  }
+};  

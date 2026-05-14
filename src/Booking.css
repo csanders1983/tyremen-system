@@ -1,0 +1,465 @@
+* {
+  box-sizing: border-box;
+}
+
+.bookingPage {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255,208,0,0.08), transparent 34%),
+    linear-gradient(180deg, #0b0b0b 0%, #1a1a1a 55%, #0a0a0a 100%);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bookingWrapPro {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 24px 70px;
+}
+
+.bookingHeroPro {
+  background:
+    radial-gradient(circle at top left, rgba(255,208,0,0.1), transparent 35%),
+    linear-gradient(135deg, #0d0d0d 0%, #1d1d1d 100%);
+  border: 1px solid rgba(255,208,0,0.25);
+  border-radius: 18px;
+  padding: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+
+.bookingHeroPro span {
+  color: #ffd000;
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: 2px;
+}
+
+.bookingHeroPro h1 {
+  margin: 10px 0;
+  font-size: 58px;
+  line-height: 0.9;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -3px;
+}
+
+.bookingHeroPro p {
+  margin: 0;
+  color: #d7d7d7;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.bookingHeroBadges {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bookingHeroBadges div {
+  background: #ffd000;
+  color: #000;
+  min-height: 44px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.bookingSteps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.bookingSteps div {
+  min-height: 58px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.bookingSteps .active {
+  background: #ffd000;
+  color: #000;
+}
+
+.bookingVehicleCard {
+  background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+  border: 2px solid #ffd000;
+  border-radius: 16px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  margin-bottom: 24px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+.bookingVehicleCard img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  background: #fff;
+  padding: 10px;
+}
+
+.bookingVehicleCard > div {
+  padding: 24px;
+}
+
+.bookingReg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffd000;
+  color: #000;
+  min-width: 180px;
+  height: 52px;
+  border-radius: 8px;
+  font-size: 28px;
+  font-weight: 1000;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+}
+
+.bookingVehicleCard h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 1000;
+}
+
+.bookingVehicleCard p {
+  margin-top: 10px;
+  color: #d7d7d7;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.bookingMainGrid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.bookingSummaryCard,
+.bookingFormCard {
+  background: rgba(255,255,255,0.98);
+  border-radius: 16px;
+  padding: 26px;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.14);
+  color: #111;
+}
+
+.bookingSummaryCard {
+  position: sticky;
+  top: 110px;
+}
+
+.bookingSummaryCard h2,
+.bookingFormCard h2 {
+  margin: 0 0 22px;
+  color: #111;
+  font-size: 34px;
+  font-weight: 1000;
+}
+
+.bookingPriceBox {
+  background: #111;
+  border-bottom: 5px solid #ffd000;
+  border-radius: 6px;
+  padding: 22px;
+  margin-bottom: 24px;
+}
+
+.bookingPriceBox span {
+  display: block;
+  color: #ddd;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.bookingPriceBox strong {
+  display: block;
+  margin-top: 10px;
+  color: #fff;
+  font-size: 54px;
+  line-height: 1;
+  font-weight: 1000;
+}
+
+.bookingPriceBox small {
+  display: block;
+  margin-top: 10px;
+  color: #ffd000;
+  font-size: 12px;
+  font-weight: 1000;
+}
+
+.miniTyreList {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.miniTyreItem {
+  background: #f7f7f7;
+  border: 1px solid #e3e3e3;
+  border-left: 5px solid #ffd000;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.miniAxleTag {
+  display: inline-flex;
+  background: #ffd000;
+  color: #000;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 1000;
+  margin-bottom: 10px;
+}
+
+.miniTyreItem strong {
+  display: block;
+  color: #111;
+  font-size: 17px;
+  font-weight: 1000;
+}
+
+.miniTyreItem p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.miniTyreItem small {
+  display: block;
+  color: #777;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.miniTyreItem b {
+  display: block;
+  margin-top: 10px;
+  color: #111;
+  font-size: 24px;
+  font-weight: 1000;
+}
+
+.serviceMiniBox {
+  background: #f7f7f7;
+  border-left: 5px solid #ffd000;
+  padding: 18px;
+  border-radius: 10px;
+  font-weight: 1000;
+  margin-bottom: 22px;
+}
+
+.bookingInfoBox {
+  background: #fff3c4;
+  border: 1px solid #f0d36b;
+  border-radius: 12px;
+  padding: 18px;
+  line-height: 1.5;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.bookingHelpBox {
+  margin-top: 20px;
+  background: #111;
+  color: #fff;
+  border-bottom: 5px solid #ffd000;
+  border-radius: 6px;
+  padding: 20px;
+}
+
+.bookingHelpBox span {
+  display: block;
+  color: #ddd;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.bookingHelpBox strong {
+  display: block;
+  margin-top: 8px;
+  color: #ffd000;
+  font-size: 30px;
+  font-weight: 1000;
+}
+
+.bookingFormCard label {
+  display: block;
+  font-weight: 1000;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #111;
+}
+
+.bookingFormCard input {
+  width: 100%;
+  height: 52px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  padding: 0 16px;
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  background: #fff;
+  color: #111;
+}
+
+.bookingFormCard input:focus {
+  outline: none;
+  border-color: #ffd000;
+  box-shadow: 0 0 0 3px rgba(255,208,0,0.2);
+}
+
+.timeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 10px 0 24px;
+}
+
+.timeBtn {
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.timeBtn:hover,
+.timeBtn.active {
+  background: #ffd000;
+  border-color: #000;
+}
+
+.detailsTitle {
+  margin-top: 8px !important;
+}
+
+.bookingFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.continueBtn {
+  width: 100%;
+  background: #ffd000;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 18px;
+  font-size: 17px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 14px;
+}
+
+.continueBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1020px) {
+  .bookingHeroPro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bookingMainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .bookingSummaryCard {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .bookingWrapPro {
+    padding: 18px 14px 50px;
+  }
+
+  .bookingHeroPro {
+    padding: 24px;
+  }
+
+  .bookingHeroPro h1 {
+    font-size: 42px;
+  }
+
+  .bookingHeroBadges {
+    width: 100%;
+  }
+
+  .bookingHeroBadges div {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .bookingSteps {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bookingVehicleCard {
+    grid-template-columns: 1fr;
+  }
+
+  .timeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bookingFormGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .bookingPriceBox strong {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 520px) {
+  .bookingHeroPro h1 {
+    font-size: 34px;
+  }
+
+  .bookingSteps {
+    grid-template-columns: 1fr;
+  }
+
+  .bookingHeroBadges {
+    flex-direction: column;
+  }
+}

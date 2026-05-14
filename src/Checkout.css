@@ -1,0 +1,201 @@
+* {
+  box-sizing: border-box;
+}
+
+.checkoutPage {
+  background: #f4f4f4;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+}
+
+.checkoutHero {
+  background: linear-gradient(90deg, #050505, #171717);
+  color: #fff;
+  padding: 62px 34px;
+}
+
+.checkoutHero h1 {
+  font-size: 54px;
+  margin: 0 0 12px;
+  font-style: italic;
+  line-height: 1;
+}
+
+.checkoutHero p {
+  color: #ffd000;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.checkoutWrap {
+  max-width: 1180px;
+  margin: 36px auto;
+  padding: 0 22px;
+  display: grid;
+  grid-template-columns: 1fr 430px;
+  gap: 28px;
+  align-items: start;
+}
+
+.checkoutSummary,
+.checkoutForm {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+}
+
+.checkoutSummary h2,
+.checkoutForm h2 {
+  margin: 0 0 24px;
+  font-size: 30px;
+}
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+  align-items: start;
+}
+
+.summaryRow span {
+  font-weight: 1000;
+  color: #555;
+}
+
+.summaryRow strong {
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.checkoutTyreList {
+  margin: 18px 0;
+  background: #090909;
+  color: #fff;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.checkoutTyreList > span {
+  display: block;
+  color: #ffd000;
+  font-weight: 1000;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.checkoutTyreItem {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.checkoutTyreItem:last-child {
+  border-bottom: 0;
+}
+
+.checkoutTyreItem span {
+  display: none;
+}
+
+.checkoutTyreItem strong {
+  color: #ffd000;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.checkoutTyreItem b {
+  color: #fff;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.summaryRow.total {
+  border-bottom: 0;
+  background: #ffd000;
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 18px;
+  align-items: center;
+}
+
+.summaryRow.total span,
+.summaryRow.total strong {
+  color: #000;
+  font-size: 22px;
+  font-weight: 1000;
+}
+
+.checkoutForm {
+  position: sticky;
+  top: 20px;
+}
+
+.checkoutForm label {
+  display: block;
+  font-weight: 1000;
+  margin-bottom: 16px;
+}
+
+.checkoutForm input {
+  width: 100%;
+  margin-top: 7px;
+  height: 48px;
+  border: 1px solid #ccc;
+  border-radius: 9px;
+  padding: 0 14px;
+  font-size: 16px;
+}
+
+.checkoutForm button {
+  width: 100%;
+  background: #ffd000;
+  color: #000;
+  border: 0;
+  border-radius: 10px;
+  padding: 17px;
+  font-size: 17px;
+  font-weight: 1000;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.checkoutForm button:hover {
+  filter: brightness(0.95);
+}
+
+@media (max-width: 900px) {
+  .checkoutHero {
+    padding: 42px 22px;
+  }
+
+  .checkoutHero h1 {
+    font-size: 40px;
+  }
+
+  .checkoutWrap {
+    grid-template-columns: 1fr;
+    margin: 24px auto;
+  }
+
+  .checkoutForm {
+    position: static;
+  }
+
+  .summaryRow {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .checkoutTyreItem {
+    grid-template-columns: 1fr;
+  }
+}

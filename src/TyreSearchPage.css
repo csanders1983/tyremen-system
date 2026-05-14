@@ -1,0 +1,553 @@
+.tsrPage {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+
+.tsrHero {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center right;
+  color: #fff;
+  padding: 58px 38px 96px;
+}
+
+.tsrHeroOverlay {
+  position: relative;
+  z-index: 2;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.tsrHero span {
+  color: #ffd000;
+  font-weight: 1000;
+  letter-spacing: 2px;
+  font-size: 13px;
+}
+
+.tsrHero h1 {
+  font-size: 58px;
+  line-height: 0.92;
+  margin: 12px 0;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -3px;
+}
+
+.tsrHero p {
+  color: #e2e2e2;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.tsrHero strong {
+  color: #ffd000;
+  font-size: 16px;
+}
+
+.tsrVehicleBox,
+.tsrStaggeredNotice,
+.tsrSearchWrap,
+.tsrTrust,
+.tsrIntro,
+.tsrGrid {
+  max-width: 1180px;
+}
+
+.tsrVehicleBox {
+  width: calc(100% - 48px);
+  margin: -42px auto 28px;
+  background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+  border: 2px solid #ffd000;
+  border-radius: 22px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  color: #fff;
+  position: relative;
+  z-index: 30;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+}
+
+.tsrVehicleImage {
+  width: 280px;
+  max-width: 100%;
+  object-fit: contain;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  filter: drop-shadow(0 10px 25px rgba(0,0,0,0.45));
+}
+
+.tsrVehicleInfo {
+  flex: 1;
+}
+
+.tsrVehicleVrm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffd000;
+  color: #000;
+  min-width: 200px;
+  height: 58px;
+  border-radius: 10px;
+  font-size: 32px;
+  font-weight: 1000;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+
+.tsrVehicleInfo h2 {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 1000;
+}
+
+.tsrVehicleInfo p {
+  margin-top: 12px;
+  color: #d7d7d7;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tsrVehicleLoading {
+  max-width: 1180px;
+  width: calc(100% - 48px);
+  margin: -42px auto 28px;
+  background: #111;
+  color: #fff;
+  padding: 22px;
+  border-radius: 18px;
+  border: 2px solid #ffd000;
+  position: relative;
+  z-index: 30;
+}
+
+.tsrStaggeredNotice {
+  width: calc(100% - 48px);
+  margin: 0 auto 24px;
+  background: #ffd000;
+  color: #000;
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.28);
+}
+
+.tsrStaggeredNotice strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 1000;
+  margin-bottom: 6px;
+}
+
+.tsrStaggeredNotice p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.tsrSearchWrap {
+  margin: 0 auto 24px;
+  padding: 0 24px;
+  position: relative;
+  z-index: 5;
+}
+
+.tsrSearchWrap input {
+  width: 100%;
+  height: 62px;
+  background: rgba(255,255,255,0.96);
+  color: #111;
+  border: 1px solid rgba(255,208,0,0.45);
+  padding: 0 22px;
+  font-size: 19px;
+  font-weight: 900;
+  box-shadow: 0 22px 46px rgba(0,0,0,0.28);
+  outline: none;
+}
+
+.tsrSearchWrap input::placeholder {
+  color: #666;
+}
+
+.tsrTrust {
+  margin: 0 auto 28px;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.tsrTrust div {
+  min-height: 58px;
+  background: rgba(255,255,255,0.94);
+  color: #111;
+  border: 1px solid rgba(255,208,0,0.24);
+  border-left: 4px solid #ffd000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 1000;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+}
+
+.tsrIntro {
+  margin: 0 auto;
+  padding: 0 24px 22px;
+}
+
+.tsrIntro h2 {
+  font-size: 42px;
+  line-height: 0.95;
+  margin: 0;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  font-style: italic;
+  color: #fff;
+}
+
+.tsrIntro p {
+  margin-top: 8px;
+  color: #ddd;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.tsrGrid {
+  margin: 0 auto;
+  padding: 0 24px 70px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.tsrCard {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,0.97);
+  border: 1px solid rgba(255,208,0,0.18);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 155px 1fr;
+  grid-template-rows: auto auto;
+  gap: 18px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.14);
+  transition: 0.2s ease;
+}
+
+.tsrCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,208,0,0.75);
+  box-shadow: 0 26px 56px rgba(0,0,0,0.2);
+}
+
+.tsrRibbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ffd000;
+  color: #000;
+  padding: 8px 42px;
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  transform: translate(34px, 22px) rotate(40deg);
+  z-index: 3;
+  white-space: nowrap;
+}
+
+.tsrBadges {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 4;
+}
+
+.tsrStock,
+.tsrRange {
+  width: fit-content;
+  min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.tsrStock {
+  background: #111;
+  color: #ffd000;
+}
+
+.tsrStock.low {
+  background: #c90000;
+  color: #fff;
+}
+
+.tsrRange {
+  background: #ffd000;
+  color: #000;
+}
+
+.tsrImage {
+  height: 155px;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.9), rgba(230,230,230,0.9)),
+    linear-gradient(135deg, #f8f8f8, #ececec);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.tsrImage img {
+  max-width: 92px;
+  max-height: 118px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 18px rgba(0,0,0,0.28));
+}
+
+.tsrInfo {
+  min-width: 0;
+  padding-right: 32px;
+}
+
+.tsrBrand {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tsrBrand img {
+  max-width: 150px;
+  max-height: 30px;
+  object-fit: contain;
+}
+
+.tsrBrand strong {
+  color: #111;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.tsrInfo p {
+  margin: 0 0 8px;
+  color: #777;
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.tsrInfo h3 {
+  margin: 0 0 12px;
+  color: #111;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: -1px;
+}
+
+.tsrInfo h3 span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  background: #ffd000;
+  color: #000;
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 1000;
+}
+
+.tsrSpecs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tsrSpecs span {
+  background: #f2f2f2;
+  color: #111;
+  border: 1px solid #e1e1e1;
+  padding: 7px 10px;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.tsrPrice {
+  grid-column: 1 / -1;
+  background: #111;
+  border-bottom: 4px solid #ffd000;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.tsrFitter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tsrWheelIcon {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.tsrPrice small {
+  display: block;
+  color: #cfcfcf;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.tsrPrice strong {
+  display: block;
+  margin-top: 3px;
+  color: #fff;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: -1.5px;
+}
+
+.tsrPrice button {
+  border: none;
+  min-width: 132px;
+  height: 48px;
+  padding: 0 22px;
+  background: #ffd000;
+  color: #000;
+  font-size: 14px;
+  font-weight: 1000;
+  cursor: pointer;
+  box-shadow: 0 14px 28px rgba(255,208,0,0.22);
+}
+
+.tsrLoadMore {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 70px;
+}
+
+.tsrLoadMore button {
+  height: 56px;
+  padding: 0 36px;
+  border: none;
+  background: #ffd000;
+  color: #000;
+  font-size: 16px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+@media (max-width: 1020px) {
+  .tsrGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .tsrTrust {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .tsrVehicleBox {
+    flex-direction: column;
+    text-align: center;
+    margin-top: -20px;
+    padding: 18px;
+  }
+
+  .tsrVehicleImage {
+    width: 220px;
+  }
+
+  .tsrVehicleVrm {
+    min-width: 170px;
+    height: 54px;
+    font-size: 26px;
+  }
+
+  .tsrVehicleInfo h2 {
+    font-size: 26px;
+  }
+
+  .tsrVehicleInfo p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 760px) {
+  .tsrHero {
+    padding: 42px 22px 76px;
+  }
+
+  .tsrHero h1 {
+    font-size: 38px;
+  }
+
+  .tsrSearchWrap,
+  .tsrTrust,
+  .tsrIntro,
+  .tsrGrid {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .tsrCard {
+    grid-template-columns: 1fr;
+  }
+
+  .tsrImage {
+    height: 220px;
+  }
+
+  .tsrImage img {
+    max-width: 130px;
+    max-height: 170px;
+  }
+
+  .tsrPrice {
+    grid-template-columns: 1fr;
+  }
+
+  .tsrPrice button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .tsrTrust {
+    grid-template-columns: 1fr;
+  }
+
+  .tsrIntro h2 {
+    font-size: 30px;
+  }
+
+  .tsrSearchWrap input {
+    font-size: 15px;
+  }
+}

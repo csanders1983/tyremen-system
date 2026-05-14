@@ -1,0 +1,910 @@
+header,
+.siteHeader,
+.header {
+  position: relative;
+  z-index: 99999;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.alloyPage {
+  min-height: 100vh;
+  background: #080808;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 110px;
+}
+
+.alloyHero {
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.58) 0%,
+      rgba(0,0,0,0.30) 48%,
+      rgba(0,0,0,0.45) 100%
+    ),
+    url("/public/images/alloy-hero-bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(255, 208, 0, 0.35);
+  padding: 110px 24px;
+}
+
+.alloyHeroInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.alloyHero p {
+  color: #ffd000;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.alloyHero h1 {
+  font-size: 78px;
+  line-height: 0.9;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  margin: 12px 0;
+  color: #fff;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.45);
+}
+
+.alloyHero span {
+  color: #f3f3f3;
+  font-size: 20px;
+  max-width: 760px;
+  display: block;
+  line-height: 1.5;
+}
+
+.alloyWrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 26px 24px 60px;
+}
+
+.csvBox,
+.vehicleSearchBox,
+.filterBox {
+  background: #171717;
+  border: 1px solid rgba(255, 208, 0, 0.35);
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+.csvBox h2,
+.vehicleSearchTop h2,
+.loadingBox h2 {
+  color: #ffd000;
+  font-size: 28px;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.csvBox p,
+.vehicleSearchTop p {
+  color: #aaa;
+  margin: 6px 0 0;
+}
+
+.loadingBox {
+  background: #080808;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 18px;
+}
+
+.csvButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.csvButtons label,
+.csvButtons button,
+.filterGrid button,
+.wheelActions button,
+.modalActions button,
+.modalHead button {
+  background: #ffd000;
+  color: #000;
+  border: none;
+  border-radius: 14px;
+  padding: 13px 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.csvButtons input {
+  display: none;
+}
+
+.csvButtons button,
+.whiteBtn {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.importStat {
+  background: #080808;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.importStat p {
+  color: #777;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.importStat strong {
+  color: #ffd000;
+  font-size: 28px;
+  display: block;
+  margin-top: 5px;
+}
+
+.fileTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.fileTags span {
+  background: #080808;
+  border: 1px solid #333;
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: #ccc;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.vehicleSearchTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.vehicleToggle {
+  color: #fff;
+  font-weight: 900;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.vehicleToggle input,
+.stockToggle input {
+  width: 20px;
+  height: 20px;
+  accent-color: #ffd000;
+}
+
+.vehicleGrid,
+.filterGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.filterGrid {
+  grid-template-columns: 1.4fr 1fr 1fr 1fr auto;
+  align-items: end;
+}
+
+.vehicleGrid label span,
+.filterGrid label span {
+  display: block;
+  color: #ffd000;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.vehicleGrid select,
+.filterGrid select,
+.filterGrid input {
+  width: 100%;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 14px;
+  padding: 13px;
+  font-weight: 900;
+  outline: none;
+}
+
+.stockToggle {
+  display: inline-flex;
+  color: #ddd;
+  font-weight: 800;
+  gap: 10px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.vehicleResult {
+  margin-top: 18px;
+  background: #080808;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: #ddd;
+}
+
+.vehicleResult strong {
+  color: #ffd000;
+}
+
+.carPreviewBox {
+  margin-top: 20px;
+  background: #080808;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.carInfo h3 {
+  color: #ffd000;
+  font-size: 24px;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.carInfo p {
+  color: #aaa;
+  margin: 6px 0 18px;
+}
+
+.digitalCar {
+  height: 310px;
+  position: relative;
+  background:
+    radial-gradient(circle at center, rgba(255,208,0,0.13), transparent 42%),
+    linear-gradient(180deg, #1c1c1c, #050505);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.digitalGlow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 36px;
+  height: 26px;
+  background: rgba(255,208,0,0.22);
+  filter: blur(22px);
+}
+
+.digitalBody {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 86px;
+  height: 92px;
+  background: linear-gradient(135deg, #ffd000, #b89100);
+  border-radius: 90px 130px 28px 28px;
+  box-shadow: inset 0 -22px 0 rgba(0,0,0,0.22);
+  z-index: 2;
+}
+
+.digitalRoof {
+  position: absolute;
+  left: 30%;
+  right: 32%;
+  bottom: 162px;
+  height: 76px;
+  background: linear-gradient(135deg, #ffd000, #b89100);
+  border-radius: 90px 90px 8px 8px;
+  transform: skewX(-14deg);
+  z-index: 2;
+}
+
+.digitalWindow {
+  position: absolute;
+  bottom: 174px;
+  height: 42px;
+  background: linear-gradient(135deg, #151515, #555);
+  border: 2px solid rgba(255,255,255,0.22);
+  z-index: 3;
+}
+
+.digitalRearWindow {
+  left: 33%;
+  width: 16%;
+  transform: skewX(-14deg);
+  border-radius: 20px 4px 4px 4px;
+}
+
+.digitalFrontWindow {
+  left: 50%;
+  width: 18%;
+  transform: skewX(-14deg);
+  border-radius: 4px 20px 4px 4px;
+}
+
+.digitalBonnet {
+  position: absolute;
+  right: 7%;
+  bottom: 111px;
+  width: 18%;
+  height: 42px;
+  background: linear-gradient(135deg, #ffd000, #caa400);
+  border-radius: 20px 80px 18px 8px;
+  z-index: 2;
+}
+
+.digitalBoot {
+  position: absolute;
+  left: 8%;
+  bottom: 110px;
+  width: 16%;
+  height: 40px;
+  background: linear-gradient(135deg, #caa400, #ffd000);
+  border-radius: 70px 20px 8px 18px;
+  z-index: 2;
+}
+
+.digitalLight {
+  position: absolute;
+  bottom: 118px;
+  width: 30px;
+  height: 10px;
+  z-index: 5;
+}
+
+.digitalFrontLight {
+  right: 9%;
+  background: #fff;
+  box-shadow: 0 0 16px rgba(255,255,255,0.8);
+}
+
+.digitalRearLight {
+  left: 9%;
+  background: #dc2626;
+  box-shadow: 0 0 16px rgba(220,38,38,0.8);
+}
+
+.digitalDoor {
+  position: absolute;
+  left: 48%;
+  bottom: 93px;
+  width: 2px;
+  height: 76px;
+  background: rgba(0,0,0,0.35);
+  z-index: 4;
+}
+
+.digitalWheel {
+  position: absolute;
+  bottom: 50px;
+  width: 96px;
+  height: 96px;
+  background: #050505;
+  border-radius: 50%;
+  border: 8px solid #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 6;
+}
+
+.digitalWheel img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.digitalRearWheel {
+  left: 22%;
+}
+
+.digitalFrontWheel {
+  right: 22%;
+}
+
+.digitalFakeWheel {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 12px solid #777;
+  background: #ffd000;
+}
+
+.digitalBadge {
+  position: absolute;
+  right: 24px;
+  top: 22px;
+  color: rgba(255,255,255,0.12);
+  font-size: 44px;
+  font-weight: 900;
+  font-style: italic;
+  z-index: 1;
+}
+
+.digitalCar.bmw .digitalBody,
+.digitalCar.bmw .digitalRoof,
+.digitalCar.bmw .digitalBonnet,
+.digitalCar.bmw .digitalBoot {
+  background: linear-gradient(135deg, #ffd000, #b89100);
+}
+
+.digitalCar.audi .digitalBody,
+.digitalCar.audi .digitalRoof,
+.digitalCar.audi .digitalBonnet,
+.digitalCar.audi .digitalBoot {
+  background: linear-gradient(135deg, #d9d9d9, #777);
+}
+
+.digitalCar.vw .digitalBody,
+.digitalCar.vw .digitalRoof,
+.digitalCar.vw .digitalBonnet,
+.digitalCar.vw .digitalBoot {
+  background: linear-gradient(135deg, #1f6fff, #003f9e);
+}
+
+.digitalCar.merc .digitalBody,
+.digitalCar.merc .digitalRoof,
+.digitalCar.merc .digitalBonnet,
+.digitalCar.merc .digitalBoot {
+  background: linear-gradient(135deg, #111, #2b2b2b);
+  border: 1px solid rgba(255,208,0,0.55);
+}
+
+.previewSelected {
+  color: #ddd;
+  margin-top: 14px;
+  font-weight: 700;
+}
+
+.previewSelected strong {
+  color: #ffd000;
+}
+
+.resultTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.resultTop p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.resultTop strong {
+  color: #ffd000;
+}
+
+.resultTop span {
+  color: #999;
+  font-size: 14px;
+}
+
+.wheelGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.wheelCard {
+  background: #171717;
+  border: 1px solid #333;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+.wheelImageBox {
+  height: 240px;
+  background: linear-gradient(135deg, #fff, #ddd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.wheelImageBox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 22px rgba(0,0,0,0.45));
+}
+
+.wheelInfo {
+  padding: 20px;
+}
+
+.wheelHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wheelHead p {
+  color: #ffd000;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 900;
+  margin: 0;
+}
+
+.wheelHead h2 {
+  font-size: 26px;
+  line-height: 1;
+  text-transform: uppercase;
+  font-weight: 900;
+  margin: 5px 0 0;
+}
+
+.stock {
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 900;
+  height: fit-content;
+  white-space: nowrap;
+}
+
+.stock.in {
+  background: #22c55e;
+  color: #000;
+}
+
+.stock.out {
+  background: #dc2626;
+  color: #fff;
+}
+
+.desc {
+  color: #ccc;
+  font-size: 14px;
+  margin: 14px 0 0;
+  min-height: 38px;
+}
+
+.source {
+  color: #777;
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+
+.specGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.specBox {
+  background: #080808;
+  border: 1px solid #333;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.specBox p {
+  color: #777;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.specBox strong {
+  color: #fff;
+  display: block;
+  margin-top: 4px;
+  word-break: break-word;
+}
+
+.cardBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.cardBottom span {
+  color: #999;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.cardBottom strong {
+  color: #ffd000;
+  font-size: 28px;
+  display: block;
+}
+
+.wheelActions {
+  display: flex;
+  gap: 8px;
+}
+
+.wheelActions button {
+  padding: 11px 12px;
+  font-size: 12px;
+}
+
+.wheelPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fakeAlloy {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #080808;
+  border: 18px solid #777;
+  position: relative;
+}
+
+.fakeAlloy span {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 8px;
+  height: 78px;
+  background: #ddd;
+  border-radius: 999px;
+  transform-origin: bottom;
+}
+
+.fakeAlloy span:nth-child(1) {
+  transform: translateX(-50%) rotate(0deg);
+}
+
+.fakeAlloy span:nth-child(2) {
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.fakeAlloy span:nth-child(3) {
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.fakeAlloy span:nth-child(4) {
+  transform: translateX(-50%) rotate(135deg);
+}
+
+.wheelPlaceholder p {
+  color: #000;
+  font-weight: 900;
+  margin: 12px 0 0;
+}
+
+.wheelPlaceholder small {
+  color: #555;
+  font-weight: 900;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.82);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modalBox {
+  background: #171717;
+  border: 1px solid rgba(255, 208, 0, 0.4);
+  border-radius: 24px;
+  max-width: 1024px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.modalHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  border-bottom: 1px solid #333;
+}
+
+.modalHead p {
+  color: #ffd000;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.modalHead h2 {
+  font-size: 34px;
+  margin: 4px 0 0;
+  text-transform: uppercase;
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 20px;
+}
+
+.modalImage {
+  background: #fff;
+  border-radius: 20px;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modalImage img {
+  max-width: 100%;
+  max-height: 330px;
+  object-fit: contain;
+}
+
+.modalGrid h3 {
+  font-size: 26px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.modalDesc {
+  color: #ccc;
+}
+
+.modalActions {
+  background: #080808;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.noResults {
+  background: #171717;
+  border: 1px solid #dc2626;
+  border-radius: 24px;
+  padding: 30px;
+  text-align: center;
+}
+
+.noResults h2 {
+  color: #ffd000;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1100px) {
+  .wheelGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .filterGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .alloyPage {
+    padding-top: 90px;
+  }
+
+  .alloyHero {
+    padding: 75px 20px;
+    background-position: center right;
+  }
+
+  .alloyHero h1 {
+    font-size: 42px;
+  }
+
+  .alloyHero span {
+    font-size: 16px;
+  }
+
+  .statGrid,
+  .vehicleGrid,
+  .filterGrid,
+  .modalGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .vehicleSearchTop,
+  .resultTop,
+  .cardBottom,
+  .modalHead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wheelGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .digitalCar {
+    height: 235px;
+  }
+
+  .digitalWheel {
+    width: 66px;
+    height: 66px;
+    bottom: 42px;
+  }
+
+  .digitalRearWheel {
+    left: 17%;
+  }
+
+  .digitalFrontWheel {
+    right: 17%;
+  }
+
+  .digitalBody {
+    bottom: 78px;
+    height: 70px;
+  }
+
+  .digitalRoof {
+    bottom: 134px;
+    height: 56px;
+  }
+
+  .digitalWindow {
+    bottom: 144px;
+    height: 30px;
+  }
+
+  .digitalBadge {
+    font-size: 28px;
+  }
+}

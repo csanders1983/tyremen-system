@@ -1,0 +1,519 @@
+.tppPage {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255,208,0,0.08), transparent 34%),
+    linear-gradient(180deg, #090909 0%, #1c1c1c 55%, #0b0b0b 100%);
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+
+.tppWrap {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 22px 24px 60px;
+}
+
+.tppBackBtn {
+  display: inline-flex;
+  margin-bottom: 20px;
+  background: transparent;
+  border: none;
+  color: #ffd000;
+  font-size: 16px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.tppVehicleBox {
+  margin: 0 0 26px;
+  display: grid;
+  grid-template-columns: 300px 1fr 360px;
+  align-items: center;
+  background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+  border: 2px solid #ffd000;
+  border-radius: 14px;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: 0 22px 55px rgba(0,0,0,0.45);
+}
+
+.tppVehicleImgBox {
+  height: 160px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tppVehicleImgBox img {
+  width: 270px;
+  height: 135px;
+  object-fit: contain;
+}
+
+.tppVehicleDetails {
+  padding: 20px 24px;
+}
+
+.tppRegPlate {
+  display: inline-flex;
+  background: #ffd000;
+  color: #000;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 30px;
+  font-weight: 1000;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+
+.tppVehicleDetails h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 26px;
+  line-height: 1.12;
+  font-weight: 1000;
+}
+
+.tppVehicleDetails p {
+  margin: 9px 0 0;
+  color: #ddd;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.tppVehicleChecks {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-left: 1px solid rgba(255,255,255,0.18);
+}
+
+.tppVehicleChecks div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 15px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  border-left: 1px solid rgba(255,255,255,0.18);
+}
+
+.tppProduct {
+  display: grid;
+  grid-template-columns: 0.95fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.tppGallery,
+.tppBuyBox {
+  background: rgba(255,255,255,0.98);
+  border: 1px solid rgba(255,208,0,0.22);
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+.tppStockRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.tppFittedTag,
+.tppStock,
+.tppAxleTag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  border-radius: 4px;
+}
+
+.tppFittedTag,
+.tppAxleTag {
+  background: #ffd000;
+  color: #000;
+}
+
+.tppStock {
+  background: #111;
+  color: #ffd000;
+}
+
+.tppStock.low {
+  background: #c90000;
+  color: #fff;
+}
+
+.tppTyreStage {
+  min-height: 430px;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,1), rgba(238,238,238,1)),
+    linear-gradient(135deg, #f8f8f8, #ececec);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.tppTyreStage img {
+  max-width: 78%;
+  max-height: 390px;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 22px rgba(0,0,0,0.25));
+}
+
+.tppUnderImage {
+  margin-top: 18px;
+  background: #111;
+  border-radius: 5px;
+  border-bottom: 4px solid #ffd000;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.tppUnderImage strong {
+  color: #fff;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.tppUnderImage span {
+  color: #ddd;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tppBrandLine {
+  color: #777;
+  font-size: 15px;
+  font-weight: 1000;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.tppBuyBox h1 {
+  color: #111;
+  font-size: 44px;
+  line-height: 0.95;
+  margin: 0;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -2px;
+}
+
+.tppSizeLine {
+  margin-top: 16px;
+  color: #111;
+  font-size: 28px;
+  font-weight: 1000;
+}
+
+.tppAxleTag {
+  margin-top: 14px;
+}
+
+.tppTrustPanel {
+  margin-top: 20px;
+  background: #f3f3f3;
+  border-left: 5px solid #ffd000;
+  padding: 17px 20px;
+  border-radius: 5px;
+}
+
+.tppTrustPanel strong {
+  display: block;
+  color: #111;
+  font-size: 20px;
+  margin-bottom: 7px;
+}
+
+.tppTrustPanel p {
+  margin: 0;
+  color: #555;
+  line-height: 1.45;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tppRatings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.tppRatings div {
+  background: #f7f7f7;
+  padding: 16px 12px;
+  text-align: center;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+}
+
+.tppRatings span {
+  display: block;
+  color: #777;
+  font-size: 11px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.tppRatings strong {
+  color: #111;
+  font-size: 32px;
+  font-weight: 1000;
+}
+
+.tppPricePanel {
+  margin-top: 22px;
+  background: #111;
+  border-radius: 6px;
+  border-bottom: 5px solid #ffd000;
+  padding: 22px;
+}
+
+.tppPriceTop {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: center;
+}
+
+.tppPricePanel small {
+  display: block;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.tppPricePanel strong {
+  display: block;
+  color: #fff;
+  font-size: 52px;
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: -2px;
+  margin-top: 10px;
+}
+
+.tppPricePanel em {
+  display: block;
+  color: #ffd000;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 1000;
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+.tppQtyBlock {
+  text-align: center;
+  border-left: 1px solid rgba(255,255,255,0.2);
+}
+
+.tppQty {
+  margin: 12px auto 6px;
+  display: inline-flex;
+  align-items: center;
+  background: #222;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.tppQty button {
+  width: 48px;
+  height: 46px;
+  border: none;
+  background: #191919;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.tppQty span {
+  min-width: 56px;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+.tppQtyBlock p {
+  margin: 0;
+  color: #ddd;
+  font-size: 13px;
+}
+
+.tppAddBtn {
+  width: 100%;
+  height: 60px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 4px;
+  background: #ffd000;
+  color: #000;
+  font-size: 17px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 14px 28px rgba(255,208,0,0.22);
+}
+
+.tppPhone {
+  margin-top: 16px;
+  background: #f7f7f7;
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+  padding: 16px;
+  text-align: center;
+  color: #111;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.tppPhone strong {
+  color: #111;
+}
+
+.tppTrustBar {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: linear-gradient(135deg, #111 0%, #1d1d1d 100%);
+  border-radius: 10px;
+  padding: 26px 18px;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.32);
+}
+
+.tppTrustBar div {
+  text-align: center;
+  padding: 12px 24px;
+  border-left: 1px solid rgba(255,255,255,0.18);
+}
+
+.tppTrustBar div:first-child {
+  border-left: none;
+}
+
+.tppTrustBar strong {
+  display: block;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.tppTrustBar span {
+  display: block;
+  margin-top: 8px;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 1020px) {
+  .tppVehicleBox {
+    grid-template-columns: 1fr;
+  }
+
+  .tppVehicleChecks {
+    grid-template-columns: 1fr;
+    border-left: none;
+  }
+
+  .tppProduct {
+    grid-template-columns: 1fr;
+  }
+
+  .tppTrustBar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tppTrustBar div {
+    border-left: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .tppWrap {
+    padding: 20px 14px 50px;
+  }
+
+  .tppGallery,
+  .tppBuyBox {
+    padding: 18px;
+  }
+
+  .tppVehicleImgBox img {
+    width: 210px;
+  }
+
+  .tppRegPlate {
+    font-size: 24px;
+  }
+
+  .tppVehicleDetails h2 {
+    font-size: 22px;
+  }
+
+  .tppTyreStage {
+    min-height: 320px;
+  }
+
+  .tppTyreStage img {
+    max-width: 92%;
+    max-height: 280px;
+  }
+
+  .tppBuyBox h1 {
+    font-size: 36px;
+  }
+
+  .tppSizeLine {
+    font-size: 22px;
+  }
+
+  .tppRatings,
+  .tppTrustBar {
+    grid-template-columns: 1fr;
+  }
+
+  .tppPriceTop {
+    grid-template-columns: 1fr;
+  }
+
+  .tppQtyBlock {
+    border-left: none;
+  }
+
+  .tppPricePanel strong {
+    font-size: 44px;
+  }
+
+  .tppUnderImage {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

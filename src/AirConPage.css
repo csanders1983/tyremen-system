@@ -1,0 +1,111 @@
+.airconPage {
+  background: #f4f4f4;
+  min-height: 100vh;
+}
+
+.airconHero {
+  background: linear-gradient(90deg, #050505, #151515);
+  color: #fff;
+  padding: 56px 38px;
+}
+
+.airconHero p {
+  color: #ffd000;
+  font-weight: 1000;
+  letter-spacing: 2px;
+}
+
+.airconHero h1 {
+  margin: 0;
+  font-size: 52px;
+  font-style: italic;
+}
+
+.airconHero span {
+  color: #ccc;
+  font-size: 18px;
+}
+
+.airconCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.airconCard {
+  background: #fff;
+  border-radius: 10px;
+  padding: 28px;
+  border: 1px solid #ddd;
+  text-align: center;
+  position: relative;
+  transition: 0.2s;
+}
+
+.airconCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.airconCard h2 {
+  margin-top: 0;
+}
+
+.airconSub {
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.airconPrice {
+  font-size: 32px;
+  font-weight: 1000;
+  color: #ffd000;
+  margin: 16px 0;
+}
+
+.airconCard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.airconCard li {
+  margin-bottom: 6px;
+}
+
+.airconCard button {
+  width: 100%;
+  background: #ffd000;
+  border: none;
+  padding: 14px;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.featured {
+  border: 2px solid #ffd000;
+  transform: scale(1.03);
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #ffd000;
+  color: #000;
+  font-size: 12px;
+  font-weight: 1000;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+@media (max-width: 900px) {
+  .airconCards {
+    grid-template-columns: 1fr;
+  }
+}

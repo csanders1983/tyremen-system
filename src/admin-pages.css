@@ -1,0 +1,82 @@
+.matrixTable {
+  display: grid;
+  gap: 10px;
+}
+
+.matrixHead,
+.matrixRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.matrixHead {
+  color: #8ea1b4;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  padding: 0 4px 8px;
+}
+
+.matrixRow {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-left: 4px solid #ffd000;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.matrixRow strong {
+  color: #fff;
+  font-size: 17px;
+}
+
+.matrixRow span {
+  color: #94a5b7;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.matrixRow b {
+  color: #ffd000;
+  font-size: 22px;
+  font-weight: 1000;
+}
+
+.moneyInput {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  color: #ffd000 !important;
+  font-size: 18px !important;
+  font-weight: 1000 !important;
+  margin: 0 !important;
+}
+
+.moneyInput input {
+  margin: 0 !important;
+  height: 44px;
+}
+
+.adminInfoBox {
+  margin-top: 22px;
+  background: #fff3c4;
+  color: #111;
+  border: 1px solid #f0d36b;
+  border-radius: 14px;
+  padding: 18px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .matrixHead {
+    display: none;
+  }
+
+  .matrixRow {
+    grid-template-columns: 1fr;
+  }
+}
