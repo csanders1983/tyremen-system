@@ -81,7 +81,7 @@ export default function Service() {
 
             <div style={styles.price}>£79</div>
 
-            <div style={styles.bundle}>FREE MOT with full service</div>
+            <div style={styles.bundle}> MOT for £20.00 with selected Services</div>
 
             <button
               style={styles.primary}

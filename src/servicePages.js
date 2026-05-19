@@ -76,7 +76,7 @@ const servicePages = {
   bullets: [
     "Class 4 MOT testing",
     "Only £40 standard MOT",
-    "Free MOT with selected servicing",
+    "MOT £20.00 with selected servicing",
     "Same-day MOT slots available",
     "Trusted Hull garage for 55+ years",
   ],
@@ -92,9 +92,9 @@ const servicePages = {
         "Need an MOT quickly? We offer same-day MOT bookings where availability allows. Book early to secure your preferred time.",
     },
     {
-      heading: "Free MOT with service",
+      heading: "MOT £20.00 with service",
       text:
-        "Take advantage of our Free MOT offer when booking a qualifying Interim, Full or Major service. Ask our team for details or book online.",
+        "Take advantage of our MOT offer when booking a qualifying Interim, Full or Major service. Ask our team for details or book online.",
     },
     {
       heading: "MOT repairs in Hull",
@@ -105,7 +105,7 @@ const servicePages = {
   faqs: [
     [
       "How much is an MOT in Hull?",
-      "Our standard MOT price is £40. We also offer a Free MOT with selected service bookings.",
+      "Our standard MOT price is £40. We also offer a £20.00 MOT with selected service bookings.",
     ],
     [
       "Can I book an MOT online?",
@@ -134,13 +134,13 @@ const servicePages = {
   intro:
     "Book car servicing in Hull with Tyremen. Choose from Oil & Filter, Interim, Full and Major service options, with clear pricing and trusted local technicians.",
   ctaPrimary: "BOOK A SERVICE",
-  ctaSecondary: "VIEW FREE MOT OFFER",
+  ctaSecondary: "VIEW £20.00 MOT OFFER",
   bullets: [
     "Oil & Filter from £120.00",
     "Interim Service from £128.50",
     "Full Service from £155.00",
     "Major Service from £180.00",
-    "Free MOT with selected services",
+    "MOT for £20.00 with selected Services",
   ],
   sections: [
     {
@@ -149,9 +149,9 @@ const servicePages = {
         "Whether your car needs basic oil and filter maintenance or a more complete service, Tyremen offers clear servicing options to suit your vehicle and mileage.",
     },
     {
-      heading: "Free MOT with selected servicing",
+      heading: "MOT for £20.00 with selected servicing",
       text:
-        "Book a qualifying service and take advantage of our Free MOT offer. It is a simple way to save money while keeping your vehicle safe and road legal.",
+        "Book a qualifying service and take advantage of our £20.00 MOT offer. It is a simple way to save money while keeping your vehicle safe and road legal.",
     },
     {
       heading: "Trusted servicing in Hull",
@@ -164,7 +164,7 @@ const servicePages = {
     ["How much is an Interim Service?", "Interim servicing starts from £128.50."],
     ["How much is a Full Service?", "Full servicing starts from £155.00."],
     ["How much is a Major Service?", "Major servicing starts from £180.00."],
-    ["Can I get a Free MOT with a service?", "Yes, selected service bookings include a Free MOT offer."],
+    ["Can I get a £20.00 MOT with a service?", "Yes, selected service bookings include a £20.00 MOT offer."],
   ],
 },
 

@@ -1,7 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
 .landingPage {
-  background: #fff;
+  background: #f3f3f3;
   color: #111;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 /* HERO */
@@ -9,14 +14,15 @@
 .landingHero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(90deg, #050505, #171717);
   color: #fff;
-  padding: 70px 48px;
+  background: linear-gradient(90deg, #050505, #171717);
+  padding: 82px 38px 110px;
   display: grid;
-  grid-template-columns: 1.3fr 420px;
-  gap: 40px;
+  grid-template-columns: 1.25fr 430px;
+  gap: 42px;
   align-items: center;
-  min-height: 430px;
+  min-height: 405px;
+  border-bottom: 4px solid #ffd000;
 }
 
 .imageHero {
@@ -30,11 +36,11 @@
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(0,0,0,0.96) 0%,
-    rgba(0,0,0,0.88) 34%,
-    rgba(0,0,0,0.58) 58%,
-    rgba(0,0,0,0.2) 78%,
-    rgba(0,0,0,0.05) 100%
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.88) 34%,
+    rgba(0, 0, 0, 0.58) 58%,
+    rgba(0, 0, 0, 0.2) 78%,
+    rgba(0, 0, 0, 0.05) 100%
   );
   z-index: 1;
 }
@@ -49,32 +55,131 @@
   font-weight: 1000;
   letter-spacing: 2px;
   margin: 0 0 12px;
+  font-size: 15px;
+  text-transform: uppercase;
 }
 
 .landingHero h1 {
-  font-size: 58px;
-  line-height: 0.95;
+  font-size: 54px;
+  line-height: 0.92;
   margin: 0;
   font-style: italic;
-  max-width: 850px;
+  font-weight: 1000;
+  letter-spacing: -2px;
+  max-width: 780px;
 }
 
 .landingIntro {
-  font-size: 20px;
-  color: #ddd;
+  font-size: 19px;
+  color: #fff;
   max-width: 760px;
-  margin: 24px 0 0;
+  margin: 22px 0 0;
+  line-height: 1.55;
+  font-weight: 500;
 }
 
 .heroTrust {
-  margin-top: 12px;
-  color: #ddd;
-  font-size: 14px;
+  margin-top: 14px;
+  color: #fff;
+  font-size: 15px;
   font-weight: 800;
 }
 
+/* HERO OFFER */
+
+.serviceHeroOffer {
+  margin-top: 34px;
+  max-width: 900px;
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: 110px 1.15fr 2px 1.45fr 130px;
+  align-items: center;
+  background: linear-gradient(
+    90deg,
+    #ffd000 0 110px,
+    rgba(0, 0, 0, 0.82) 110px 100%
+  );
+  border: 3px solid #ffd000;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.offerIcon {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #050505;
+  font-size: 48px;
+  font-weight: 1000;
+}
+
+.offerMain,
+.offerText {
+  padding: 0 28px;
+}
+
+.offerMain span {
+  display: block;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.offerMain strong {
+  display: block;
+  color: #ffd000;
+  font-size: 32px;
+  font-weight: 1000;
+  margin-top: 5px;
+}
+
+.offerDivider {
+  height: 56px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.offerText {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 1000;
+  line-height: 1.15;
+}
+
+.offerText b {
+  color: #ffd000;
+}
+
+.offerSave {
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background: #ffd000;
+  color: #000;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  justify-self: center;
+  font-weight: 1000;
+  transform: rotate(-2deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.offerSave strong {
+  display: block;
+  font-size: 34px;
+  line-height: 0.9;
+}
+
+.offerSave small {
+  font-size: 10px;
+}
+
+/* HERO BUTTONS */
+
 .landingButtons {
-  margin-top: 22px;
+  margin-top: 24px;
   display: flex;
   gap: 14px;
 }
@@ -86,17 +191,19 @@
   border: none;
   padding: 16px 28px;
   font-weight: 1000;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .landingButtons button:hover,
 .landingCTA button:hover {
   background: #ffea00;
+  transform: translateY(-2px);
 }
 
 .landingButtons .outline {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.25);
   color: #fff;
   border: 2px solid #fff;
 }
@@ -107,11 +214,12 @@
 }
 
 .landingPanel {
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 10px;
-  padding: 22px;
+  border: 1px solid rgba(255, 208, 0, 0.28);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
 .landingPanel h3 {
@@ -121,22 +229,24 @@
 }
 
 .landingBullet {
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-  font-weight: 800;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 900;
 }
 
-/* DEAL STRIPS */
+/* MAIN STRIPS */
 
 .tyreDealStrip,
 .motDealStrip,
 .quoteConvertStrip {
-  margin: -24px 38px 30px;
-  background: #fff;
+  max-width: 1480px;
+  margin: -54px auto 34px;
+  background: #f7f7f7;
   border: 1px solid #ddd;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-  border-radius: 10px;
-  padding: 26px;
+  border-top: 5px solid #ffd000;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
+  border-radius: 24px;
+  padding: 30px;
   position: relative;
   z-index: 5;
 }
@@ -144,35 +254,34 @@
 .tyreDealStrip {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
-  gap: 24px;
+  gap: 28px;
 }
 
 .motDealStrip,
 .quoteConvertStrip {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 24px;
+  grid-template-columns: 0.95fr 1.45fr;
+  gap: 28px;
+  align-items: stretch;
 }
-
-.salesMot {
-  border-top: 5px solid #ffd000;
-}
-
-/* TYRE CARDS */
 
 .tyreDealText span,
 .motDealText span,
 .quoteConvertText span {
   color: #ffd000;
   font-weight: 1000;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .tyreDealText h2,
 .motDealText h2,
 .quoteConvertText h2 {
-  margin: 8px 0;
-  font-size: 30px;
+  margin: 12px 0;
+  font-size: 34px;
+  line-height: 1.18;
+  font-weight: 900;
+  letter-spacing: -1px;
 }
 
 .tyreDealText p,
@@ -183,172 +292,198 @@
   line-height: 1.5;
 }
 
-.tyreDealCards {
+/* SERVICE PAGE */
+
+.serviceOnlyStrip {
+  max-width: 1560px !important;
+  grid-template-columns: 0.82fr 1.55fr !important;
+  gap: 28px !important;
+}
+
+.serviceVrmBox {
+  margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  grid-template-columns: 1fr 180px;
+  gap: 12px;
+  max-width: 620px;
 }
 
-.tyreDealCard {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 18px;
-  background: #fafafa;
+.serviceVrmBox input {
+  height: 58px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 0 20px;
+  font-size: 22px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  outline: none;
+  background: #fff;
 }
 
-.tyreDealCard h3 {
-  margin: 0 0 8px;
+.serviceVrmBox input:focus {
+  border-color: #ffd000;
+  box-shadow: 0 0 0 4px rgba(255, 208, 0, 0.2);
 }
 
-.tyreDealCard p {
-  color: #555;
-  min-height: 44px;
+.serviceVrmBox button {
+  height: 58px;
+  border: none;
+  background: #ffd000;
+  color: #000;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 1000;
+  cursor: pointer;
 }
 
-.tyreDealCard strong {
-  color: #111;
-}
-
-.tyreDealCard.featured {
+.serviceVehicleResult {
+  max-width: 620px;
+  margin-top: 16px;
   background: #050505;
   color: #fff;
-  border-color: #ffd000;
+  border-left: 6px solid #ffd000;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: grid;
+  gap: 6px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
 }
 
-.tyreDealCard.featured p {
-  color: #ddd;
-}
-
-.tyreDealCard.featured strong {
+.serviceVehicleResult strong {
+  display: block;
   color: #ffd000;
+  font-size: 16px;
 }
 
-/* MOT / SERVICE / AIR CON / ALIGNMENT CARDS */
+.serviceVehicleResult span {
+  display: block;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 1000;
+}
+
+.serviceVehicleImageBox {
+  margin-top: 18px;
+  max-width: 540px;
+}
+
+.serviceVehicleImageBox img {
+  max-height: 210px;
+  width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.serviceMotToggle {
+  margin-top: 24px;
+  max-width: 620px;
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  align-items: center;
+  gap: 18px;
+  background: #050505;
+  border: 3px solid #ffd000;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+
+.serviceMotToggle strong {
+  display: block;
+  color: #ffd000;
+  font-size: 26px;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.serviceMotToggle span {
+  display: block;
+  margin-top: 7px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.serviceMotToggle button {
+  height: 58px;
+  min-width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffd000;
+  color: #000;
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.serviceMotToggle button.active {
+  background: #16a032;
+  color: #fff;
+}
+
+/* CARDS */
 
 .motDealCards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 18px;
+  align-items: stretch;
 }
 
 .serviceSalesCards {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(190px, 1fr)) !important;
+  gap: 18px !important;
 }
 
-.airconSalesCards {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.motCard {
+.motCard,
+.tyreDealCard {
   position: relative;
   overflow: hidden;
   border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  background: #fafafa;
-  transition: all 0.25s ease;
-  cursor: pointer;
+  border-radius: 16px;
+  padding: 24px;
+  background: #fff;
+  transition: 0.25s ease;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
 }
 
-.motCard:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 25px 55px rgba(0,0,0,0.2);
+.serviceOnlyStrip .motCard {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.motCard:hover,
+.tyreDealCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.18);
   border-color: #ffd000;
 }
 
-.motCard::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 70%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,208,0,0.22),
-    transparent
-  );
-  transition: 0.6s;
-}
-
-.motCard:hover::before {
-  left: 130%;
-}
-
-.motCard h3 {
-  margin: 0 0 8px;
-}
-
-.motCard p {
-  color: #555;
-}
-
-.motCard ul {
-  margin: 10px 0;
-  padding-left: 0;
-  list-style: none;
-  font-size: 14px;
-}
-
-.motCard li {
-  margin-bottom: 6px;
-}
-
-.motCard button {
-  margin-top: 12px;
-  background: #ffd000;
-  color: #000;
-  border: none;
-  padding: 12px;
-  font-weight: 1000;
-  width: 100%;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.motCard button:hover {
-  transform: scale(1.02);
-  
-}
-
 .motCard.featured,
-.serviceSalesCards .motCard:nth-child(2) {
+.serviceSalesCards .motCard:nth-child(2),
+.tyreDealCard.featured {
   background: #050505;
   color: #fff;
   border: 2px solid #ffd000;
-
-  /* premium glow */
-  box-shadow: 
-    0 12px 30px rgba(0,0,0,0.35),
-    0 0 0 1px rgba(255,208,0,0.15),
-    0 0 18px rgba(255,208,0,0.08);
-
-  transition: all 0.25s ease;
-}
-.motCard.featured h3,
-.motCard.featured p,
-.motCard.featured li,
-.serviceSalesCards .motCard:nth-child(2) p,
-.serviceSalesCards .motCard:nth-child(2) li {
-  color: #fff !important;
-}
-
-.motCard.featured .motPrice,
-.serviceSalesCards .motCard:nth-child(2) .motPrice {
-  color: #ffd000 !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
 }
 
 .motTag {
   display: inline-block;
+  width: fit-content;
   background: #050505;
   color: #ffd000;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 1000;
-  padding: 7px 12px;
+  padding: 8px 14px;
   border-radius: 999px;
-  margin-bottom: 14px;
-  transition: 0.2s;
+  margin-bottom: 8px;
 }
 
 .motCard.featured .motTag,
@@ -357,516 +492,563 @@
   color: #000;
 }
 
-.motCard:hover .motTag {
-  transform: translateY(-3px);
+.motCard h3,
+.tyreDealCard h3 {
+  margin: 12px 0 8px;
+  font-size: 26px;
+  line-height: 1.05;
+  font-weight: 1000;
+}
+
+.motCard p,
+.tyreDealCard p {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.35;
+  margin: 0 0 14px;
+}
+
+.motCard.featured p,
+.motCard.featured li,
+.serviceSalesCards .motCard:nth-child(2) p,
+.serviceSalesCards .motCard:nth-child(2) li,
+.tyreDealCard.featured p {
+  color: #fff !important;
+}
+
+/* SERVICE PRICE */
+
+.servicePriceWrap {
+  margin: 14px 0 20px;
+}
+
+.serviceCardReg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f3f3f3;
+  color: #111;
+
+  border: 2px solid #d8d8d8;
+  border-radius: 8px;
+
+  padding: 8px 16px;
+  margin-bottom: 12px;
+
+  font-size: 21px;
+  font-weight: 1000;
+  letter-spacing: 2px;
+}
+.featured .serviceCardReg {
+  background: #ffd000;
+  color: #000;
+  border-color: #111;
+}
+
+.servicePrice {
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: -1px;
+  color: #050505;
+}
+
+.motCard.featured .servicePrice,
+.serviceSalesCards .motCard:nth-child(2) .servicePrice {
+  color: #ffd000 !important;
+}
+
+/* SERVICE BUTTONS */
+
+.serviceButtonsWrap {
+  margin-top: auto;
+  display: grid;
+  gap: 12px;
+}
+
+.modernBtn,
+.bookNowModern {
+  width: 100%;
+  min-height: 58px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffd91a 0%, #ffd000 100%);
+  color: #000;
+  cursor: pointer;
+  font-weight: 1000;
+  display: grid;
+  grid-template-columns: 34px 1fr 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 10px 22px rgba(255, 208, 0, 0.24);
+  transition: 0.22s ease;
+}
+
+.modernBtn:hover,
+.bookNowModern:hover {
+  transform: translateY(-2px);
+}
+
+.bookNowModern:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnIcon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 50%;
+  background: #050505;
+  color: #ffd000;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  font-weight: 1000;
+}
+
+.btnText {
+  color: #000 !important;
+  font-size: 13px;
+  line-height: 1.05;
+  text-align: left;
+  font-weight: 1000;
+  min-width: 0;
+}
+
+.btnArrow,
+.bookArrow {
+  color: #000;
+  font-size: 18px;
+  line-height: 1;
+  text-align: right;
+  transition: transform 0.22s ease;
+}
+
+.btnArrow.rotate {
+  transform: rotate(180deg);
+}
+
+.includesContent {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s ease,
+    opacity 0.25s ease;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 0 0 14px 14px;
+}
+
+.includesContent.open {
+  max-height: 220px;
+  overflow-y: auto;
+  opacity: 1;
+  padding: 14px 16px;
+}
+
+.includesContent ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.includesContent li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.featured .includesContent {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.featured .includesContent li {
+  color: #fff;
+}
+
+.serviceMotAdded {
+  width: fit-content;
+  margin: 0 0 10px;
+  background: #12a820;
+  color: #fff;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 1000;
+}
+
+.serviceDisabled {
+  opacity: 0.35;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+/* MOT PAGE */
+
+.motOnlyStrip {
+  grid-template-columns: 0.9fr auto !important;
+  gap: 34px !important;
+  align-items: stretch !important;
+}
+
+.motOnlyStrip .motDealCards {
+  display: grid !important;
+  grid-template-columns: 350px 350px !important;
+  gap: 24px !important;
+}
+
+.motVehicleImageBox {
+  margin-top: 28px;
+  max-width: 560px;
+}
+
+.motVehicleImageBox img {
+  width: 100%;
+  max-height: 270px;
+  object-fit: contain;
+  display: block;
+}
+
+.motOnlyStrip .motCard {
+  min-height: 520px;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.motOnlyStrip .recommendedMot {
+  border: 4px solid #ffd000;
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+}
+
+.motOnlyStrip .notRecommendedMot {
+  opacity: 0.32;
+  filter: grayscale(1);
+  pointer-events: none;
+  user-select: none;
+}
+
+.motRecommendedTag {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffd000;
+  color: #000;
+  border-radius: 0 0 999px 999px;
+  padding: 10px 24px;
+  font-size: 12px;
+  font-weight: 1000;
+  z-index: 5;
+}
+
+.motRegTag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px 0 26px;
+  padding: 13px 32px;
+  background: #ffd000;
+  color: #000;
+  border: 3px solid #111;
+  border-radius: 8px;
+  font-size: 34px;
+  font-weight: 1000;
+  letter-spacing: 3px;
 }
 
 .motPrice {
-  font-size: 36px;
-  font-weight: 1000;
-  margin: 12px 0;
-  letter-spacing: -1px;
-  color: #111;
-  transition: 0.2s;
-}
-
-
-/* OFFER BANNER */
-
-.motOfferBanner {
-  margin-top: 18px;
-  background: #ffd000;
-  color: #000;
-  padding: 18px 20px;
-  border-radius: 8px;
-  font-weight: 1000;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
-}
-
-.motOfferBanner strong {
-  display: block;
-  font-size: 24px;
+  font-size: 48px;
   line-height: 1;
+  font-weight: 1000;
+  color: #050505;
+  margin: 0 0 24px;
 }
 
-.motOfferBanner span {
-  display: block;
-  margin-top: 4px;
-  font-size: 14px;
-  color: #000;
+.motOnlyStrip .motCard ul {
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
 }
 
-.motOfferBanner button {
-  width: auto !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px !important;
-  margin-top: 0 !important;
-  background: #050505 !important;
-  color: #ffd000 !important;
-  border: none !important;
-  font-size: 13px !important;
-  font-weight: 1000 !important;
-  border-radius: 4px;
-  min-width: 150px;
+.motOnlyStrip .motCard li {
+  color: #111;
+  font-size: 15px;
+  margin-bottom: 10px;
 }
 
-.motOfferBadge {
-  display: inline-block;
-  margin-top: 16px;
+.motOnlyStrip .motCard button {
+  height: 58px;
+  border: none;
+  border-radius: 0;
   background: #ffd000;
   color: #000;
+  font-size: 15px;
   font-weight: 1000;
-  padding: 12px 16px;
+  width: 100%;
+}
+
+.motOnlyStrip .notRecommendedMot button {
+  background: #ddd;
+  color: #777;
+}
+
+/* AIRCON PAGE */
+
+.airconOnlyStrip {
+  max-width: 1480px !important;
+  grid-template-columns: 0.95fr 1.35fr !important;
+  align-items: center !important;
+  gap: 44px !important;
+  padding: 34px !important;
+}
+
+.airconIntroPanel h2 {
+  font-size: 38px !important;
+  line-height: 1.05 !important;
+  margin-bottom: 12px !important;
+}
+
+.airconIntroPanel p {
+  max-width: 600px;
+  font-size: 17px !important;
+  line-height: 1.5 !important;
+}
+
+.airconVehicleResult {
+  max-width: 580px;
+  margin-top: 26px;
+  background: #050505;
+  color: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.airconVehicleIcon {
+  grid-row: span 2;
+  background: #0b0b0b;
+  color: #ffd000;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.airconVehicleTop {
+  padding: 18px 20px 12px;
+}
+
+.airconVehicleTop strong {
+  display: block;
+  color: #ffd000;
+  font-size: 17px;
+  font-weight: 1000;
+}
+
+.airconVehicleTop span {
+  display: block;
+  margin-top: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.airconRecommendedGas {
+  grid-column: 2;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 14px 20px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.airconRecommendedGas b {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 1000;
+}
+
+.airconRecommendedGas em {
+  background: linear-gradient(
+    180deg,
+    #7fe7ff 0%,
+    #35c8ff 100%
+  );
+
+  color: #00303a;
+
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 1000;
+
+  padding: 8px 18px;
   border-radius: 999px;
+
+  box-shadow:
+    0 6px 18px rgba(53,200,255,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+}
+.airconVehicleImageBox {
+  margin-top: 26px;
+  max-width: 580px;
+}
+
+.airconVehicleImageBox img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: contain;
+  display: block;
+}
+
+.airconSalesCards {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(220px, 1fr)) !important;
+  gap: 22px !important;
+  align-items: stretch !important;
+}
+
+.airconCard {
+  min-height: 455px !important;
+  padding: 30px !important;
+  border-radius: 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.airconCard.featured,
+.airconRecommended {
+  background:
+    linear-gradient(
+      180deg,
+      #0d1d29 0%,
+      #081119 100%
+    ) !important;
+
+  color: #fff !important;
+
+  border: 3px solid #59d8ff !important;
+
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.18),
+    0 0 28px rgba(83,216,255,0.16) !important;
+}
+
+.airconCard .motTag {
+  margin-bottom: 20px !important;
+}
+
+.airconCard.featured .motTag,
+.airconRecommended .motTag {
+  background: linear-gradient(
+    180deg,
+    #7fe7ff 0%,
+    #35c8ff 100%
+  ) !important;
+
+  color: #00303a !important;
+}
+
+.airconCard h3 {
+  font-size: 32px !important;
+  line-height: 1.05 !important;
+  margin: 0 0 8px !important;
+}
+
+.airconCard p {
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  margin: 0 0 26px !important;
+}
+
+.airconPrice {
+  font-size: 52px;
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: -2px;
+  color: #050505;
+  margin: 0 0 30px;
+}
+
+.airconCard.featured .airconPrice,
+.airconRecommended .airconPrice {
+  color: #7fe7ff !important;
+}
+
+.airconCard ul {
+  padding: 0 !important;
+  margin: 0 0 28px !important;
+  list-style: none !important;
+}
+
+.airconCard li {
+  font-size: 16px !important;
+  margin-bottom: 12px !important;
+}
+
+.airconCard.featured li,
+.airconCard.featured p,
+.airconRecommended li,
+.airconRecommended p {
+  color: #fff !important;
+}
+
+.airconBookBtn {
+  margin-top: auto !important;
+  height: 58px !important;
+  border: none !important;
+  font-size: 16px !important;
+  font-weight: 1000 !important;
+  cursor: pointer !important;
+  border-radius: 0 !important;
+  transition: 0.22s ease !important;
+}
+
+.airconCard.featured .airconBookBtn,
+.airconRecommended .airconBookBtn {
+  background: linear-gradient(
+    180deg,
+    #67dfff 0%,
+    #2bb8ee 100%
+  ) !important;
+
+  color: #032532 !important;
+}
+
+.airconCard.featured .airconBookBtn:hover,
+.airconRecommended .airconBookBtn:hover {
+  background: linear-gradient(
+    180deg,
+    #9cebff 0%,
+    #52d2ff 100%
+  ) !important;
+
+  transform: translateY(-2px);
 }
 
 /* QUOTE FORM */
 
 .quoteConvertStrip {
-  margin-top: -60px;
-}
-
-.quoteChecklist {
-  margin-top: 18px;
-  display: grid;
-  gap: 10px;
-  font-weight: 1000;
-}
-
-.quoteForm {
-  background: #050505;
-  color: #fff;
-  padding: 26px;
-  border-radius: 10px;
-  border: 2px solid #ffd000;
-  display: grid;
-  gap: 12px;
-}
-
-.quoteForm h3 {
-  margin: 0;
-  font-size: 28px;
-  color: #ffd000;
-}
-
-.quoteForm p {
-  margin: 0 0 6px;
-  color: #ddd;
-}
-
-.quoteForm input,
-.quoteForm textarea {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 13px;
-  border: 1px solid #333;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.quoteForm textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-.quoteForm button {
-  background: #ffd000;
-  color: #000;
-  border: none;
-  padding: 15px;
-  font-weight: 1000;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
-.quoteSource {
-  font-size: 12px;
-  color: #999;
-  margin-bottom: 8px;
-}
-
-.quoteSource strong {
-  color: #ffd000;
-}
-
-.quoteContactOptions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.quoteContactOptions a {
-  text-align: center;
-  background: #fff;
-  color: #000;
-  text-decoration: none;
-  padding: 12px;
-  border-radius: 6px;
-  font-weight: 1000;
-}
-
-/* CONTENT */
-
-.landingContent {
-  padding: 46px 38px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-
-.contentCard {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 28px;
-  background: #fff;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-}
-
-.contentCard h2 {
-  margin-top: 0;
-  font-size: 30px;
-}
-
-.contentCard p {
-  color: #444;
-  font-size: 17px;
-  line-height: 1.55;
-}
-
-.faqSection {
-  background: #f5f5f5;
-  padding: 52px 38px;
-}
-
-.faqSection h2 {
-  text-align: center;
-  font-size: 38px;
-  margin-top: 0;
-}
-
-.faqGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.faqCard {
-  background: #fff;
-  border-radius: 8px;
-  padding: 24px;
-  border: 1px solid #ddd;
-}
-
-.faqCard h3 {
-  margin-top: 0;
-}
-
-.faqCard p {
-  color: #555;
-}
-
-.landingCTA {
-  background: #050505;
-  color: #fff;
-  text-align: center;
-  padding: 58px 24px;
-}
-
-.landingCTA h2 {
-  font-size: 42px;
-  margin: 0;
-}
-
-.landingCTA p {
-  color: #ddd;
-  font-size: 18px;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 1100px) {
-  .landingHero,
-  .motDealStrip,
-  .tyreDealStrip,
-  .quoteConvertStrip,
-  .landingContent,
-  .faqGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .motDealCards,
-  .tyreDealCards,
-  .serviceSalesCards,
-  .airconSalesCards {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .landingPanel {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 650px) {
-  .landingHero {
-    padding: 44px 22px;
-    min-height: auto;
-  }
-
-  .landingHero h1 {
-    font-size: 40px;
-  }
-
-  .landingButtons,
-  .motOfferBanner {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .motDealCards,
-  .tyreDealCards,
-  .serviceSalesCards,
-  .airconSalesCards,
-  .quoteContactOptions {
-    grid-template-columns: 1fr;
-  }
-
-  .motDealStrip,
-  .tyreDealStrip,
-  .quoteConvertStrip {
-    margin-left: 14px;
-    margin-right: 14px;
-  }
-}
-
-/* AIRCON HERO CLEANUP */
-.airconHero::after {
-  background: linear-gradient(
-    90deg,
-    rgba(0,0,0,0.96) 0%,
-    rgba(0,0,0,0.88) 35%,
-    rgba(0,30,55,0.65) 58%,
-    rgba(0,85,130,0.30) 78%,
-    rgba(0,120,180,0.18) 100%
-  );
-}
-
-.airconHero .landingEyebrow {
-  color: #7fe7ff !important;
-  font-weight: 900 !important;
-}
-
-.airconHero .landingIntro {
-  color: #ffffff !important;
-  font-size: 21px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0 !important;
-  line-height: 1.55 !important;
-  max-width: 760px;
-}
-
-.airconHero .heroTrust {
-  color: #dddddd !important;
-  font-size: 14px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0 !important;
-}
-
-.airconHero .landingPanel {
-  background: rgba(0, 0, 0, 0.72);
-  border: 1px solid rgba(255, 208, 0, 0.35);
-}
-/* ============================= */
-/* AIRCON HERO MOTION + CTA GLOW */
-/* ============================= */
-
-/* Subtle hero movement */
-.airconHero {
-  background-size: 110% auto !important;
-  animation: heroPan 18s ease-in-out infinite alternate;
-}
-
-@keyframes heroPan {
-  0% {
-    background-position: right center;
-  }
-  100% {
-    background-position: center center;
-  }
-}
-
-/* Subtle CTA glow (primary button only) */
-.landingButtons button:first-child:hover {
-  box-shadow: 0 0 14px rgba(255, 208, 0, 0.4);
-}
-/* ICE BUTTON STYLE */
-.airconHero .landingButtons button:first-child {
-  background: linear-gradient(135deg, #b9f3ff, #6fd8ff);
-  color: #00303a;
-  border: 1px solid rgba(255,255,255,0.4);
-  box-shadow: 
-    0 6px 18px rgba(0,0,0,0.25),
-    inset 0 1px 0 rgba(255,255,255,0.6);
-  transition: all 0.25s ease;
-}
-
-/* HOVER */
-.airconHero .landingButtons button:first-child:hover {
-  background: linear-gradient(135deg, #d8fbff, #8fe6ff);
-  box-shadow: 
-    0 10px 28px rgba(0,0,0,0.35),
-    0 0 14px rgba(120,220,255,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.7);
-  transform: translateY(-2px);
-}
-
-/* ACTIVE (click feel) */
-.airconHero .landingButtons button:first-child:active {
-  transform: translateY(0);
-  box-shadow: 
-    0 4px 12px rgba(0,0,0,0.25),
-    inset 0 2px 4px rgba(0,0,0,0.2);
-}
-/* ============================= */
-/* AIRCON FROSTED BUTTON PANEL   */
-/* ============================= */
-
-/* ============================= */
-/* AIRCON FROSTED BUTTON PANEL   */
-/* ============================= */
-
-.airconHero .landingButtons {
-  position: relative;
-  display: inline-flex;
-  gap: 14px;
-  padding: 10px;
-  border-radius: 10px;
-  overflow: hidden;
-
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255,255,255,0.18);
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.25);
-}
-
-/* ICE PRIMARY BUTTON */
-.airconHero .landingButtons button:first-child {
-  background: linear-gradient(135deg, #b9f3ff, #6fd8ff);
-  color: #00303a;
-  border: 1px solid rgba(255,255,255,0.4);
-  box-shadow:
-    0 6px 18px rgba(0,0,0,0.25),
-    inset 0 1px 0 rgba(255,255,255,0.6);
-  transition: all 0.30s ease;
-}
-
-.airconHero .landingButtons button:first-child:hover {
-  background: linear-gradient(135deg, #d8fbff, #8fe6ff);
-  box-shadow:
-    0 10px 28px rgba(0,0,0,0.35),
-    0 0 14px rgba(120,220,255,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.7);
-  transform: translateY(-2px);
-}
-
-.airconHero .landingButtons button:first-child:active {
-  transform: translateY(0);
-}
-
-/* CONTAINED LIGHT SWEEP */
-.airconHero .landingButtons::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 35%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.22),
-    transparent
-  );
-
-  animation: glassSweep 4s ease-in-out infinite;
-}
-
-.airconHero .landingButtons button {
-  position: relative;
-  z-index: 2;
-}
-
-@keyframes glassSweep {
-  0% {
-    left: -120%;
-  }
-
-  20% {
-    left: 130%;
-  }
-
-  100% {
-    left: 130%;
-  }
-}
-.alignmentHero::after {
-  background: linear-gradient(
-    90deg,
-    rgba(0,0,0,0.95) 0%,
-    rgba(0,0,0,0.85) 35%,
-    rgba(0,60,100,0.55) 60%,
-    rgba(0,120,180,0.25) 80%,
-    rgba(0,180,255,0.15) 100%
-  );
-}
-.quoteConvertStrip {
-  max-width: 1180px;
-  margin: 34px auto;
-  padding: 34px;
-  display: grid;
-  grid-template-columns: 1.05fr 430px;
-  gap: 28px;
   background:
-    radial-gradient(circle at top left, rgba(255,208,0,0.14), transparent 34%),
+    radial-gradient(circle at top left, rgba(255, 208, 0, 0.14), transparent 34%),
     linear-gradient(135deg, #171717 0%, #070707 100%);
-  border: 1px solid rgba(255,208,0,0.28);
-  border-radius: 32px;
-  box-shadow: 0 24px 70px rgba(0,0,0,0.5);
-}
-
-.quoteConvertText span {
-  color: #ffd000;
-  font-weight: 1000;
-  letter-spacing: 3px;
-  font-size: 13px;
-  text-transform: uppercase;
-}
-
-.quoteSource {
-  color: #aaa;
-  font-weight: 800;
-  margin: 12px 0 0;
-}
-
-.quoteSource strong {
-  color: #ffd000;
+  border: 1px solid rgba(255, 208, 0, 0.28);
+  border-top: 5px solid #ffd000;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
 }
 
 .quoteConvertText h2 {
-  font-size: 52px;
+  font-size: 48px;
   line-height: 0.95;
   margin: 18px 0;
   font-weight: 1000;
@@ -874,26 +1056,15 @@
   text-transform: uppercase;
   letter-spacing: -2px;
   color: #fff;
-  text-shadow:
-    0 0 18px rgba(255,208,0,0.18),
-    0 4px 20px rgba(0,0,0,0.65);
 }
 
-.quoteConvertText h2::after {
-  content: "";
-  display: block;
-  width: 110px;
-  height: 5px;
-  margin-top: 16px;
-  border-radius: 999px;
-  background: #ffd000;
-}
-
-.quoteConvertText p {
+.quoteConvertText p,
+.quoteSource {
   color: #ddd;
-  font-size: 17px;
-  line-height: 1.55;
-  max-width: 660px;
+}
+
+.quoteSource strong {
+  color: #ffd000;
 }
 
 .quoteChecklist {
@@ -904,7 +1075,7 @@
 
 .quoteChecklist div {
   background: #0b0b0b;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-left: 5px solid #ffd000;
   border-radius: 16px;
   padding: 15px 18px;
@@ -917,7 +1088,7 @@
   color: #000;
   border-radius: 28px;
   padding: 26px;
-  box-shadow: 0 20px 55px rgba(0,0,0,0.45);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.45);
 }
 
 .quoteForm h3 {
@@ -954,13 +1125,6 @@
   resize: vertical;
 }
 
-.quoteForm input:focus,
-.quoteForm textarea:focus {
-  border-color: #ffd000;
-  box-shadow: 0 0 0 5px rgba(255,208,0,0.22);
-  background: #fff;
-}
-
 .quoteForm button {
   width: 100%;
   border: none;
@@ -971,12 +1135,6 @@
   font-size: 16px;
   font-weight: 1000;
   cursor: pointer;
-  text-transform: uppercase;
-  margin-top: 4px;
-}
-
-.quoteForm button:hover {
-  transform: translateY(-2px);
 }
 
 .quoteSentMessage {
@@ -1009,19 +1167,275 @@
   color: #ffd000;
 }
 
-@media (max-width: 900px) {
-  .quoteConvertStrip {
+/* CONTENT + FAQ */
+
+.landingContent {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 46px 38px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.contentCard,
+.faqCard {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+}
+
+.contentCard h2,
+.faqCard h3 {
+  margin: 0 0 12px;
+  color: #050505;
+  font-size: 24px;
+  font-weight: 1000;
+  letter-spacing: -0.5px;
+}
+
+.contentCard p,
+.faqCard p {
+  color: #444;
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.contentCard a {
+  color: #000;
+  font-weight: 1000;
+  text-decoration-color: #ffd000;
+  text-decoration-thickness: 3px;
+}
+
+.faqSection {
+  background: #f3f3f3;
+  padding: 52px 38px;
+}
+
+.faqSection h2 {
+  text-align: center;
+  font-size: 38px;
+  font-weight: 1000;
+  margin: 0 0 28px;
+  letter-spacing: -1px;
+}
+
+.faqGrid {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.landingCTA {
+  background: #050505;
+  color: #fff;
+  text-align: center;
+  padding: 70px 24px;
+  border-top: 5px solid #ffd000;
+}
+
+.landingCTA h2 {
+  font-size: 42px;
+  font-weight: 1000;
+  margin: 0 0 10px;
+}
+
+.landingCTA p {
+  color: #ddd;
+  font-size: 18px;
+  margin: 0 0 22px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1200px) {
+  .landingHero,
+  .serviceOnlyStrip,
+  .motOnlyStrip,
+  .motDealStrip,
+  .tyreDealStrip,
+  .quoteConvertStrip,
+  .landingContent,
+  .airconOnlyStrip {
+    grid-template-columns: 1fr !important;
+  }
+
+  .serviceSalesCards,
+  .motOnlyStrip .motDealCards,
+  .motDealCards,
+  .tyreDealCards,
+  .faqGrid,
+  .airconSalesCards {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .landingHero {
+    padding: 44px 22px 70px;
+    min-height: auto;
+  }
+
+  .landingHero h1 {
+    font-size: 40px;
+  }
+
+  .serviceSalesCards,
+  .motOnlyStrip .motDealCards,
+  .motDealCards,
+  .tyreDealCards,
+  .faqGrid,
+  .landingContent,
+  .airconSalesCards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .serviceVrmBox,
+  .serviceMotToggle {
     grid-template-columns: 1fr;
-    margin: 24px 14px;
-    padding: 22px;
-    border-radius: 26px;
   }
 
-  .quoteConvertText h2 {
-    font-size: 38px;
+  .serviceHeroOffer {
+    grid-template-columns: 80px 1fr;
   }
 
-  .quoteForm {
-    padding: 20px;
+  .offerDivider,
+  .offerSave {
+    display: none;
   }
+
+  .offerMain,
+  .offerText {
+    padding: 18px;
+  }
+
+  .airconVehicleResult {
+    grid-template-columns: 1fr;
+  }
+
+  .airconVehicleIcon {
+    display: none;
+  }
+
+  .airconRecommendedGas {
+    grid-column: 1;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* AIRCON HERO POLISH */
+
+.airconHero {
+  min-height: 455px !important;
+  padding: 92px 42px 120px !important;
+}
+
+.airconHero .landingEyebrow {
+  color: #7fe7ff !important;
+}
+
+.airconHero .landingHero h1,
+.airconHero h1 {
+  max-width: 700px !important;
+  font-size: 58px !important;
+  line-height: 0.92 !important;
+  margin-bottom: 18px !important;
+}
+
+.airconHero .landingIntro {
+  max-width: 650px !important;
+  color: #f2f2f2 !important;
+  font-size: 19px !important;
+  line-height: 1.55 !important;
+}
+
+.airconHero .heroTrust {
+  margin-top: 18px !important;
+  margin-bottom: 28px !important;
+}
+
+.airconHero .landingButtons {
+  margin-top: 30px !important;
+  display: flex !important;
+  gap: 14px !important;
+}
+
+.airconHero .landingButtons button {
+  min-width: 190px !important;
+  height: 54px !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+}
+
+.airconHero .landingButtons .outline {
+  background: rgba(0,0,0,0.35) !important;
+  border: 2px solid rgba(255,255,255,0.85) !important;
+}
+
+.airconHero .landingPanel {
+  max-width: 420px !important;
+  justify-self: end !important;
+}
+
+@media (max-width: 700px) {
+  .airconHero {
+    padding: 58px 22px 82px !important;
+  }
+
+  .airconHero h1 {
+    font-size: 42px !important;
+  }
+
+  .airconHero .landingButtons {
+    flex-direction: column !important;
+  }
+
+  .airconHero .landingButtons button {
+    width: 100% !important;
+  }
+}
+/* AIRCON RECOMMENDED REG + BUTTON COLOUR */
+
+.airconRegTag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffd000;
+  color: #000;
+
+  border: 2px solid #111;
+  border-radius: 8px;
+
+  padding: 9px 18px;
+  margin: 0 0 18px;
+
+  font-size: 24px;
+  font-weight: 1000;
+  letter-spacing: 2px;
+}
+
+.airconCard.featured .airconBookBtn {
+  background: linear-gradient(
+    180deg,
+    #7fe7ff 0%,
+    #35c8ff 100%
+  ) !important;
+
+  color: #00303a !important;
+}
+
+.airconCard.featured .airconBookBtn:hover {
+  background: linear-gradient(
+    180deg,
+    #9cebff 0%,
+    #52d2ff 100%
+  ) !important;
 }

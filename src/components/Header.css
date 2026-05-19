@@ -10,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 22px;
-  padding: 10px 28px;
+  padding: 8px 28px;
   flex-wrap: wrap;
 }
 
@@ -21,7 +21,7 @@
   gap: 10px;
   color: #fff;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .topRight {
@@ -30,7 +30,7 @@
 
 .hoursLabel {
   color: #ffd000;
-  font-weight: 900;
+  font-weight: 1000;
 }
 
 .topIcon {
@@ -45,8 +45,8 @@
 
 .mainHeader {
   width: 100%;
-  background: #0a0a0a;
-  border-bottom: 1px solid rgba(255, 208, 0, 0.15);
+  background: linear-gradient(180deg, #ffd400 0%, #f2c400 100%);
+  border-bottom: 2px solid #111;
 
   display: flex;
   align-items: center;
@@ -54,9 +54,14 @@
   gap: 24px;
 
   padding: 14px 28px;
+
   position: sticky;
   top: 0;
   z-index: 9999;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.28);
 }
 
 /* LOGO */
@@ -68,20 +73,22 @@
 }
 
 .logoText {
-  color: #fff;
+  color: #000;
   font-size: 42px;
   font-weight: 1000;
   font-style: italic;
   letter-spacing: 1px;
   line-height: 0.9;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
 }
 
 .logoSub {
-  color: #fff;
-  font-size: 12px;
-  font-weight: 900;
+  color: #111;
+  font-size: 11px;
+  font-weight: 1000;
   letter-spacing: 4px;
   margin-top: 6px;
+  opacity: 0.9;
 }
 
 /* NAV */
@@ -96,42 +103,75 @@
 }
 
 .mainHeader nav a {
-  color: #fff;
+  position: relative;
+  color: #111;
   text-decoration: none;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 1000;
   letter-spacing: 1px;
-  transition: 0.25s ease;
   white-space: nowrap;
+  padding-bottom: 6px;
+  transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .mainHeader nav a:hover {
-  color: #ffd000;
+  color: #000;
+  opacity: 1;
+  transform: translateY(-1px);
+  text-shadow:
+    0 0 8px rgba(255,255,255,0.8),
+    0 0 14px rgba(0,0,0,0.25);
+}
+
+.mainHeader nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 0;
+  height: 3px;
+
+  background: #000;
+  border-radius: 999px;
+
+  transition: width 0.25s ease;
+}
+
+.mainHeader nav a:hover::after {
+  width: 100%;
 }
 
 /* BOOK BUTTON */
 
 .bookNow {
-  background: #ffd000;
-  color: #000;
+  background: #111;
+  color: #ffd000;
+
   border: none;
   padding: 18px 28px;
-  border-radius: 5px;
+  border-radius: 8px;
+
   font-size: 15px;
   font-weight: 1000;
   letter-spacing: 1px;
+
   cursor: pointer;
   transition: 0.25s ease;
+
   flex-shrink: 0;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
 .bookNow:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(255, 208, 0, 0.28);
+  background: #000;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.25);
 }
 
 /* =========================
-   MOBILE
+   RESPONSIVE
 ========================= */
 
 @media (max-width: 1250px) {

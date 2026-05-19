@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import heroCar from "./assets/hero-car.png";
 import "./Home.css";
@@ -13,8 +13,11 @@ import clutchIcon from "./assets/icons/clutch.png";
 import timingIcon from "./assets/icons/timing.png";
 import diagnosticsIcon from "./assets/icons/diagnostics.png";
 
+const VEHICLE_LOOKUP_URL =
+  "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=";
+
 const services = [
-  { title: "TYRES", text: "Find tyres", icon: tyreIcon, link: "/tyres" },
+  { title: "TYRES", text: "View tyres", icon: tyreIcon, link: "/tyres" },
   { title: "SERVICING", text: "Book a service", icon: serviceIcon, link: "/car-servicing-hull" },
   { title: "BRAKES", text: "Brake check", icon: brakeIcon, link: "/brakes-hull" },
   { title: "MOT", text: "Book an MOT", icon: motIcon, link: "/mot-hull" },
@@ -24,34 +27,56 @@ const services = [
   { title: "DIAGNOSTICS", text: "Vehicle diagnostics", icon: diagnosticsIcon, link: "/booking" },
 ];
 
-const SameDayIcon = () => (
-  <svg viewBox="0 0 64 64" className="trustIcon">
-    <rect x="10" y="16" width="44" height="36" rx="6" stroke="currentColor" strokeWidth="5" fill="none" />
-    <line x1="10" y1="26" x2="54" y2="26" stroke="currentColor" strokeWidth="5" />
-    <circle cx="32" cy="38" r="6" fill="#ffd000" />
-  </svg>
-);
+function firstValue(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== "") || "";
+}
 
-const PriceIcon = () => (
-  <svg viewBox="0 0 64 64" className="trustIcon">
-    <path d="M32 6l20 8v14c0 14-10 24-20 30C22 52 12 42 12 28V14l20-8z" stroke="currentColor" strokeWidth="5" fill="none" />
-    <path d="M24 32l6 6 10-10" stroke="#ffd000" strokeWidth="5" fill="none" />
-  </svg>
-);
+function formatVehicleName(vehicle) {
+  if (!vehicle) return "";
 
-const StarIcon = () => (
-  <svg viewBox="0 0 64 64" className="trustIcon">
-    <polygon points="32,6 40,24 60,24 44,36 50,56 32,44 14,56 20,36 4,24 24,24" stroke="currentColor" strokeWidth="5" fill="none" />
-    <circle cx="32" cy="32" r="4" fill="#ffd000" />
-  </svg>
-);
+  const parts = [
+    vehicle.year,
+    firstValue(vehicle.make, vehicle.manufacturer),
+    firstValue(vehicle.model, vehicle.derivative),
+  ].filter(Boolean);
+
+  return parts.join(" ").trim();
+}
 
 export default function Home() {
   const navigate = useNavigate();
 
-  const [registration, setRegistration] = useState("");
-  const [vehicle, setVehicle] = useState(null);
+  const [registration, setRegistration] = useState(() => {
+    return localStorage.getItem("tyremenVrm") || "";
+  });
+
+  const [vehicle, setVehicle] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("tyremenVehicle") || "null");
+    } catch {
+      return null;
+    }
+  });
+
   const [loadingVehicle, setLoadingVehicle] = useState(false);
+
+  useEffect(() => {
+    const refreshVehicleState = () => {
+      setRegistration(localStorage.getItem("tyremenVrm") || "");
+
+      try {
+        setVehicle(JSON.parse(localStorage.getItem("tyremenVehicle") || "null"));
+      } catch {
+        setVehicle(null);
+      }
+    };
+
+    window.addEventListener("tyremenVehicleUpdated", refreshVehicleState);
+
+    return () => {
+      window.removeEventListener("tyremenVehicleUpdated", refreshVehicleState);
+    };
+  }, []);
 
   async function lookupVehicle() {
     const cleanReg = registration.toUpperCase().replace(/\s/g, "");
@@ -64,18 +89,24 @@ export default function Home() {
     try {
       setLoadingVehicle(true);
 
-      const res = await fetch(
-        "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=" + cleanReg
-      );
-
+      const res = await fetch(VEHICLE_LOOKUP_URL + cleanReg);
       const data = await res.json();
+
+      console.log("VRM LOOKUP RESULT:", data);
+      console.log("CACHED:", data.cached);
 
       if (!data.success) {
         alert("Vehicle lookup failed");
         return;
       }
 
+      localStorage.setItem("tyremenVehicle", JSON.stringify(data.vehicle));
+      localStorage.setItem("tyremenVrm", cleanReg);
+
+      window.dispatchEvent(new Event("tyremenVehicleUpdated"));
+
       setVehicle(data.vehicle);
+      setRegistration(cleanReg);
     } catch (err) {
       console.error(err);
       alert("Vehicle lookup failed");
@@ -84,21 +115,41 @@ export default function Home() {
     }
   }
 
-  function continueToTyres() {
-    const cleanReg = registration.toUpperCase().replace(/\s/g, "");
-
-    if (cleanReg) {
-      navigate(`/tyres?vrm=${cleanReg}`);
-    } else {
-      navigate("/tyres");
-    }
+  function clearVehicle() {
+    localStorage.removeItem("tyremenVehicle");
+    localStorage.removeItem("tyremenVrm");
+    setVehicle(null);
+    setRegistration("");
+    window.dispatchEvent(new Event("tyremenVehicleUpdated"));
   }
+
+  function goTo(path) {
+    const cleanReg =
+      vehicle?.vrm || registration.toUpperCase().replace(/\s/g, "");
+
+    navigate(cleanReg ? `${path}?vrm=${cleanReg}` : path);
+  }
+
+  const cleanDisplayReg =
+    vehicle?.vrm || registration.toUpperCase().replace(/\s/g, "") || "ABC123";
+
+  const vehicleName = formatVehicleName(vehicle);
+  const vehicleSubLine = [vehicle?.fuel, vehicle?.body, vehicle?.colour]
+    .filter(Boolean)
+    .join(" • ");
+
+  const tyreSize = firstValue(vehicle?.tyreSize, vehicle?.frontTyreSize, vehicle?.tyres);
+  const motTitle = firstValue(vehicle?.motClass, vehicle?.motType, "MOT Class 4");
+  const motExpiry = firstValue(vehicle?.motExpiryDate, vehicle?.motExpiry, vehicle?.motDueDate);
+  const motMileage = firstValue(vehicle?.motMileage, vehicle?.lastMotMileage, vehicle?.mileage);
+  const motStatus = firstValue(vehicle?.motStatus, vehicle?.lastMotStatus, "MOT info");
+  const airConGas = firstValue(vehicle?.airconGas, vehicle?.airConGas, vehicle?.acGas, vehicle?.gasType, "Likely R1234yf");
 
   return (
     <div className="homePage">
       <Header />
 
-      <section className="hero">
+      <section className={`hero ${vehicle ? "heroWithVehicle" : ""}`}>
         <div className="heroLeft">
           <div className="heroContent">
             <p>HULL'S TRUSTED GARAGE</p>
@@ -109,34 +160,13 @@ export default function Home() {
             </h1>
 
             <div className="heroServices">
-              TYRES <b>•</b> SERVICING <b>•</b> MOT <b>•</b> REPAIRS
+              MOT <b>•</b> SERVICING <b>•</b> CLUTCHES <b>•</b> TIMING BELTS
             </div>
 
-            <div className="trustBadges">
-              <div>
-                <SameDayIcon />
-                <span>SAME DAY<br />Appointments</span>
-              </div>
-
-              <div>
-                <PriceIcon />
-                <span>PRICE MATCH<br />Guarantee</span>
-              </div>
-
-              <div>
-                <StarIcon />
-                <span>4.8/5<br />Google Rating</span>
-              </div>
-            </div>
-
-            <div className="heroButtons">
-              <button onClick={() => navigate("/tyres")}>
-                FIND TYRES →
-              </button>
-
-              <button className="outlineBtn" onClick={() => navigate("/booking")}>
-                BOOK SERVICE / MOT →
-              </button>
+            <div className="heroTrust">
+              <span>4.8 Rated Garage</span>
+              <span>55+ Years Experience</span>
+              <span>Trusted Across Hull</span>
             </div>
           </div>
         </div>
@@ -147,53 +177,155 @@ export default function Home() {
         />
       </section>
 
-      <section className="regSearch">
-        <div className="gbBox">GB</div>
+      {vehicle && (
+  <section className="vehicleHudWrap">
+    <div className="vehicleHud">
+      <div className="hudBlock hudReg">
+        <small>YOUR VEHICLE</small>
+        <strong>{cleanDisplayReg}</strong>
+        <span>✓ Reg found</span>
+      </div>
 
+      <div className="hudBlock hudVehicle">
+        <small>VEHICLE</small>
+        <strong>{vehicleName || "Vehicle found"}</strong>
+        <span>{vehicleSubLine || "View vehicle details"}</span>
+      </div>
+
+      <div className="hudBlock">
+        <small>TYRES</small>
+        <strong>{tyreSize || "View sizes"}</strong>
+        <button type="button" onClick={() => goTo("/tyres")}>
+          🛞 View tyre options
+        </button>
+      </div>
+
+      <div className="hudBlock">
+  <small>MOT</small>
+
+  <strong>{motTitle} ✅</strong>
+
+  <span>{motExpiry ? `Expires ${motExpiry}` : motStatus}</span>
+
+  {motMileage && <span>{motMileage} miles</span>}
+
+  {vehicle?.motAdvisories?.length > 0 && (
+    <span className="hudWarning">
+      ⚠ {vehicle.motAdvisories.length} advisories found
+    </span>
+  )}
+</div>
+
+      <div className="hudBlock">
+        <small>AIR CON</small>
+        <strong>{airConGas}</strong>
+        <button type="button" onClick={() => goTo("/air-conditioning-hull")}>
+          ❄️ View air con info
+        </button>
+      </div>
+
+      <button className="hudClear" type="button" onClick={clearVehicle}>
+        CLEAR SEARCH
+      </button>
+    </div>
+  </section>
+)}
+
+      <section className="regSearch">
         <div className="regMain">
           <h3>
-            FIND THE <span>RIGHT TYRES</span> FOR YOUR VEHICLE
+            FIND TYRES, SERVICE OR MOT <span>BY REG</span>
           </h3>
 
-          <div className="regInputRow">
-            <input
-              value={registration}
-              onChange={(e) => setRegistration(e.target.value.toUpperCase())}
-              placeholder="ENTER REGISTRATION"
-            />
+          <div className="plateLine">
+            <div className="ukFlag"></div>
 
-            <button onClick={lookupVehicle}>
-              {loadingVehicle ? "CHECKING..." : "FIND MY VEHICLE →"}
-            </button>
+            <div className="plateRow">
+              <div className="plateGb">GB</div>
+
+              <input
+                value={registration}
+                onChange={(e) => setRegistration(e.target.value.toUpperCase())}
+                placeholder="ABC 123"
+              />
+
+              <button onClick={lookupVehicle} disabled={loadingVehicle}>
+                {loadingVehicle ? "CHECKING..." : "FIND MY VEHICLE ✓"}
+              </button>
+            </div>
           </div>
 
-          {vehicle && (
+          {vehicle ? (
             <div className="vehicleResult">
-              {vehicle.image && (
-                <img src={vehicle.image} alt={vehicle.model} />
-              )}
+              <div className="vehicleImageBox">
+                {vehicle.image && (
+                  <img src={vehicle.image} alt={vehicle.model || "Vehicle"} />
+                )}
+              </div>
 
-              <div>
-                <strong>
-                  {vehicle.year} {vehicle.make} {vehicle.model}
-                </strong>
+              <div className="vehicleInfo">
+                <strong>{vehicleName || "Vehicle found"}</strong>
+
+                <p>{vehicleSubLine}</p>
 
                 <p>
-                  {vehicle.fuel} • {vehicle.body} • {vehicle.colour}
+                  {vehicle.engineCC ? `${vehicle.engineCC}cc` : ""}
+                  {tyreSize ? ` • ${tyreSize}` : ""}
                 </p>
 
-                <button onClick={continueToTyres}>
-                  CONTINUE TO TYRES →
-                </button>
+                <div className="vehicleActionGrid">
+                  <button onClick={() => goTo("/tyres")}>TYRES →</button>
+                  <button onClick={() => goTo("/car-servicing-hull")}>
+                    SERVICE →
+                  </button>
+                  <button onClick={() => goTo("/mot-hull")}>MOT →</button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="vehiclePlaceholder">
+              <div className="placeholderInner">
+                <div className="placeholderReg">YOUR VEHICLE WILL APPEAR HERE</div>
+
+                <h4>Enter your registration to begin</h4>
+
+                <p>
+                  Instantly find tyres, MOT pricing, servicing, air conditioning
+                  gas type and more.
+                </p>
+
+                <div className="placeholderTags">
+                  <span>✓ Tyre Sizes</span>
+                  <span>✓ MOT Info</span>
+                  <span>✓ Service Booking</span>
+                  <span>✓ Air Con Gas</span>
+                </div>
               </div>
             </div>
           )}
         </div>
 
         <div className="steps">
-          <div><b>1</b><span>ENTER YOUR REG<br /><small>We'll find your vehicle</small></span></div>
-          <div><b>2</b><span>CHOOSE TYRES<br /><small>From our best prices</small></span></div>
-          <div><b>3</b><span>BOOK ONLINE<br /><small>Fitted in Hull</small></span></div>
+          <div>
+            <b>1</b>
+            <em>🔍</em>
+            <span>ENTER REG</span>
+            <small>We’ll find your vehicle</small>
+          </div>
+
+          <div>
+            <b>2</b>
+            <em>🛠️</em>
+            <span>CHOOSE SERVICE</span>
+            <small>Tyres, Service or MOT</small>
+          </div>
+
+          <div>
+            <b>3</b>
+            <em>🗓️</em>
+            <span>BOOK ONLINE</span>
+            <small>Fitted in Hull</small>
+          </div>
         </div>
       </section>
 
@@ -202,7 +334,7 @@ export default function Home() {
           <button
             key={item.title}
             className="serviceCard"
-            onClick={() => navigate(item.link)}
+            onClick={() => goTo(item.link)}
           >
             <div className="serviceIcon">
               <img src={item.icon} alt={item.title} />
@@ -224,21 +356,44 @@ export default function Home() {
             `,
           }}
         >
-          <h2>FREE MOT</h2>
-          <h3>WITH ANY SERVICE</h3>
-          <p>✓ SAVE £40 &nbsp; ✓ SAME-DAY APPOINTMENTS &nbsp; ✓ LIMITED SLOTS PER WEEK</p>
-          <button onClick={() => navigate("/booking")}>BOOK NOW →</button>
+          <h2>MOT FOR £20</h2>
+          <h3>WITH SELECTED SERVICES</h3>
+          <p>
+            ✓ SAVE £20 &nbsp; ✓ SAME-DAY APPOINTMENTS &nbsp; ✓ LIMITED SLOTS
+            PER WEEK
+          </p>
+          <button onClick={() => goTo("/car-servicing-hull")}>BOOK NOW →</button>
         </div>
 
         <div className="whyBox">
           <h3>WHY CHOOSE TYREMEN?</h3>
 
           <div className="whyGrid">
-            <div><b>55+</b><strong>YEARS</strong><span>Trusted locally</span></div>
-            <div><b>★</b><strong>4.8/5</strong><span>Google rating</span></div>
-            <div><b>✓</b><strong>HONEST</strong><span>No hidden costs</span></div>
-            <div><b>⚙</b><strong>EXPERTS</strong><span>Skilled technicians</span></div>
-            <div><b>📍</b><strong>LOCAL</strong><span>Hull based</span></div>
+            <div>
+              <b>55+</b>
+              <strong>YEARS</strong>
+              <span>Trusted locally</span>
+            </div>
+            <div>
+              <b>★</b>
+              <strong>4.8/5</strong>
+              <span>Google rating</span>
+            </div>
+            <div>
+              <b>✓</b>
+              <strong>HONEST</strong>
+              <span>No hidden costs</span>
+            </div>
+            <div>
+              <b>⚙</b>
+              <strong>EXPERTS</strong>
+              <span>Skilled technicians</span>
+            </div>
+            <div>
+              <b>📍</b>
+              <strong>LOCAL</strong>
+              <span>Hull based</span>
+            </div>
           </div>
         </div>
       </section>
@@ -256,7 +411,11 @@ export default function Home() {
           <p>Witty Street, Hull HU3 4TX</p>
         </div>
 
-        <button className="callBox">CALL NOW<br />01482 328800</button>
+        <button className="callBox">
+          CALL NOW
+          <br />
+          01482 328800
+        </button>
       </footer>
     </div>
   );

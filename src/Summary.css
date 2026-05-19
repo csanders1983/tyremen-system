@@ -152,3 +152,42 @@
     grid-column: 1 / -1;
   }
 }
+.summaryCard,
+.summaryCard * {
+  color: #111 !important;
+}
+
+.summaryHero,
+.summaryHero * {
+  color: #fff !important;
+}
+
+.summaryHero p {
+  color: #ffd000 !important;
+}
+
+.basketPrice,
+.summaryTotal strong {
+  color: #000 !important;
+}
+
+.summaryTotal {
+  background: #050505 !important;
+}
+
+.summaryTotal span {
+  color: #fff !important;
+}
+
+.summaryTotal strong {
+  color: #ffd000 !important;
+}
+
+.summaryNotice {
+  color: #111 !important;
+  background: #fff3bf !important;
+}
+
+.summaryContinue {
+  color: #000 !important;
+}

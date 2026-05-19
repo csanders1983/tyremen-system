@@ -1,0 +1,10 @@
+Future workflow
+On either PC after changes:
+git add .
+git commit -m "Updated homepage"
+git push
+
+Then on the OTHER PC:
+git pull
+
+That syncs both computers automatically.

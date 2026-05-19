@@ -3,9 +3,20 @@ import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import servicePages from "./servicePages";
 import "./ServiceLandingPage.css";
-import { saveBasket, servicePrices } from "./Basket";
-import { collection, addDoc } from "firebase/firestore";
+import { saveBasket } from "./Basket";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "./firebase";
+
+const VEHICLE_LOOKUP_URL =
+  "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=";
 
 export default function ServiceLandingPage({ pageKey }) {
   const navigate = useNavigate();
@@ -17,18 +28,46 @@ export default function ServiceLandingPage({ pageKey }) {
   const [description, setDescription] = useState("");
   const [sent, setSent] = useState(false);
 
+  const [serviceReg, setServiceReg] = useState(() => {
+    return localStorage.getItem("tyremenVrm") || "";
+  });
+
+  const [serviceVehicle, setServiceVehicle] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("tyremenVehicle") || "null");
+    } catch {
+      return null;
+    }
+  });
+
+  const [pricingLoading, setPricingLoading] = useState(false);
+  const [addMotOffer, setAddMotOffer] = useState(false);
+  const [openService, setOpenService] = useState(null);
+
+  const [motPrices, setMotPrices] = useState({
+    class4: 40,
+    class7: 45,
+  });
+
+  const [servicePricing, setServicePricing] = useState({
+    oil: 120,
+    interim: 128.5,
+    full: 155,
+    major: 180,
+  });
+
   const page = servicePages[pageKey];
 
   const heroImages = {
-  tyresHull: "/tyres-hero.jpg",
-  motHull: "/mot-hero.jpg",
-  servicingHull: "/service-hero.jpg",
-  brakesHull: "/brakes-hero.jpg",
-  airconHull: "/aircon-hero.jpg",
-  alignmentHull: "/alignment-hero.jpg",
-  clutchHull: "/clutch.jpg",
-  timingHull: "/timing-belt.jpg",
-};
+    tyresHull: "/tyres-hero.jpg",
+    motHull: "/mot-hero.jpg",
+    servicingHull: "/service-hero.jpg",
+    brakesHull: "/brakes-hero.jpg",
+    airconHull: "/aircon-hero.jpg",
+    alignmentHull: "/alignment-hero.jpg",
+    clutchHull: "/clutch.jpg",
+    timingHull: "/timing-belt.jpg",
+  };
 
   const serviceMap = {
     timingHull: "Timing Belt",
@@ -42,24 +81,150 @@ export default function ServiceLandingPage({ pageKey }) {
     airconHull: "Air Con Page",
   };
 
+  const getMatrixPrice = async (serviceType, engineCC) => {
+    const q = query(
+      collection(db, "servicePricingMatrix"),
+      where("serviceType", "==", serviceType)
+    );
+
+    const snapshot = await getDocs(q);
+
+    const rows = snapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    }));
+
+    const match = rows.find(
+      (row) =>
+        Number(engineCC) >= Number(row.minCC) &&
+        Number(engineCC) <= Number(row.maxCC)
+    );
+
+    return Number(match?.priceIncVat || 0);
+  };
+
+  const loadServicePricesForVehicle = async (vehicle) => {
+    if (!vehicle?.engineCC) return;
+
+    const engineCC = Number(vehicle.engineCC || 0);
+
+    const oil = await getMatrixPrice("oil", engineCC);
+    const interim = await getMatrixPrice("interim", engineCC);
+    const full = await getMatrixPrice("full", engineCC);
+    const major = await getMatrixPrice("major", engineCC);
+
+    setServicePricing({
+      oil: oil || 120,
+      interim: interim || 128.5,
+      full: full || 155,
+      major: major || 180,
+    });
+  };
+
   useEffect(() => {
     if (page) {
       document.title = page.title;
     }
   }, [page]);
 
-  if (!page) return null;
-
-  const addToBasket = (service, type, price) => {
-    saveBasket({
-      service,
-      type,
-      price,
-      extras: "",
+  useEffect(() => {
+    const unsubClass4 = onSnapshot(doc(db, "motPricing", "class4"), (snap) => {
+      if (snap.exists()) {
+        setMotPrices((prev) => ({
+          ...prev,
+          class4: snap.data().price || 40,
+        }));
+      }
     });
 
-    navigate(`/summary?service=${encodeURIComponent(service)}`);
+    const unsubClass7 = onSnapshot(doc(db, "motPricing", "class7"), (snap) => {
+      if (snap.exists()) {
+        setMotPrices((prev) => ({
+          ...prev,
+          class7: snap.data().price || 45,
+        }));
+      }
+    });
+
+    return () => {
+      unsubClass4();
+      unsubClass7();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (pageKey !== "servicingHull") return;
+    if (!serviceVehicle?.engineCC) return;
+
+    loadServicePricesForVehicle(serviceVehicle);
+  }, [pageKey, serviceVehicle]);
+
+  if (!page) return null;
+
+  const airconType =
+    Number(serviceVehicle?.year || 0) >= 2015 ? "r1234yf" : "r134a";
+
+  const lookupServicePricing = async () => {
+  if (!serviceReg.trim()) {
+    alert("Please enter your registration.");
+    return;
+  }
+
+  try {
+    setPricingLoading(true);
+
+    const cleanReg = serviceReg.toUpperCase().replace(/\s/g, "");
+
+    const res = await fetch(VEHICLE_LOOKUP_URL + encodeURIComponent(cleanReg));
+    const data = await res.json();
+
+    if (!data.success) {
+      alert("Vehicle lookup failed. Please check the registration.");
+      return;
+    }
+
+    const vehicle = data.vehicle;
+
+    localStorage.setItem("tyremenVehicle", JSON.stringify(vehicle));
+    localStorage.setItem("tyremenVrm", vehicle.vrm || cleanReg);
+
+    setServiceReg(vehicle.vrm || cleanReg);
+    setServiceVehicle(vehicle);
+
+    if (vehicle.engineCC) {
+      await loadServicePricesForVehicle(vehicle);
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Could not load vehicle details.");
+  } finally {
+    setPricingLoading(false);
+  }
+};
+
+const addToBasket = (serviceName, type, price) => {
+  const basketItem = {
+    service: serviceName,
+    type,
+    price: Number(price || 0),
+    vehicle: serviceVehicle || null,
+    extras: "",
+    icon:
+      type === "Service"
+        ? "🔧"
+        : type === "Air Con"
+        ? "❄️"
+        : type === "Alignment"
+        ? "📐"
+        : "🚗",
   };
+
+  saveBasket(basketItem);
+
+  navigate(`/summary?service=${encodeURIComponent(serviceName)}`, {
+    state: basketItem,
+  });
+};
 
   const submitQuote = async () => {
     if (!name || !phone || !email || !registration || !description) {
@@ -95,6 +260,66 @@ export default function ServiceLandingPage({ pageKey }) {
     }
   };
 
+  const serviceCards = [
+    {
+      key: "oil",
+      title: "OIL & FILTER",
+      text: "Essential engine maintenance only",
+      price: servicePricing.oil,
+      included: [
+        "Replace engine oil",
+        "Replace oil filter",
+        "Check oil level",
+        "Check for oil leaks",
+        "Reset service light where possible",
+      ],
+    },
+    {
+      key: "interim",
+      title: "INTERIM SERVICE",
+      text: "Best for 6,000 miles / 6 months",
+      price: servicePricing.interim,
+      included: [
+        "Engine oil and filter change",
+        "Brake inspection",
+        "Tyre tread and pressure check",
+        "Fluid level checks and top-ups",
+        "Lights, battery and exhaust checks",
+        "Steering and suspension inspection",
+        "Service light reset",
+      ],
+    },
+    {
+      key: "full",
+      title: "FULL SERVICE",
+      text: "Best for 12,000 miles / 12 months",
+      price: servicePricing.full,
+      included: [
+        "Oil and filter change",
+        "Brake, tyre and suspension checks",
+        "Battery and charging checks",
+        "Coolant, brake fluid and screen wash check",
+        "Wipers, lights and safety checks",
+        "Full under-vehicle inspection",
+        "Service book / digital record update",
+      ],
+    },
+    {
+      key: "major",
+      title: "MAJOR SERVICE",
+      text: "Best for 24,000 miles / 24 months",
+      price: servicePricing.major,
+      included: [
+        "Full service checks included",
+        "Air filter replacement",
+        "Cabin filter check/replacement",
+        "Spark plug/fuel filter check where applicable",
+        "Full safety inspection",
+        "Service book / digital record update",
+      ],
+    },
+  ];
+
   return (
     <div className="landingPage">
       <Header />
@@ -119,15 +344,39 @@ export default function ServiceLandingPage({ pageKey }) {
             availability
           </p>
 
-          <div className="landingButtons">
-            <button onClick={() => navigate("/tyres")}>
-              {page.ctaPrimary}
-            </button>
+          {pageKey === "servicingHull" ? (
+            <div className="serviceHeroOffer">
+              <div className="offerIcon">▣</div>
 
-            <button className="outline" onClick={() => navigate("/booking")}>
-              {page.ctaSecondary}
-            </button>
-          </div>
+              <div className="offerMain">
+                <span>GET MOT</span>
+                <strong>FROM £20.00</strong>
+              </div>
+
+              <div className="offerDivider" />
+
+              <div className="offerText">
+                WHEN BOOKED WITH
+                <br />A <b>SELECTED SERVICE</b>
+              </div>
+
+              <div className="offerSave">
+                SAVE
+                <strong>£20</strong>
+                <small>ON YOUR MOT</small>
+              </div>
+            </div>
+          ) : (
+            <div className="landingButtons">
+              <button onClick={() => navigate("/booking")}>
+                {page.ctaPrimary}
+              </button>
+
+              <button className="outline" onClick={() => navigate("/booking")}>
+                {page.ctaSecondary}
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="landingPanel">
@@ -141,69 +390,420 @@ export default function ServiceLandingPage({ pageKey }) {
         </div>
       </section>
 
+      {pageKey === "servicingHull" && (
+        <section className="motDealStrip salesMot serviceOnlyStrip">
+          <div className="motDealText serviceIntroPanel">
+            <span>CAR SERVICING HULL</span>
+
+            <h2>Book Your Service Today</h2>
+
+            <p>
+              Enter your registration to show the correct service price based on
+              your engine size. Choose Interim, Full or Major service and add an
+              MOT for only £20.00.
+            </p>
+
+            <div className="serviceVrmBox">
+              <input
+                placeholder="ENTER REG"
+                value={serviceReg}
+                onChange={(e) => setServiceReg(e.target.value.toUpperCase())}
+              />
+
+              <button type="button" onClick={lookupServicePricing}>
+                {pricingLoading ? "CHECKING..." : "GET PRICES"}
+              </button>
+            </div>
+
+            {serviceVehicle && (
+              <div className="serviceVehicleResult">
+                <strong>
+                  {serviceVehicle.vrm} — {serviceVehicle.year}{" "}
+                  {serviceVehicle.make} {serviceVehicle.model}
+                </strong>
+
+                <span>
+                  ENGINE: {serviceVehicle.engineCC || "Unknown"}cc
+                  {serviceVehicle.engineLitres
+                    ? ` / ${serviceVehicle.engineLitres}L`
+                    : ""}
+                </span>
+              </div>
+            )}
+
+            {serviceVehicle?.image && (
+              <div className="serviceVehicleImageBox">
+                <img
+                  src={serviceVehicle.image}
+                  alt={serviceVehicle.model || "Vehicle"}
+                />
+              </div>
+            )}
+
+            <div className="serviceMotToggle">
+              <div>
+                <strong>Add MOT for £20.00</strong>
+                <span>Interim, Full or Major only</span>
+              </div>
+
+              <button
+                type="button"
+                className={addMotOffer ? "active" : ""}
+                onClick={() => setAddMotOffer((prev) => !prev)}
+              >
+                {addMotOffer ? "MOT ADDED ✓" : "ADD MOT +£20"}
+              </button>
+            </div>
+          </div>
+
+          <div className="motDealCards serviceSalesCards serviceCardsLive">
+            {serviceCards.map((card, index) => {
+              const motBlocked = addMotOffer && card.key === "oil";
+
+              const totalPrice =
+                addMotOffer && card.key !== "oil"
+                  ? Number(card.price || 0) + 20
+                  : Number(card.price || 0);
+
+              const isOpen = openService === card.key;
+
+              return (
+                <div
+                  className={`motCard serviceOptionCard ${
+                    index === 1 ? "featured" : ""
+                  } ${motBlocked ? "serviceDisabled" : ""}`}
+                  key={card.key}
+                >
+                  <div className="motTag">SERVICE OPTION</div>
+
+                  {addMotOffer && card.key !== "oil" && (
+                    <div className="serviceMotAdded">MOT ADDED +£20</div>
+                  )}
+
+                  <h3>{card.title}</h3>
+                  <p>{card.text}</p>
+
+                  <div className="servicePriceWrap">
+                    {serviceVehicle?.vrm && (
+                      <div className="serviceCardReg">
+                        {serviceVehicle.vrm}
+                      </div>
+                    )}
+
+                    <div className="servicePrice">
+                      £{Number(totalPrice || 0).toFixed(2)}
+                    </div>
+                  </div>
+
+                  <div className="serviceButtonsWrap">
+                    <button
+                      type="button"
+                      className={`includesToggle modernBtn ${
+                        isOpen ? "activeToggle" : ""
+                      }`}
+                      onClick={() =>
+                        setOpenService(isOpen ? null : card.key)
+                      }
+                    >
+                      <span className="btnIcon">{isOpen ? "−" : "+"}</span>
+
+                      <span className="btnText">
+                        {isOpen ? "HIDE INCLUDED" : "WHAT’S INCLUDED"}
+                      </span>
+
+                      <span className={`btnArrow ${isOpen ? "rotate" : ""}`}>
+                        ▾
+                      </span>
+                    </button>
+
+                    <div
+                      className={`includesContent ${isOpen ? "open" : ""}`}
+                    >
+                      <ul>
+                        {card.included.map((item) => (
+                          <li key={item}>✓ {item}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <button
+                      className="bookNowModern"
+                      disabled={motBlocked}
+                      onClick={() =>
+                        addToBasket(
+                          addMotOffer && card.key !== "oil"
+                            ? `${card.title} + MOT`
+                            : card.title,
+                          "Service",
+                          Number(totalPrice || 0)
+                        )
+                      }
+                    >
+                      <span className="btnIcon calendarIcon">🗓</span>
+
+                      <span className="btnText">
+                        {motBlocked ? "NOT AVAILABLE WITH MOT" : "BOOK NOW"}
+                      </span>
+
+                      <span className="bookArrow">→</span>
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {pageKey === "motHull" &&
+        (() => {
+          const recommendedMotClass =
+            Number(serviceVehicle?.grossWeightKg || 0) > 3000
+              ? "class7"
+              : "class4";
+
+          return (
+            <section className="motDealStrip salesMot motOnlyStrip">
+              <div className="motDealText">
+                <span>MOT TESTING HULL</span>
+
+                <h2>Book Your MOT Today — Class 4 & Class 7 Available</h2>
+
+                <p>
+                  Fast MOT testing in Hull with clear advice, fair pricing and
+                  repairs available if needed.
+                </p>
+
+                {serviceVehicle && (
+                  <div className="serviceVehicleResult motVehicleResult">
+                    <strong>
+                      {serviceVehicle.vrm} — {serviceVehicle.year}{" "}
+                      {serviceVehicle.make} {serviceVehicle.model}
+                    </strong>
+
+                    <span>
+                      RECOMMENDED MOT:{" "}
+                      {recommendedMotClass === "class7"
+                        ? "CLASS 7"
+                        : "CLASS 4"}
+                    </span>
+                  </div>
+                )}
+
+                {serviceVehicle?.image && (
+                  <div className="motVehicleImageBox">
+                    <img
+                      src={serviceVehicle.image}
+                      alt={serviceVehicle.model || "Vehicle"}
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="motDealCards">
+                <div
+                  className={`motCard ${
+                    recommendedMotClass === "class4"
+                      ? "recommendedMot"
+                      : "notRecommendedMot"
+                  }`}
+                >
+                  {recommendedMotClass === "class4" && (
+                    <div className="motRecommendedTag">RECOMMENDED</div>
+                  )}
+
+                  {recommendedMotClass === "class4" &&
+                    serviceVehicle?.vrm && (
+                      <div className="motRegTag">{serviceVehicle.vrm}</div>
+                    )}
+
+                  <h3>CLASS 4 MOT</h3>
+
+                  <div className="motTag">MOST CARS</div>
+
+                  <p>Cars, small vans and passenger vehicles.</p>
+
+                  <div className="motPrice">
+                    £{Number(motPrices.class4).toFixed(2)}
+                  </div>
+
+                  <ul>
+                    <li>✔ Ideal for cars & small vans</li>
+                    <li>✔ Clear pass/fail advice</li>
+                    <li>✔ Repairs available if needed</li>
+                  </ul>
+
+                  <button onClick={() => navigate("/booking")}>
+                    BOOK CLASS 4 MOT →
+                  </button>
+                </div>
+
+                <div
+                  className={`motCard ${
+                    recommendedMotClass === "class7"
+                      ? "recommendedMot"
+                      : "notRecommendedMot"
+                  }`}
+                >
+                  {recommendedMotClass === "class7" && (
+                    <div className="motRecommendedTag">RECOMMENDED</div>
+                  )}
+
+                  {recommendedMotClass === "class7" &&
+                    serviceVehicle?.vrm && (
+                      <div className="motRegTag">{serviceVehicle.vrm}</div>
+                    )}
+
+                  <div className="motTag">VANS & COMMERCIALS</div>
+
+                  <h3>CLASS 7 MOT</h3>
+
+                  <p>For larger vans and light commercial vehicles.</p>
+
+                  <div className="motPrice">
+                    £{Number(motPrices.class7).toFixed(2)}
+                  </div>
+
+                  <ul>
+                    <li>✔ Class 7 MOT testing</li>
+                    <li>✔ Great for business vans</li>
+                    <li>✔ Hull garage you can trust</li>
+                  </ul>
+
+                  <button
+                    disabled={recommendedMotClass !== "class7"}
+                    onClick={() => navigate("/booking")}
+                  >
+                    BOOK CLASS 7 MOT →
+                  </button>
+                </div>
+              </div>
+            </section>
+          );
+        })()}
+
       {pageKey === "airconHull" && (
-        <section className="motDealStrip salesMot">
-          <div className="motDealText">
+        <section className="motDealStrip salesMot airconOnlyStrip">
+          <div className="motDealText airconIntroPanel">
             <span>AIR CONDITIONING HULL</span>
+
             <h2>Air Con Regas & Leak Testing</h2>
 
             <p>
-              Choose the correct air con service for your vehicle. We offer R134a
-              gas, R1234yf gas and leak testing at Tyremen Hull.
+              Choose the correct air con service for your vehicle. We offer
+              R134a gas, R1234yf gas and leak testing at Tyremen Hull.
             </p>
+
+            {serviceVehicle && (
+              <div className="airconVehicleResult">
+                <div className="airconVehicleIcon">🧊</div>
+
+                <div className="airconVehicleTop">
+                  <strong>
+                    {serviceVehicle.vrm} — {serviceVehicle.year}{" "}
+                    {serviceVehicle.make} {serviceVehicle.model}
+                  </strong>
+
+                  <span>
+                    {serviceVehicle.engineLitres
+                      ? `${serviceVehicle.engineLitres}L`
+                      : ""}
+                    {serviceVehicle.fuel ? ` ${serviceVehicle.fuel}` : ""}{" "}
+                    {serviceVehicle.transmission || ""}{" "}
+                    {serviceVehicle.bodyType || ""}
+                  </span>
+                </div>
+
+                <div className="airconRecommendedGas">
+                  <b>RECOMMENDED GAS:</b>
+                  <em>{airconType === "r1234yf" ? "R1234yf" : "R134a"}</em>
+                </div>
+              </div>
+            )}
+
+            {serviceVehicle?.image && (
+              <div className="airconVehicleImageBox">
+                <img
+                  src={serviceVehicle.image}
+                  alt={serviceVehicle.model || "Vehicle"}
+                />
+              </div>
+            )}
           </div>
 
           <div className="motDealCards airconSalesCards">
             {[
-              [
-                "R134a GAS",
-                "Vehicles up to 2014",
-                "£64.99",
-                "Air Con R134a Regas",
-                64.99,
-              ],
-              [
-                "R1234yf GAS",
-                "Vehicles 2015 onwards",
-                "£124.99",
-                "Air Con R1234yf Regas",
-                124.99,
-              ],
-              [
-                "LEAK TEST",
-                "Air con leak detection",
-                "£40.00",
-                "Air Con Leak Test",
-                40,
-              ],
-            ].map(([title, text, price, serviceName, basketPrice], index) => (
-              <div
-                className={`motCard ${index === 1 ? "featured" : ""}`}
-                key={title}
-              >
-                <div className="motTag">
-                  {index === 1 ? "NEWER VEHICLES" : "AIR CON OPTION"}
-                </div>
+              {
+                key: "r134a",
+                title: "R134a GAS",
+                text: "Vehicles up to 2014",
+                price: 64.99,
+                tag:
+                  airconType === "r134a"
+                    ? "RECOMMENDED"
+                    : "AIR CON OPTION",
+                serviceName: "Air Con R134a Regas",
+              },
+              {
+                key: "r1234yf",
+                title: "R1234yf GAS",
+                text: "Vehicles 2015 onwards",
+                price: 124.99,
+                tag:
+                  airconType === "r1234yf"
+                    ? "RECOMMENDED"
+                    : "NEWER VEHICLES",
+                serviceName: "Air Con R1234yf Regas",
+              },
+              {
+                key: "leak",
+                title: "LEAK TEST",
+                text: "Air con leak detection",
+                price: 40,
+                tag: "AIR CON OPTION",
+                serviceName: "Air Con Leak Test",
+              },
+            ].map((card) => {
+              const isRecommended = card.key === airconType;
 
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <div className="motPrice">{price}</div>
-
-                <ul>
-                  <li>✔ Clear pricing</li>
-                  <li>✔ Trusted Hull garage</li>
-                  <li>✔ Book online today</li>
-                </ul>
-
-                <button
-                  onClick={() =>
-                    addToBasket(serviceName, "Air Con", basketPrice)
-                  }
+              return (
+                <div
+                  className={`motCard airconCard ${
+                    isRecommended ? "featured airconRecommended" : ""
+                  }`}
+                  key={card.key}
                 >
-                  BOOK NOW →
-                </button>
-              </div>
-            ))}
+                  <div className="motTag">{card.tag}</div>
+
+                                           {isRecommended && serviceVehicle?.vrm && (
+  		<div className="airconRegTag">{serviceVehicle.vrm}</div>
+		)}
+
+                  <h3>{card.title}</h3>
+
+                  <p>{card.text}</p>
+
+                  <div className="airconPrice">
+                    £{Number(card.price).toFixed(2)}
+                  </div>
+
+                  <ul>
+                    <li>✔ Clear pricing</li>
+                    <li>✔ Trusted Hull garage</li>
+                    <li>✔ Book online today</li>
+                  </ul>
+
+                  <button
+                    className="airconBookBtn"
+                    onClick={() =>
+                      addToBasket(card.serviceName, "Air Con", card.price)
+                    }
+                  >
+                    BOOK NOW →
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </section>
       )}
@@ -213,7 +813,6 @@ export default function ServiceLandingPage({ pageKey }) {
           <div className="motDealText">
             <span>WHEEL ALIGNMENT HULL</span>
             <h2>Precision Wheel Alignment</h2>
-
             <p>
               Improve tyre life, handling and fuel efficiency with professional
               wheel alignment at Tyremen Hull.
@@ -282,119 +881,6 @@ export default function ServiceLandingPage({ pageKey }) {
                 </button>
               </div>
             ))}
-          </div>
-        </section>
-      )}
-
-      {pageKey === "servicingHull" && (
-        <section className="motDealStrip salesMot">
-          <div className="motDealText">
-            <span>CAR SERVICING HULL</span>
-            <h2>Book Your Service Today — Free MOT with Selected Services</h2>
-
-            <p>
-              Choose from Oil & Filter, Interim, Full or Major Service with
-              clear prices and trusted local technicians.
-            </p>
-
-            <div className="motOfferBanner">
-              <div>
-                <strong>FREE MOT</strong>
-                <span>when booked with selected services</span>
-              </div>
-
-              <button onClick={() => navigate("/booking")}>
-                BOOK SERVICE →
-              </button>
-            </div>
-          </div>
-
-          <div className="motDealCards serviceSalesCards">
-            {[
-              ["OIL & FILTER", "Essential engine maintenance", "FROM £120.00"],
-              ["INTERIM SERVICE", "Ideal between annual services", "FROM £128.50"],
-              ["FULL SERVICE", "Annual service for most vehicles", "FROM £155.00"],
-              ["MAJOR SERVICE", "Complete service check", "FROM £180.00"],
-            ].map(([title, text, price]) => (
-              <div className="motCard" key={title}>
-                <div className="motTag">SERVICE OPTION</div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <div className="motPrice">{price}</div>
-
-                <ul>
-                  <li>✔ Clear pricing</li>
-                  <li>✔ Trusted Hull garage</li>
-                  <li>✔ Book online today</li>
-                </ul>
-
-                <button
-                  onClick={() => {
-                    const item = servicePrices[title] || {
-                      price: null,
-                      type: "Service",
-                    };
-
-                    addToBasket(title, item.type, item.price);
-                  }}
-                >
-                  BOOK NOW →
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {pageKey === "motHull" && (
-        <section className="motDealStrip salesMot">
-          <div className="motDealText">
-            <span>MOT TESTING HULL</span>
-            <h2>Book Your MOT Today — Class 4 & Class 7 Available</h2>
-
-            <p>
-              Fast MOT testing in Hull with clear advice, fair pricing and
-              repairs available if needed. Book online today and keep your
-              vehicle road legal.
-            </p>
-
-            <div className="motOfferBadge">FREE MOT with selected servicing</div>
-          </div>
-
-          <div className="motDealCards">
-            <div className="motCard">
-              <div className="motTag">MOST CARS</div>
-              <h3>CLASS 4 MOT</h3>
-              <p>Cars, small vans and passenger vehicles.</p>
-              <div className="motPrice">£40</div>
-
-              <ul>
-                <li>✔ Ideal for cars & small vans</li>
-                <li>✔ Clear pass/fail advice</li>
-                <li>✔ Repairs available if needed</li>
-              </ul>
-
-              <button onClick={() => navigate("/booking")}>
-                BOOK CLASS 4 MOT →
-              </button>
-            </div>
-
-            <div className="motCard featured">
-              <div className="motTag">VANS & COMMERCIALS</div>
-              <h3>CLASS 7 MOT</h3>
-              <p>For larger vans and light commercial vehicles.</p>
-              <div className="motPrice">£45.00</div>
-
-              <ul>
-                <li>✔ Class 7 MOT testing</li>
-                <li>✔ Great for business vans</li>
-                <li>✔ Hull garage you can trust</li>
-              </ul>
-
-              <button onClick={() => navigate("/booking")}>
-                BOOK CLASS 7 MOT →
-              </button>
-            </div>
           </div>
         </section>
       )}
@@ -494,7 +980,6 @@ export default function ServiceLandingPage({ pageKey }) {
           <div className="tyreDealText">
             <span>POPULAR TYRE OPTIONS</span>
             <h2>Budget, Mid-Range & Premium Tyres Fitted in Hull</h2>
-
             <p>
               Choose from great-value everyday tyres through to premium brands,
               all fitted by our Hull team.
@@ -525,7 +1010,7 @@ export default function ServiceLandingPage({ pageKey }) {
 
       <section className="landingContent">
         {page.sections.map((section) => (
-          <div className="contentCard" key={section.heading}>	
+          <div className="contentCard" key={section.heading}>
             <h2>{section.heading}</h2>
 
             <p>

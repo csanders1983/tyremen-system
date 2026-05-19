@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import tyres from "./data/tyres.json";
 import "./TyreSearchPage.css";
-import heroCar from "./hero-car.jpg";
 
 export default function TyreSearchPage() {
   const navigate = useNavigate();
@@ -12,6 +11,7 @@ export default function TyreSearchPage() {
   const [visibleCount, setVisibleCount] = useState(20);
   const [vehicle, setVehicle] = useState(null);
   const [loadingVehicle, setLoadingVehicle] = useState(false);
+  const [sortBy, setSortBy] = useState("priceAsc");
 
   const params = new URLSearchParams(window.location.search);
   const vrm = params.get("vrm");
@@ -22,19 +22,6 @@ export default function TyreSearchPage() {
       .replaceAll("/", "-")
       .replaceAll(" ", "-")
       .replace(/[^a-z0-9-]/g, "");
-
-  const brandLogos = {
-    VREDESTEIN: "/brand-logos/vredestein.png",
-    APTANY: "/brand-logos/aptany.png",
-    LINGLONG: "/brand-logos/linglong.png",
-    DELINTE: "/brand-logos/delinte.png",
-    PIRELLI: "/brand-logos/pirelli.png",
-    MICHELIN: "/brand-logos/michelin.png",
-    GOODYEAR: "/brand-logos/goodyear.png",
-    CONTINENTAL: "/brand-logos/continental.png",
-    BRIDGESTONE: "/brand-logos/bridgestone.png",
-    HANKOOK: "/brand-logos/hankook.png",
-  };
 
   const getSize = (tyre) =>
     `${tyre.Width || ""}/${tyre["Aspect Ratio"] || ""}R${tyre.Rim || ""}`;
@@ -49,11 +36,6 @@ export default function TyreSearchPage() {
   const getPrice = (tyre) => {
     const cost = Number(tyre.Price || 0);
     return (cost + 25) * 1.2;
-  };
-
-  const getBrandLogo = (brand) => {
-    const key = String(brand || "").toUpperCase().trim();
-    return brandLogos[key] || "";
   };
 
   useEffect(() => {
@@ -94,36 +76,42 @@ export default function TyreSearchPage() {
 
   const frontSize = normaliseSize(vehicle?.frontTyreSize);
   const rearSize = normaliseSize(vehicle?.rearTyreSize);
+  const mainVehicleSize = normaliseSize(
+    vehicle?.frontTyreSize || vehicle?.tyreSize || search
+  );
+
   const isStaggered = Boolean(frontSize && rearSize && frontSize !== rearSize);
 
   const frontTyres = useMemo(() => {
     if (!frontSize) return [];
 
-    return tyres.filter((tyre) => normaliseSize(getSize(tyre)) === frontSize);
+    return tyres
+      .filter((tyre) => normaliseSize(getSize(tyre)) === frontSize)
+      .sort((a, b) => getPrice(a) - getPrice(b));
   }, [frontSize]);
 
   const rearTyres = useMemo(() => {
     if (!rearSize) return [];
 
-    return tyres.filter((tyre) => normaliseSize(getSize(tyre)) === rearSize);
+    return tyres
+      .filter((tyre) => normaliseSize(getSize(tyre)) === rearSize)
+      .sort((a, b) => getPrice(a) - getPrice(b));
   }, [rearSize]);
 
   const filteredTyres = useMemo(() => {
     let list = tyres;
 
-    if (vehicle?.tyreSize && !isStaggered) {
-      const vehicleSize = normaliseSize(vehicle.tyreSize);
-
+    if (mainVehicleSize && !isStaggered) {
       list = list.filter((tyre) => {
         const tyreSize = normaliseSize(getSize(tyre));
-        return tyreSize === vehicleSize;
+        return tyreSize === mainVehicleSize;
       });
     }
 
-    const term = normaliseSize(search);
+    if (search && !vehicle && !isStaggered) {
+      const term = normaliseSize(search);
 
-    if (term && !vehicle?.tyreSize && !isStaggered) {
-      list = list.filter((tyre) => {
+      list = tyres.filter((tyre) => {
         const text = normaliseSize(`
           ${tyre.Title || ""}
           ${tyre.Brand || ""}
@@ -135,8 +123,16 @@ export default function TyreSearchPage() {
       });
     }
 
+    if (sortBy === "priceAsc") {
+      list = [...list].sort((a, b) => getPrice(a) - getPrice(b));
+    }
+
+    if (sortBy === "priceDesc") {
+      list = [...list].sort((a, b) => getPrice(b) - getPrice(a));
+    }
+
     return list;
-  }, [search, vehicle, isStaggered]);
+  }, [search, vehicle, isStaggered, mainVehicleSize, sortBy]);
 
   const visibleTyres = filteredTyres.slice(0, visibleCount);
 
@@ -146,60 +142,48 @@ export default function TyreSearchPage() {
       : "";
 
     navigate(`/tyres/${makeSlug(tyre.Title)}${query}`, {
-      state: { tyre, axle },
+      state: { tyre, axle, vehicle },
     });
   };
+
+  const vehicleTitle = vehicle
+    ? `${vehicle.make || ""} ${vehicle.model || ""}`.trim()
+    : "Find Your Tyres";
+
+  const displaySize =
+    vehicle?.frontTyreSize || vehicle?.tyreSize || search || "Enter tyre size";
 
   const renderTyreCard = (tyre, index, axle = "") => {
     const size = getSize(tyre);
     const price = getPrice(tyre);
-    const brandLogo = getBrandLogo(tyre.Brand);
     const qty = Number(tyre.Quantity || 0);
 
     return (
-      <article className="tsrCard" key={`${axle}-${tyre.Title}-${index}`}>
+      <article className="tsrCardLong" key={`${axle}-${tyre.Title}-${index}`}>
         <div className="tsrRibbon">
           {axle ? `${axle.toUpperCase()} FITTED` : "FULLY FITTED"}
         </div>
 
-        <div className="tsrBadges">
-          <span className={qty <= 1 ? "tsrStock low" : "tsrStock"}>
+        <div className="tsrImageBox">
+          <div className={qty <= 1 ? "tsrStockBadge low" : "tsrStockBadge"}>
             {qty > 0 ? `${qty} available` : "Check stock"}
-          </span>
+          </div>
 
-          <span className="tsrRange">
+          <div className="tsrTagBadge">
             {axle ? `${axle} axle` : "Budget Option"}
-          </span>
-        </div>
+          </div>
 
-        <div className="tsrImage">
           <img src={tyre["Image URL"]} alt={tyre.Title} />
         </div>
 
-        <div className="tsrInfo">
-          <div className="tsrBrand">
-            {brandLogo ? (
-              <img
-                src={brandLogo}
-                alt={tyre.Brand}
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                  e.currentTarget.nextSibling.style.display = "block";
-                }}
-              />
-            ) : null}
-
-            <strong style={{ display: brandLogo ? "none" : "block" }}>
-              {tyre.Brand}
-            </strong>
-          </div>
-
+        <div className="tsrTyreInfo">
+          <h3>{tyre.Brand}</h3>
           <p>{tyre.Model}</p>
 
-          <h3>
+          <div className="tsrTyreSizeLine">
             {size}
             {tyre.Reinforced && <span>{tyre.Reinforced}</span>}
-          </h3>
+          </div>
 
           <div className="tsrSpecs">
             <span>Load {tyre["Load Index"] || "-"}</span>
@@ -215,22 +199,16 @@ export default function TyreSearchPage() {
           </div>
         </div>
 
-        <div className="tsrPrice">
-          <div className="tsrFitter">
-            <img src="/wheel.png" alt="Wheel" className="tsrWheelIcon" />
-          </div>
+        <div className="tsrPricePanel">
+          <small>
+            {axle
+              ? `${axle.toUpperCase()} axle fitted at Tyremen Hull`
+              : "Fully fitted at Tyremen Hull"}
+          </small>
 
-          <div>
-            <small>
-              {axle
-                ? `${axle.toUpperCase()} axle fitted at Tyremen Hull`
-                : "Fully fitted at Tyremen Hull"}
-            </small>
+          <strong>£{price.toFixed(2)}</strong>
 
-            <strong>£{price.toFixed(2)}</strong>
-          </div>
-
-          <button onClick={() => openTyre(tyre, axle)}>View Tyre</button>
+          <button onClick={() => openTyre(tyre, axle)}>View Tyre →</button>
         </div>
       </article>
     );
@@ -240,62 +218,26 @@ export default function TyreSearchPage() {
     <div className="tsrPage">
       <Header />
 
-      <section
-        className="tsrHero"
-        style={{
-          backgroundImage: `
-            linear-gradient(90deg, rgba(5,5,5,0.96), rgba(21,21,21,0.72)),
-            url(${heroCar})
-          `,
-        }}
-      >
-        <div className="tsrHeroOverlay">
-          <span>TYREMEN HULL</span>
-          <h1>Find Your Tyres</h1>
-          <p>Fully fitted tyres including VAT, valve and balance.</p>
-          <strong>More than just tyres.</strong>
+      <section className="tsrVehicleHero">
+        {vehicle?.image && (
+          <div className="tsrVehicleHeroImage">
+            <img src={vehicle.image} alt={vehicleTitle} />
+          </div>
+        )}
+
+        <div className="tsrVehicleHeroText">
+          <h1>{vehicleTitle}</h1>
+
+          <p>
+            {vehicle?.year && <>{vehicle.year} <span>•</span> </>}
+            {vehicle?.fuel && <>{vehicle.fuel} <span>•</span> </>}
+            Tyre size: <strong>{displaySize}</strong>
+          </p>
         </div>
       </section>
 
       {loadingVehicle && (
         <div className="tsrVehicleLoading">Loading vehicle...</div>
-      )}
-
-      {vehicle && (
-        <section className="tsrVehicleBox">
-          {vehicle.image && (
-            <img
-              src={vehicle.image}
-              alt={vehicle.model}
-              className="tsrVehicleImage"
-            />
-          )}
-
-          <div className="tsrVehicleInfo">
-            <div className="tsrVehicleVrm">{vehicle.vrm}</div>
-
-            <h2>
-              {vehicle.make} {vehicle.model}
-            </h2>
-
-            <p>
-              {vehicle.year} • {vehicle.fuel} •{" "}
-              {isStaggered ? (
-                <>
-                  Front: <strong>{vehicle.frontTyreSize}</strong> • Rear:{" "}
-                  <strong>{vehicle.rearTyreSize}</strong>
-                </>
-              ) : (
-                <>
-                  Tyre size:{" "}
-                  <strong>
-                    {vehicle.frontTyreSize || vehicle.tyreSize || "Confirm size"}
-                  </strong>
-                </>
-              )}
-            </p>
-          </div>
-        </section>
       )}
 
       {isStaggered && (
@@ -308,49 +250,63 @@ export default function TyreSearchPage() {
         </section>
       )}
 
-      <div className="tsrSearchWrap">
-        <input
-          type="text"
-          placeholder="Search by size, brand or pattern..."
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setVisibleCount(20);
-            setVehicle(null);
-          }}
-        />
-      </div>
+      {!vehicle && (
+        <div className="tsrSearchWrap">
+          <input
+            type="text"
+            placeholder="Search by size, brand or pattern..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setVisibleCount(20);
+            }}
+          />
+        </div>
+      )}
 
-      <section className="tsrTrust">
-        <div> Fully fitted price</div>
-        <div> Hull fitting centre</div>
-        <div> &#128077;&#127999;Over 55 years trusted</div>
-        <div>&#9742; 01482 328800</div>
+      <section className="tsrSizePanel">
+        <div className="tsrSizeLeft">
+          <div>
+            <span>Your tyre size</span>
+            <h2>{displaySize}</h2>
+          </div>
+        </div>
+
+        <div className="tsrTrustGrid">
+          <div>✅ Fully fitted price</div>
+          <div>🏁 Hull fitting centre</div>
+          <div>🛡️ Over 55 years trusted</div>
+          <div>☎ 01482 328800</div>
+        </div>
       </section>
 
       {isStaggered ? (
         <>
           <section className="tsrIntro">
-            <h2>
-              Front tyres found: {frontTyres.length}
-            </h2>
-            <p>Front axle size: {vehicle.frontTyreSize}</p>
+            <div>
+              <h2>
+                Front tyres found: <strong>{frontTyres.length}</strong>
+              </h2>
+              <p>Front axle size: {vehicle.frontTyreSize}</p>
+            </div>
           </section>
 
-          <section className="tsrGrid">
+          <section className="tsrList">
             {frontTyres.map((tyre, index) =>
               renderTyreCard(tyre, index, "front")
             )}
           </section>
 
           <section className="tsrIntro">
-            <h2>
-              Rear tyres found: {rearTyres.length}
-            </h2>
-            <p>Rear axle size: {vehicle.rearTyreSize}</p>
+            <div>
+              <h2>
+                Rear tyres found: <strong>{rearTyres.length}</strong>
+              </h2>
+              <p>Rear axle size: {vehicle.rearTyreSize}</p>
+            </div>
           </section>
 
-          <section className="tsrGrid">
+          <section className="tsrList">
             {rearTyres.map((tyre, index) =>
               renderTyreCard(tyre, index, "rear")
             )}
@@ -359,21 +315,28 @@ export default function TyreSearchPage() {
       ) : (
         <>
           <section className="tsrIntro">
-            <h2>
-              {filteredTyres.length} tyres found
-              {vehicle?.frontTyreSize
-                ? ` for ${vehicle.frontTyreSize}`
-                : vehicle?.tyreSize
-                  ? ` for ${vehicle.tyreSize}`
-                  : ""}
-            </h2>
-            <p>All prices include fitting, VAT, valve and balance.</p>
+            <div>
+              <h2>
+                {filteredTyres.length} tyres found for{" "}
+                <strong>{displaySize}</strong>
+              </h2>
+              <p>All prices include fitting, VAT, valve and balance.</p>
+            </div>
+
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+              <option value="priceAsc">Sort by: Price low to high</option>
+              <option value="priceDesc">Sort by: Price high to low</option>
+            </select>
           </section>
 
-          <section className="tsrGrid">
-            {visibleTyres.map((tyre, index) =>
-              renderTyreCard(tyre, index)
-            )}
+          {filteredTyres.length === 0 && (
+            <p className="tsrNoTyres">
+              No tyres found for {displaySize}. Call us on 01482 328800.
+            </p>
+          )}
+
+          <section className="tsrList">
+            {visibleTyres.map((tyre, index) => renderTyreCard(tyre, index))}
           </section>
 
           {visibleCount < filteredTyres.length && (
@@ -385,6 +348,25 @@ export default function TyreSearchPage() {
           )}
         </>
       )}
+
+      <section className="tsrFittingStrip">
+        <div>
+          <strong>Expert fitting</strong>
+          <span>All tyres fitted by trained technicians.</span>
+        </div>
+        <div>
+          <strong>Wheel balancing</strong>
+          <span>Precision balancing included.</span>
+        </div>
+        <div>
+          <strong>New valve</strong>
+          <span>Brand new valves included.</span>
+        </div>
+        <div>
+          <strong>Peace of mind</strong>
+          <span>All tyres include VAT and fitting.</span>
+        </div>
+      </section>
     </div>
   );
 }

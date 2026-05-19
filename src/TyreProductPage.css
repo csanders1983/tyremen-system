@@ -1,519 +1,398 @@
-.tppPage {
+.tyreResultsPage {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(255,208,0,0.08), transparent 34%),
-    linear-gradient(180deg, #090909 0%, #1c1c1c 55%, #0b0b0b 100%);
-  font-family: Arial, Helvetica, sans-serif;
-  color: #fff;
+    radial-gradient(circle at top, rgba(255, 208, 0, 0.08), transparent 35%),
+    linear-gradient(135deg, #111, #202020);
+  color: white;
+  padding: 0 32px 60px;
 }
 
-.tppWrap {
-  max-width: 1220px;
+.vehicleHero {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 22px 24px 60px;
-}
-
-.tppBackBtn {
-  display: inline-flex;
-  margin-bottom: 20px;
-  background: transparent;
-  border: none;
-  color: #ffd000;
-  font-size: 16px;
-  font-weight: 1000;
-  cursor: pointer;
-}
-
-.tppVehicleBox {
-  margin: 0 0 26px;
+  min-height: 250px;
   display: grid;
-  grid-template-columns: 300px 1fr 360px;
+  grid-template-columns: 1fr 1.2fr;
   align-items: center;
-  background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
-  border: 2px solid #ffd000;
-  border-radius: 14px;
-  overflow: hidden;
-  color: #fff;
-  box-shadow: 0 22px 55px rgba(0,0,0,0.45);
-}
-
-.tppVehicleImgBox {
-  height: 160px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tppVehicleImgBox img {
-  width: 270px;
-  height: 135px;
-  object-fit: contain;
-}
-
-.tppVehicleDetails {
-  padding: 20px 24px;
-}
-
-.tppRegPlate {
-  display: inline-flex;
-  background: #ffd000;
-  color: #000;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 30px;
-  font-weight: 1000;
-  letter-spacing: 4px;
-  margin-bottom: 12px;
-}
-
-.tppVehicleDetails h2 {
-  margin: 0;
-  color: #fff;
-  font-size: 26px;
-  line-height: 1.12;
-  font-weight: 1000;
-}
-
-.tppVehicleDetails p {
-  margin: 9px 0 0;
-  color: #ddd;
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.tppVehicleChecks {
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-left: 1px solid rgba(255,255,255,0.18);
-}
-
-.tppVehicleChecks div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 15px;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 1000;
-  text-transform: uppercase;
-  border-left: 1px solid rgba(255,255,255,0.18);
-}
-
-.tppProduct {
-  display: grid;
-  grid-template-columns: 0.95fr 1fr;
-  gap: 28px;
-  align-items: start;
-}
-
-.tppGallery,
-.tppBuyBox {
-  background: rgba(255,255,255,0.98);
-  border: 1px solid rgba(255,208,0,0.22);
-  border-radius: 10px;
-  padding: 24px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-}
-
-.tppStockRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.tppFittedTag,
-.tppStock,
-.tppAxleTag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 36px;
-  padding: 0 16px;
-  font-size: 12px;
-  font-weight: 1000;
-  text-transform: uppercase;
-  letter-spacing: 0.7px;
-  border-radius: 4px;
-}
-
-.tppFittedTag,
-.tppAxleTag {
-  background: #ffd000;
-  color: #000;
-}
-
-.tppStock {
-  background: #111;
-  color: #ffd000;
-}
-
-.tppStock.low {
-  background: #c90000;
-  color: #fff;
-}
-
-.tppTyreStage {
-  min-height: 430px;
-  background:
-    radial-gradient(circle at center, rgba(255,255,255,1), rgba(238,238,238,1)),
-    linear-gradient(135deg, #f8f8f8, #ececec);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  overflow: hidden;
-}
-
-.tppTyreStage img {
-  max-width: 78%;
-  max-height: 390px;
-  object-fit: contain;
-  filter: drop-shadow(0 22px 22px rgba(0,0,0,0.25));
-}
-
-.tppUnderImage {
-  margin-top: 18px;
-  background: #111;
-  border-radius: 5px;
   border-bottom: 4px solid #ffd000;
-  padding: 16px 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
+  border-right: 4px solid #ffd000;
+  border-radius: 0 0 28px 0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0.8)),
+    #111;
+  overflow: hidden;
 }
 
-.tppUnderImage strong {
-  color: #fff;
-  font-size: 15px;
+.vehicleHeroImage img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
+}
+
+.vehicleHeroText h1 {
+  font-size: clamp(38px, 5vw, 58px);
+  margin: 0 0 12px;
   text-transform: uppercase;
+  font-weight: 1000;
 }
 
-.tppUnderImage span {
-  color: #ddd;
-  font-size: 13px;
+.vehicleHeroText p {
+  font-size: 20px;
   font-weight: 800;
 }
 
-.tppBrandLine {
-  color: #777;
-  font-size: 15px;
-  font-weight: 1000;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
+.vehicleHeroText span,
+.vehicleHeroText strong {
+  color: #ffd000;
 }
 
-.tppBuyBox h1 {
-  color: #111;
-  font-size: 44px;
-  line-height: 0.95;
-  margin: 0;
-  text-transform: uppercase;
-  font-style: italic;
-  letter-spacing: -2px;
-}
-
-.tppSizeLine {
-  margin-top: 16px;
-  color: #111;
-  font-size: 28px;
-  font-weight: 1000;
-}
-
-.tppAxleTag {
-  margin-top: 14px;
-}
-
-.tppTrustPanel {
-  margin-top: 20px;
-  background: #f3f3f3;
-  border-left: 5px solid #ffd000;
-  padding: 17px 20px;
-  border-radius: 5px;
-}
-
-.tppTrustPanel strong {
-  display: block;
-  color: #111;
-  font-size: 20px;
-  margin-bottom: 7px;
-}
-
-.tppTrustPanel p {
-  margin: 0;
-  color: #555;
-  line-height: 1.45;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.tppRatings {
+.tyreSizePanel {
+  max-width: 1200px;
+  margin: 32px auto;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.35);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 20px;
-}
-
-.tppRatings div {
-  background: #f7f7f7;
-  padding: 16px 12px;
-  text-align: center;
-  border: 1px solid #e1e1e1;
-  border-radius: 5px;
-}
-
-.tppRatings span {
-  display: block;
-  color: #777;
-  font-size: 11px;
-  font-weight: 1000;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.tppRatings strong {
-  color: #111;
-  font-size: 32px;
-  font-weight: 1000;
-}
-
-.tppPricePanel {
-  margin-top: 22px;
-  background: #111;
-  border-radius: 6px;
-  border-bottom: 5px solid #ffd000;
+  grid-template-columns: 1.2fr 2fr;
+  gap: 18px;
   padding: 22px;
 }
 
-.tppPriceTop {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
+.sizeLeft {
+  display: flex;
   align-items: center;
+  gap: 20px;
 }
 
-.tppPricePanel small {
-  display: block;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 1000;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
+.sizeLeft img {
+  width: 80px;
 }
 
-.tppPricePanel strong {
-  display: block;
-  color: #fff;
-  font-size: 52px;
-  line-height: 1;
-  font-weight: 1000;
-  letter-spacing: -2px;
-  margin-top: 10px;
-}
-
-.tppPricePanel em {
-  display: block;
+.sizeLeft span {
   color: #ffd000;
-  font-style: normal;
-  font-size: 12px;
   font-weight: 1000;
-  margin-top: 8px;
   text-transform: uppercase;
 }
 
-.tppQtyBlock {
+.sizeLeft h2 {
+  margin: 4px 0 0;
+  font-size: 46px;
+}
+
+.trustGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.trustGrid div {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 22px 14px;
   text-align: center;
-  border-left: 1px solid rgba(255,255,255,0.2);
+  font-weight: 900;
 }
 
-.tppQty {
-  margin: 12px auto 6px;
-  display: inline-flex;
-  align-items: center;
-  background: #222;
-  border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 5px;
-  overflow: hidden;
+.resultsHeader {
+  max-width: 1200px;
+  margin: 0 auto 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
 }
 
-.tppQty button {
-  width: 48px;
-  height: 46px;
-  border: none;
-  background: #191919;
-  color: #fff;
-  font-size: 26px;
-  font-weight: 1000;
-  cursor: pointer;
-}
-
-.tppQty span {
-  min-width: 56px;
-  text-align: center;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 1000;
-}
-
-.tppQtyBlock p {
+.resultsHeader h2 {
   margin: 0;
-  color: #ddd;
-  font-size: 13px;
-}
-
-.tppAddBtn {
-  width: 100%;
-  height: 60px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 4px;
-  background: #ffd000;
-  color: #000;
-  font-size: 17px;
-  font-weight: 1000;
+  font-size: 34px;
   text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 14px 28px rgba(255,208,0,0.22);
+  font-style: italic;
 }
 
-.tppPhone {
-  margin-top: 16px;
-  background: #f7f7f7;
-  border: 1px solid #e4e4e4;
-  border-radius: 5px;
-  padding: 16px;
-  text-align: center;
-  color: #111;
-  font-size: 16px;
+.resultsHeader strong {
+  color: #ffd000;
+}
+
+.resultsHeader p {
+  margin: 8px 0 0;
   font-weight: 800;
 }
 
-.tppPhone strong {
-  color: #111;
+.resultsHeader select {
+  background: #111;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  padding: 16px;
+  font-weight: 800;
 }
 
-.tppTrustBar {
-  margin-top: 32px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  background: linear-gradient(135deg, #111 0%, #1d1d1d 100%);
+.loadingTyres {
+  max-width: 1200px;
+  margin: 20px auto;
+  background: #ffd000;
+  color: #000;
+  padding: 18px 22px;
   border-radius: 10px;
-  padding: 26px 18px;
-  box-shadow: 0 18px 44px rgba(0,0,0,0.32);
+  font-weight: 1000;
 }
 
-.tppTrustBar div {
-  text-align: center;
-  padding: 12px 24px;
-  border-left: 1px solid rgba(255,255,255,0.18);
+.tyreList {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
 }
 
-.tppTrustBar div:first-child {
-  border-left: none;
+.tyreCardLong {
+  position: relative;
+  display: grid;
+  grid-template-columns: 230px 1fr 320px;
+  gap: 28px;
+  align-items: center;
+  background: linear-gradient(110deg, #fff, #f1f1f1);
+  color: #000;
+  border-radius: 12px;
+  padding: 24px 16px 24px 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  border-bottom: 5px solid #111;
 }
 
-.tppTrustBar strong {
-  display: block;
-  color: #fff;
-  font-size: 19px;
+.tyreRibbon {
+  position: absolute;
+  top: 0;
+  right: 250px;
+  background: #ffd000;
+  padding: 9px 36px;
+  transform: rotate(45deg) translate(48px, -20px);
+  transform-origin: center;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tyreImageBox {
+  position: relative;
+  background: #eee;
+  border-radius: 6px;
+  min-height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tyreImageBox img {
+  max-width: 165px;
+  max-height: 165px;
+  object-fit: contain;
+}
+
+.stockBadge,
+.tagBadge {
+  position: absolute;
+  left: 10px;
+  z-index: 2;
+  padding: 7px 12px;
+  font-size: 12px;
   font-weight: 1000;
   text-transform: uppercase;
 }
 
-.tppTrustBar span {
-  display: block;
-  margin-top: 8px;
-  color: #ddd;
+.stockBadge {
+  top: 10px;
+  background: #000;
+  color: #ffd000;
+}
+
+.tagBadge {
+  top: 44px;
+  background: #ffd000;
+  color: #000;
+}
+
+.redTag {
+  background: #d60000;
+  color: #fff;
+}
+
+.tyreInfo h3 {
+  font-size: 34px;
+  margin: 0;
+  font-weight: 1000;
+  font-style: italic;
+}
+
+.tyreInfo p {
+  margin: 6px 0 12px;
+  color: #666;
+  font-size: 15px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.tyreSizeLine {
+  font-size: 34px;
+  font-weight: 1000;
+  margin-bottom: 14px;
+}
+
+.tyreSizeLine span {
+  background: #ffd000;
   font-size: 14px;
-  font-weight: 700;
+  padding: 6px 8px;
+  margin-left: 8px;
 }
 
-@media (max-width: 1020px) {
-  .tppVehicleBox {
-    grid-template-columns: 1fr;
-  }
-
-  .tppVehicleChecks {
-    grid-template-columns: 1fr;
-    border-left: none;
-  }
-
-  .tppProduct {
-    grid-template-columns: 1fr;
-  }
-
-  .tppTrustBar {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .tppTrustBar div {
-    border-left: none;
-  }
+.specGrid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-@media (max-width: 620px) {
-  .tppWrap {
-    padding: 20px 14px 50px;
-  }
+.specGrid span {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 8px 13px;
+  font-size: 13px;
+  font-weight: 900;
+  background: #f8f8f8;
+}
 
-  .tppGallery,
-  .tppBuyBox {
-    padding: 18px;
-  }
+.pricePanel {
+  background: linear-gradient(135deg, #080808, #191919);
+  color: white;
+  border-radius: 8px;
+  padding: 28px;
+  display: grid;
+  gap: 10px;
+}
 
-  .tppVehicleImgBox img {
-    width: 210px;
-  }
+.pricePanel small {
+  font-weight: 900;
+}
 
-  .tppRegPlate {
-    font-size: 24px;
-  }
+.pricePanel strong {
+  font-size: 38px;
+}
 
-  .tppVehicleDetails h2 {
-    font-size: 22px;
-  }
+.pricePanel button,
+.helpBox a {
+  background: #ffd000;
+  color: #000;
+  border: none;
+  border-radius: 7px;
+  padding: 16px 22px;
+  font-size: 17px;
+  font-weight: 1000;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
 
-  .tppTyreStage {
-    min-height: 320px;
-  }
+.fittingStrip,
+.helpBox {
+  max-width: 1200px;
+  margin: 32px auto 0;
+  background: rgba(0,0,0,0.42);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+}
 
-  .tppTyreStage img {
-    max-width: 92%;
-    max-height: 280px;
-  }
+.fittingStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
 
-  .tppBuyBox h1 {
-    font-size: 36px;
-  }
+.fittingStrip div {
+  padding: 26px;
+  border-right: 1px solid rgba(255,255,255,0.12);
+}
 
-  .tppSizeLine {
-    font-size: 22px;
-  }
+.fittingStrip strong,
+.fittingStrip span {
+  display: block;
+}
 
-  .tppRatings,
-  .tppTrustBar {
+.fittingStrip strong {
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.fittingStrip span {
+  color: #ccc;
+}
+
+.helpBox {
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.helpBox h2 {
+  margin: 0;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: 2px;
+}
+
+.helpBox p {
+  margin: 8px 0 0;
+  color: #ddd;
+}
+
+@media (max-width: 950px) {
+  .vehicleHero,
+  .tyreSizePanel,
+  .tyreCardLong {
     grid-template-columns: 1fr;
   }
 
-  .tppPriceTop {
-    grid-template-columns: 1fr;
+  .trustGrid,
+  .fittingStrip {
+    grid-template-columns: 1fr 1fr;
   }
 
-  .tppQtyBlock {
-    border-left: none;
-  }
-
-  .tppPricePanel strong {
-    font-size: 44px;
-  }
-
-  .tppUnderImage {
+  .resultsHeader {
+    align-items: stretch;
     flex-direction: column;
-    align-items: flex-start;
+  }
+
+  .pricePanel {
+    width: 100%;
+  }
+
+  .tyreRibbon {
+    right: -30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .tyreResultsPage {
+    padding: 0 14px 40px;
+  }
+
+  .trustGrid,
+  .fittingStrip {
+    grid-template-columns: 1fr;
+  }
+
+  .vehicleHeroText h1 {
+    font-size: 34px;
+  }
+
+  .sizeLeft h2,
+  .pricePanel strong {
+    font-size: 34px;
+  }
+
+  .helpBox {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
   }
 }
