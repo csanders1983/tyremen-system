@@ -16,7 +16,7 @@ import TyreBasketPage from "./TyreBasketPage";
 import BasketPage from "./BasketPage";
 import AlloyWheels from "./AlloyWheels";
 import TyreSizeCalculator from "./TyreSizeCalculator";
-
+import SpareWheel from "./SpareWheel";
 
 export default function App() {
   return (
@@ -45,6 +45,7 @@ export default function App() {
       <Route path="/tyre-product" element={<TyreProductPage />} />
       <Route path="/basket" element={<BasketPage />} />
       <Route path="/tyre-size-calculator" element={<TyreSizeCalculator />} />
+      <Route path="/spare-wheel" element={<SpareWheel />} />
       
       <Route path="/tyres/:tyreSlug" element={<TyreProductPage />} />
 

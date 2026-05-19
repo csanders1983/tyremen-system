@@ -1,4 +1,4 @@
-﻿ID,Manufacturer,Model,Nickname,Year Start,Year End,Engine Size,Tyre Size ,Wheel Size ,Part code,Sell Inc Vat,Cost,Logo Image,Image 1,Image 2,Image 3
+ID,Manufacturer,Model,Nickname,Year Start,Year End,Engine Size,Tyre Size ,Wheel Size ,Part code,Sell Inc Vat,Cost,Logo Image,Image 1,Image 2,Image 3
 52,Alfa Romeo,145,930A,1994,2001,"1.4i,1.6i,1.7i,1.9 JTD,1.9 TD",125/80/15,"15""",RH001,199,125,Picture,Picture,Picture,Picture
 54,Alfa Romeo,145,930A,1994,2001,"1.8i TS,2.0i TS",125/80/15,"15""",RH001,199,125,Picture,Picture,Picture,Picture
 53,Alfa Romeo,146,930B,1995,2001,"1.4i,1.6i,1.7i,1.9 JTD,1.9 TD",125/80/15,"15""",RH001,199,125,Picture,Picture,Picture,Picture
@@ -742,15 +742,15 @@ NEW,BYD,Dolphin,EM,2023,,EV,125/70/18,"18""",RH198,299,182.5,Picture,Picture,Pic
 2055,Citroen,C5,RD/TD,2008,2017,"2.2HDi,2.7HDi,3.0HDi,3.0i",145/80/18,"18""",RH055,299,182.5,Picture,Picture,Picture,Picture
 2047,Citroen,C5 Aircross,EMP2,2017,,"1.2 PureTech,1.5 BlueHDi,1.6T,1.6THP",145/80/18,"18""",RH055,299,182.5,Picture,Picture,Picture,Picture
 2053,Citroen,C5 Aircross,EMP2,2017,,"1.6 PureTech,1.8T,2.0 BlueHDi,2.0HDI",145/80/18,"18""",RH055,299,182.5,Picture,Picture,Picture,Picture
-2062,Citroen,C5 Aircross,EMP2,2017,,1.6 Ã«,145/80/18,"18""",RH055,299,182.5,Picture,Picture,Picture,Picture
+2062,Citroen,C5 Aircross,EMP2,2017,,1.6 ë,145/80/18,"18""",RH055,299,182.5,Picture,Picture,Picture,Picture
 10677,Citroen,C5 X,,2021,,"1.2 PureTech,1.6 PHEV",155/85/18,"18""",RH233,299,182.5,Picture,Picture,Picture,Picture
 2048,Citroen,C6,EMP2,2016,,"1.6T,1.8T",135/80/17,"17""",RH160,249,155,Picture,Picture,Picture,Picture
 2050,Citroen,C6,PF3,2005,2012,"2.2HDi,2.7HDi,3.0i",135/80/17,"17""",RH160,249,155,Picture,Picture,Picture,Picture
 2058,Citroen,C6,PF3,2005,2012,3.0HDi,135/80/17,"17""",RH160,249,155,Picture,Picture,Picture,Picture
 1986,Citroen,C-Crosser,GS,2007,2012,"2.0i,2.2HDi,2.4i",145/80/18,"18""",RH050,299,182.5,Picture,Picture,Picture,Picture
-1987,Citroen,C-ElysÃ©e,PF1,2012,2017,"1.2VTi,1.6HDi",125/80/17,"17""",RH054,249,155,Picture,Picture,Picture,Picture
-1991,Citroen,C-ElysÃ©e,PF1,2012,2017,1.6VTi,125/80/17,"17""",RH054,249,155,Picture,Picture,Picture,Picture
-1989,Citroen,C-ElysÃ©e,PF1 Facelift,2017,2020,"1.2VTi,1.5 BlueHDi,1.6HDi,1.6VTi",125/80/17,"17""",RH054,249,155,Picture,Picture,Picture,Picture
+1987,Citroen,C-Elysée,PF1,2012,2017,"1.2VTi,1.6HDi",125/80/17,"17""",RH054,249,155,Picture,Picture,Picture,Picture
+1991,Citroen,C-Elysée,PF1,2012,2017,1.6VTi,125/80/17,"17""",RH054,249,155,Picture,Picture,Picture,Picture
+1989,Citroen,C-Elysée,PF1 Facelift,2017,2020,"1.2VTi,1.5 BlueHDi,1.6HDi,1.6VTi",125/80/17,"17""",RH054,249,155,Picture,Picture,Picture,Picture
 1994,Citroen,C-Zero,I,2010,2020,EV,125/80/15,"15""",RH004,199,125,Picture,Picture,Picture,Picture
 2065,Citroen,Dispatch,I,1996,2006,"1.6i,1.9D,1.9TD",135/80/17,"17""",RH161,249,155,Picture,Picture,Picture,Picture
 2073,Citroen,Dispatch,I,1996,2006,"2.0i,2.0TD",135/80/17,"17""",RH161,249,155,Picture,Picture,Picture,Picture
@@ -2174,8 +2174,8 @@ NEW,Lexus,RX,AL30,2022,,"RX350,RX350L,RX450h",175/70/20,"20""",RH291,499,299,Pic
 5512,Mercedes-Benz,A-Class,Br177,2018,,"A 160,A 160 d,A 180,A 180 d",135/80/17,"17""",RH175,249,155,Picture,Picture,Picture,Picture
 5524,Mercedes-Benz,A-Class,Br177,2018,,"A 200,A 200 d,A 220,A 220 4Matic,A 220 d",135/80/17,"17""",RH175,249,155,Picture,Picture,Picture,Picture
 5534,Mercedes-Benz,A-Class,Br177,2018,,"A 250,A 250 4Matic,A 250 e",135/80/17,"17""",RH175,249,155,Picture,Picture,Picture,Picture
-5515,Mercedes-Benz,A-Class,W168,1997,2004,"A 140,Ð 160 CDI,Ð 170 CDI",125/80/17,"17""",RH097,249,155,Picture,Picture,Picture,Picture
-5522,Mercedes-Benz,A-Class,W168,1997,2004,"GF-168031,GF-168032,GF-168035,Ð 160,Ð 190,Ð 210",125/80/17,"17""",RH097,249,155,Picture,Picture,Picture,Picture
+5515,Mercedes-Benz,A-Class,W168,1997,2004,"A 140,А 160 CDI,А 170 CDI",125/80/17,"17""",RH097,249,155,Picture,Picture,Picture,Picture
+5522,Mercedes-Benz,A-Class,W168,1997,2004,"GF-168031,GF-168032,GF-168035,А 160,А 190,А 210",125/80/17,"17""",RH097,249,155,Picture,Picture,Picture,Picture
 5514,Mercedes-Benz,A-Class,W169,2005,2012,"A 150,A 160,A 160 CDI,A 170,A 180,A 180 CDI,DBA-169006,DBA-169007,DBA-169031,DBA-169032",125/80/17,"17""",RH098,249,155,Picture,Picture,Picture,Picture
 5537,Mercedes-Benz,A-Class,W169,2005,2012,"A 200,A 200 CDI,DBA-169008,DBA-169033",125/80/17,"17""",RH098,249,155,Picture,Picture,Picture,Picture
 5544,Mercedes-Benz,A-Class,W169,2005,2012,"A 200 Turbo,CBA-169034",125/70/18,"18""",RH084,299,182.5,Picture,Picture,Picture,Picture
