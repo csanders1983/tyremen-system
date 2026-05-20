@@ -1,125 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import Header from "./components/Header";
 import "./AlloyWheels.css";
 
-const demoWheelData = [
-  {
-    partNumber: "19855X112ET40731BLACKBRONZE",
-    brand: "STUTTGART",
-    description: "STUTTGART ST2 19X8.5 5X112 ET40 73.1 BBZ",
-    model: "ST2",
-    diameter: 19,
-    width: 8.5,
-    pcd: "5X112",
-    bore: 73.1,
-    offset: 38,
-    load: 690,
-    finish: "BLACK BRONZE",
-    stock: 0,
-    rrp: 137.5,
-    image: "https://51.89.171.49/images/Riviera/Forged/FG2%20Gloss%20Black%20Angle.jpg",
-    sourceFile: "Demo data",
-  },
-  {
-    partNumber: "ATLAS20855X12035726GB",
-    brand: "RIVIERA",
-    description: "RIVIERA ATLAS 20X8.5 5X120 ET35 GLOSS BLACK",
-    model: "ATLAS",
-    diameter: 20,
-    width: 8.5,
-    pcd: "5X120",
-    bore: 72.6,
-    offset: 35,
-    load: 815,
-    finish: "GLOSS BLACK",
-    stock: 4,
-    rrp: 207.5,
-    image: "http://51.89.171.49/images/Riviera/Commercial/Atlas-Gloss-Black-Angle-Web.jpg",
-    sourceFile: "Demo data",
-  },
-];
+const VEHICLE_LOOKUP_URL =
+  "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=";
 
-const vehicleData = [
-  {
-    make: "BMW",
-    model: "3 Series F30",
-    years: "2012-2019",
-    pcd: "5X120",
-    bore: 72.6,
-    diameters: [18, 19, 20],
-    bodyType: "bmw",
-  },
-  {
-    make: "BMW",
-    model: "5 Series F10",
-    years: "2010-2017",
-    pcd: "5X120",
-    bore: 72.6,
-    diameters: [18, 19, 20],
-    bodyType: "bmw",
-  },
-  {
-    make: "Audi",
-    model: "A4 B8",
-    years: "2008-2015",
-    pcd: "5X112",
-    bore: 66.6,
-    diameters: [18, 19, 20],
-    bodyType: "audi",
-  },
-  {
-    make: "Volkswagen",
-    model: "Golf MK7",
-    years: "2013-2020",
-    pcd: "5X112",
-    bore: 57.1,
-    diameters: [17, 18, 19],
-    bodyType: "vw",
-  },
-  {
-    make: "Mercedes",
-    model: "C Class W205",
-    years: "2014-2021",
-    pcd: "5X112",
-    bore: 66.6,
-    diameters: [18, 19, 20],
-    bodyType: "merc",
-  },
-];
-
-function splitCSVLine(line) {
-  const cells = [];
-  let cell = "";
-  let quoted = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    const next = line[i + 1];
-
-    if (char === '"' && next === '"') {
-      cell += '"';
-      i++;
-    } else if (char === '"') {
-      quoted = !quoted;
-    } else if (char === "," && !quoted) {
-      cells.push(cell.trim());
-      cell = "";
-    } else {
-      cell += char;
-    }
-  }
-
-  cells.push(cell.trim());
-  return cells;
-}
-
-function cleanKey(value) {
+function clean(value) {
   return String(value || "")
     .toLowerCase()
-    .replace(/\+/g, "plus")
-    .replace(/[^a-z0-9]/g, "");
+    .replace(/-/g, " ")
+    .replace(/[^a-z0-9. /]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function cleanFileName(value) {
@@ -132,91 +27,142 @@ function cleanFileName(value) {
     .replace(/^-|-$/g, "");
 }
 
-function get(row, names) {
-  for (const name of names) {
-    const value = row[cleanKey(name)];
-    if (value !== undefined && value !== "") return value;
-  }
-  return "";
-}
-
 function toNumber(value) {
   const cleaned = String(value || "").replace(/[^0-9.-]/g, "");
   return cleaned ? Number(cleaned) : 0;
-}
-
-function toMoney(value) {
-  const number = toNumber(value);
-  return number ? number : null;
 }
 
 function normalisePCD(value) {
   return String(value || "").toUpperCase().replace(/\s+/g, "");
 }
 
-function mapWheel(row, fileName, index) {
-  return {
-    partNumber:
-      get(row, ["Part Number", "PartNumber", "SKU", "Code"]) ||
-      `${fileName}-${index}`,
-    brand: get(row, ["Brand", "Make", "Manufacturer"]) || "UNKNOWN",
-    description: get(row, ["Description", "Product Description", "Name"]) || "",
-    model: get(row, ["Model", "Wheel Model", "Pattern"]) || "",
-    diameter: toNumber(get(row, ["Diameter", "Wheel Diameter"])),
-    width: toNumber(get(row, ["Width", "Wheel Width"])),
-    pcd: normalisePCD(get(row, ["PCD", "Stud Pattern", "Fitment"])),
-    bore: toNumber(get(row, ["Centre Bore", "Center Bore", "Bore", "CB"])),
-    offset: toNumber(get(row, ["Offset", "ET"])),
-    load: toNumber(get(row, ["Load Rating", "Load"])),
-    finish: get(row, ["Finish", "Colour", "Color"]) || "",
-    stock: toNumber(get(row, ["Stock", "Qty", "Quantity", "Available"])),
-    rrp: toMoney(get(row, ["RRP + VAT", "RRP", "Retail", "Retail Price"])),
-    image: get(row, ["Image URL", "Image", "ImageURL", "Photo", "Picture"]),
-    sourceFile: fileName,
-  };
+function normaliseTyreSize(value) {
+  const text = String(value || "")
+    .toUpperCase()
+    .replace(/\s+/g, "")
+    .replace(/ZR/g, "R")
+    .replace(/RF/g, "R")
+    .replace(/XL/g, "");
+
+  let found = text.match(/(\d{3})\/(\d{2})R(\d{2})/);
+
+  if (!found) {
+    found = text.match(/(\d{3})\/(\d{2})\/(\d{2})/);
+  }
+
+  if (!found) return "";
+
+  return `${found[1]}/${found[2]}R${found[3]}`;
 }
 
-function parseCSV(text, fileName) {
-  const lines = text
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  if (lines.length < 2) return [];
-
-  const headers = splitCSVLine(lines[0]).map(cleanKey);
-
-  return lines.slice(1).map((line, index) => {
-    const values = splitCSVLine(line);
-    const row = {};
-
-    headers.forEach((header, i) => {
-      row[header] = values[i] || "";
-    });
-
-    return mapWheel(row, fileName, index + 1);
-  });
+function getTyreRim(size) {
+  const found = normaliseTyreSize(size).match(/R(\d{2})/);
+  return found ? Number(found[1]) : 0;
 }
 
-function removeDuplicates(wheels) {
-  const map = new Map();
+function findDeepValue(obj, keys) {
+  const targets = keys.map((k) => clean(k));
 
-  wheels.forEach((wheel) => {
-    const key = wheel.partNumber || `${wheel.brand}-${wheel.model}-${wheel.pcd}`;
-    const existing = map.get(key);
+  function scan(value) {
+    if (!value || typeof value !== "object") return "";
 
-    if (!existing) {
-      map.set(key, wheel);
-    } else {
-      map.set(key, {
-        ...existing,
-        stock: Number(existing.stock || 0) + Number(wheel.stock || 0),
-        sourceFile: `${existing.sourceFile}, ${wheel.sourceFile}`,
-      });
+    for (const key of Object.keys(value)) {
+      const cleanedKey = clean(key);
+
+      if (targets.some((target) => cleanedKey.includes(target))) {
+        if (typeof value[key] !== "object") return value[key];
+      }
+
+      const nested = scan(value[key]);
+      if (nested) return nested;
     }
-  });
 
-  return [...map.values()];
+    return "";
+  }
+
+  return scan(obj);
+}
+
+function findOriginalTyreSize(vehicle) {
+  const possibleValues = [
+    vehicle?.tyreSize,
+    vehicle?.tyre_size,
+    vehicle?.frontTyreSize,
+    vehicle?.front_tyre_size,
+    vehicle?.tyres,
+    vehicle?.tyre,
+    vehicle?.standardTyreSize,
+    vehicle?.vehicleTyreSize,
+    vehicle?.tyreDetails?.front,
+    vehicle?.tyreDetails?.frontTyre,
+    vehicle?.tyreDetails?.frontTyreSize,
+    vehicle?.tyreDetails?.standard,
+    vehicle?.tyreDetails?.standardTyreSize,
+    vehicle?.tyreDetails?.size,
+  ];
+
+  for (const value of possibleValues) {
+    const size = normaliseTyreSize(value);
+    if (size) return size;
+  }
+
+  return normaliseTyreSize(JSON.stringify(vehicle || {}));
+}
+
+function getYear(vehicle) {
+  return Number(
+    vehicle?.year ||
+      vehicle?.registrationYear ||
+      String(vehicle?.dateOfFirstRegistration || "").slice(0, 4)
+  );
+}
+
+function getVehicleImage(vehicle) {
+  return (
+    vehicle?.image ||
+    vehicle?.vehicleImage ||
+    vehicle?.imageUrl ||
+    vehicle?.vehicleImageUrl ||
+    vehicle?.picture ||
+    vehicle?.photo ||
+    findDeepValue(vehicle, ["image", "vehicle image", "image url", "photo"]) ||
+    ""
+  );
+}
+
+function getVehicleFitment(vehicle) {
+  const tyreSize = findOriginalTyreSize(vehicle);
+  const rim = getTyreRim(tyreSize);
+
+  const pcd =
+    normalisePCD(vehicle?.pcd) ||
+    normalisePCD(vehicle?.wheelPcd) ||
+    normalisePCD(vehicle?.studPattern) ||
+    normalisePCD(vehicle?.fitment?.pcd) ||
+    normalisePCD(findDeepValue(vehicle, ["pcd", "stud pattern"]));
+
+  const bore =
+    toNumber(vehicle?.cb) ||
+    toNumber(vehicle?.centreBore) ||
+    toNumber(vehicle?.centerBore) ||
+    toNumber(vehicle?.bore) ||
+    toNumber(vehicle?.fitment?.cb) ||
+    toNumber(vehicle?.fitment?.centreBore) ||
+    toNumber(vehicle?.fitment?.centerBore) ||
+    toNumber(findDeepValue(vehicle, ["cb", "centre bore", "center bore", "bore"]));
+
+  const diameters = rim
+    ? [...new Set([rim, rim + 1, rim + 2].filter((n) => n >= 15 && n <= 24))]
+    : [];
+
+  return {
+    tyreSize,
+    rim,
+    pcd,
+    bore,
+    diameters,
+    image: getVehicleImage(vehicle),
+  };
 }
 
 function getWheelImage(wheel) {
@@ -247,31 +193,27 @@ function getWheelImage(wheel) {
 }
 
 export default function AlloyWheels() {
-  const previewRef = useRef(null);
+  const location = useLocation();
+  const carriedVrm = location.state?.vrm || "";
 
-  const [uploadedWheels, setUploadedWheels] = useState([]);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [vrm, setVrm] = useState(carriedVrm);
+  const [vehicle, setVehicle] = useState(null);
+  const [loadingVehicle, setLoadingVehicle] = useState(false);
+  const [vehicleMessage, setVehicleMessage] = useState("");
+
+  const [wheels, setWheels] = useState([]);
   const [loadingFirebase, setLoadingFirebase] = useState(true);
 
   const [search, setSearch] = useState("");
   const [diameter, setDiameter] = useState("all");
-  const [pcd, setPcd] = useState("all");
   const [finish, setFinish] = useState("all");
   const [stockOnly, setStockOnly] = useState(true);
-
-  const [make, setMake] = useState("all");
-  const [model, setModel] = useState("all");
-  const [year, setYear] = useState("all");
-  const [vehicleFilterOn, setVehicleFilterOn] = useState(false);
-
   const [selectedWheel, setSelectedWheel] = useState(null);
-  const [previewWheel, setPreviewWheel] = useState(null);
-
-  const wheels = uploadedWheels.length ? uploadedWheels : demoWheelData;
 
   async function loadWheelsFromFirebase() {
     try {
       setLoadingFirebase(true);
+
       const snapshot = await getDocs(collection(db, "alloyWheels"));
 
       const firebaseWheels = snapshot.docs.map((item) => ({
@@ -279,9 +221,7 @@ export default function AlloyWheels() {
         ...item.data(),
       }));
 
-      if (firebaseWheels.length > 0) {
-        setUploadedWheels(firebaseWheels);
-      }
+      setWheels(firebaseWheels);
     } catch (error) {
       console.error(error);
       alert("Could not load wheels from Firebase");
@@ -294,96 +234,43 @@ export default function AlloyWheels() {
     loadWheelsFromFirebase();
   }, []);
 
-  const scrollToPreview = () => {
-    setTimeout(() => {
-      previewRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    }, 80);
-  };
+  async function searchVehicle() {
+    if (!vrm.trim()) return;
 
-  async function saveWheelsToFirebase() {
+    setLoadingVehicle(true);
+    setVehicle(null);
+    setVehicleMessage("");
+
     try {
-      if (!uploadedWheels.length) {
-        alert("Upload a CSV first before saving to Firebase.");
-        return;
+      const res = await fetch(`${VEHICLE_LOOKUP_URL}${vrm.replace(/\s/g, "")}`);
+      const data = await res.json();
+      const v = data.vehicle || data;
+
+      setVehicle(v);
+
+      const fitment = getVehicleFitment(v);
+
+      if (fitment.rim) {
+        setDiameter(String(fitment.rim));
       }
 
-      for (const wheel of uploadedWheels) {
-        const id = String(
-          wheel.partNumber || `${wheel.brand}-${wheel.model}-${wheel.pcd}`
-        )
-          .replaceAll("/", "-")
-          .replaceAll(" ", "-");
-
-        await setDoc(doc(db, "alloyWheels", id), {
-          ...wheel,
-          updatedAt: new Date(),
-        });
-      }
-
-      alert(`${uploadedWheels.length} wheels saved to Firebase`);
+      setSearch("");
     } catch (error) {
       console.error(error);
-      alert("Error saving wheels to Firebase");
+      setVehicleMessage("Vehicle lookup failed. Please check the registration.");
+    } finally {
+      setLoadingVehicle(false);
     }
   }
 
-  const handleFiles = async (event) => {
-    const files = [...event.target.files].filter((file) =>
-      file.name.toLowerCase().endsWith(".csv")
-    );
+  useEffect(() => {
+    if (carriedVrm) {
+      searchVehicle();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    const parsedGroups = await Promise.all(
-      files.map(async (file) => {
-        const text = await file.text();
-        return parseCSV(text, file.name);
-      })
-    );
-
-    setUploadedWheels(removeDuplicates([...uploadedWheels, ...parsedGroups.flat()]));
-    setUploadedFiles((prev) => [...prev, ...files.map((file) => file.name)]);
-    event.target.value = "";
-  };
-
-  const resetUploads = () => {
-    setUploadedWheels([]);
-    setUploadedFiles([]);
-    setSelectedWheel(null);
-    setPreviewWheel(null);
-  };
-
-  const vehicleOptions = useMemo(() => {
-    const makes = [...new Set(vehicleData.map((v) => v.make))].sort();
-
-    const models = vehicleData
-      .filter((v) => make === "all" || v.make === make)
-      .map((v) => v.model);
-
-    const years = vehicleData
-      .filter((v) => {
-        const makeMatch = make === "all" || v.make === make;
-        const modelMatch = model === "all" || v.model === model;
-        return makeMatch && modelMatch;
-      })
-      .map((v) => v.years);
-
-    return {
-      makes,
-      models: [...new Set(models)].sort(),
-      years: [...new Set(years)].sort(),
-    };
-  }, [make, model]);
-
-  const selectedVehicle = useMemo(() => {
-    return vehicleData.find((v) => {
-      const makeMatch = make === "all" || v.make === make;
-      const modelMatch = model === "all" || v.model === model;
-      const yearMatch = year === "all" || v.years === year;
-      return makeMatch && modelMatch && yearMatch;
-    });
-  }, [make, model, year]);
+  const vehicleFitment = vehicle ? getVehicleFitment(vehicle) : null;
 
   const options = useMemo(() => {
     const unique = (key) =>
@@ -391,7 +278,6 @@ export default function AlloyWheels() {
 
     return {
       diameters: unique("diameter"),
-      pcds: unique("pcd"),
       finishes: unique("finish"),
     };
   }, [wheels]);
@@ -403,43 +289,41 @@ export default function AlloyWheels() {
       const matchesSearch = text.includes(search.toLowerCase());
       const matchesDiameter =
         diameter === "all" || Number(wheel.diameter) === Number(diameter);
-      const matchesPcd = pcd === "all" || wheel.pcd === pcd;
       const matchesFinish = finish === "all" || wheel.finish === finish;
       const matchesStock = !stockOnly || Number(wheel.stock) > 0;
 
       let matchesVehicle = true;
 
-      if (vehicleFilterOn && selectedVehicle) {
-        const pcdOk = wheel.pcd === selectedVehicle.pcd;
-        const boreOk = Number(wheel.bore) >= Number(selectedVehicle.bore);
-        const diameterOk = selectedVehicle.diameters.includes(Number(wheel.diameter));
-        matchesVehicle = pcdOk && boreOk && diameterOk;
+      if (vehicleFitment) {
+        const diameterOk =
+          !vehicleFitment.diameters.length ||
+          vehicleFitment.diameters.includes(Number(wheel.diameter));
+
+        const pcdOk =
+          !vehicleFitment.pcd ||
+          normalisePCD(wheel.pcd) === normalisePCD(vehicleFitment.pcd);
+
+        const boreOk =
+          !vehicleFitment.bore ||
+          !wheel.bore ||
+          Number(wheel.bore) >= Number(vehicleFitment.bore);
+
+        matchesVehicle = diameterOk && pcdOk && boreOk;
       }
 
       return (
         matchesSearch &&
         matchesDiameter &&
-        matchesPcd &&
         matchesFinish &&
         matchesStock &&
         matchesVehicle
       );
     });
-  }, [
-    wheels,
-    search,
-    diameter,
-    pcd,
-    finish,
-    stockOnly,
-    vehicleFilterOn,
-    selectedVehicle,
-  ]);
+  }, [wheels, search, diameter, finish, stockOnly, vehicleFitment]);
 
   const clearFilters = () => {
     setSearch("");
-    setDiameter("all");
-    setPcd("all");
+    setDiameter(vehicleFitment?.rim ? String(vehicleFitment.rim) : "all");
     setFinish("all");
     setStockOnly(true);
   };
@@ -450,128 +334,156 @@ export default function AlloyWheels() {
 
       <div className="alloyPage">
         <section className="alloyHero">
+          <div className="alloyHeroShade"></div>
+
           <div className="alloyHeroInner">
-            <p>Tyremen Alloy Wheels</p>
-            <h1>Find Alloy Wheels</h1>
-            <span>
-              Upload supplier CSV files, search wheels, filter by vehicle and
-              preview wheels on a car.
-            </span>
+            <div className="alloyHeroContent">
+              <div className="heroHeading">
+  <p className="eyebrow">TYREMEN ALLOY WHEELS</p>
+
+  <h1>
+    FIND ALLOY
+    <br />
+    WHEELS <span>BY REG</span>
+  </h1>
+
+  <p className="heroText">
+    Enter your registration and we’ll instantly show alloy wheels
+    matched to your vehicle fitment and sizing.
+  </p>
+</div>
+
+              <div className="alloyVrmBox">
+                <div className="plateFlag">GB</div>
+
+                <input
+                  value={vrm}
+                  onChange={(e) => setVrm(e.target.value.toUpperCase())}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") searchVehicle();
+                  }}
+                  placeholder="ENTER REG"
+                />
+
+                <button onClick={searchVehicle}>
+  {loadingVehicle ? "SEARCHING..." : "FIND WHEELS"}
+</button>
+              </div>
+
+              {vehicleMessage && (
+                <div className="alloyMessage">{vehicleMessage}</div>
+              )}
+            </div>
           </div>
         </section>
 
         <main className="alloyWrap">
-          <section className="csvBox">
-            <div>
-              <h2>CSV Import</h2>
-              <p>Upload one or many CSV files. They merge into one searchable wheel list.</p>
+          {loadingFirebase && (
+            <div className="loadingBox">
+              <h2>Loading wheels from Firebase...</h2>
             </div>
+          )}
 
-            <div className="csvButtons">
-              <label>
-                Add CSV Files
-                <input type="file" accept=".csv" multiple onChange={handleFiles} />
-              </label>
-
-              <button onClick={resetUploads}>Reset</button>
-              <button onClick={saveWheelsToFirebase}>Save To Firebase</button>
-            </div>
-
-            {loadingFirebase && (
-              <div className="loadingBox">
-                <h2>Loading wheels from Firebase...</h2>
+          {vehicle && (
+            <section className="vehicleVrmResult">
+              <div className="vehicleImagePanel">
+                {vehicleFitment?.image ? (
+                  <img
+                    src={vehicleFitment.image}
+                    alt={`${vehicle.make || ""} ${vehicle.model || ""}`}
+                  />
+                ) : (
+                  <div className="vehicleImageFallback">TYREMEN</div>
+                )}
               </div>
-            )}
 
-            <div className="statGrid">
-              <ImportStat label="CSV files added" value={uploadedFiles.length} />
-              <ImportStat label="Wheels loaded" value={wheels.length} />
-              <ImportStat label="Mode" value={uploadedWheels.length ? "Live CSV" : "Demo"} />
-            </div>
+              <div className="vehicleInfoPanel">
+                <div className="vehicleSearchTop">
+                  <div>
+                    <p className="vehicleMatched">Vehicle matched</p>
 
-            {uploadedFiles.length > 0 && (
-              <div className="fileTags">
-                {uploadedFiles.map((file, index) => (
-                  <span key={`${file}-${index}`}>{file}</span>
-                ))}
+                    <h2>
+                      {vehicle.make} {vehicle.model}
+                    </h2>
+
+                    <p className="vehicleSub">
+                      {getYear(vehicle) || ""}
+                      {vehicle.fuel && ` • ${vehicle.fuel}`}
+                      {vehicle.body && ` • ${vehicle.body}`}
+                    </p>
+                  </div>
+
+                  <button onClick={() => setVehicle(null)}>Change Vehicle</button>
+                </div>
+
+                <div className="vehicleResult">
+                  <span>
+                    Original tyre: <strong>{vehicleFitment?.tyreSize || "Not found"}</strong>
+                  </span>
+
+                  <span>
+                    Wheel diameter:{" "}
+                    <strong>
+                      {vehicleFitment?.rim ? `${vehicleFitment.rim}"` : "Not found"}
+                    </strong>
+                  </span>
+
+                  <span>
+                    Suggested:{" "}
+                    <strong>
+                      {vehicleFitment?.diameters?.length
+                        ? vehicleFitment.diameters.map((d) => `${d}"`).join(", ")
+                        : "Use filters"}
+                    </strong>
+                  </span>
+
+                  <span>
+                    PCD: <strong>{vehicleFitment?.pcd || "Not supplied"}</strong>
+                  </span>
+
+                  <span>
+                    Bore:{" "}
+                    <strong>
+                      {vehicleFitment?.bore
+                        ? `${vehicleFitment.bore}mm`
+                        : "Not supplied"}
+                    </strong>
+                  </span>
+                </div>
               </div>
-            )}
-          </section>
+            </section>
+          )}
 
-          <section className="vehicleSearchBox" ref={previewRef}>
-            <div className="vehicleSearchTop">
+          {!vehicle && (
+            <section className="alloyIntroBox">
               <div>
-                <h2>Vehicle Search</h2>
-                <p>Choose make, model and year to show wheels that should suit that vehicle.</p>
+                <p className="eyebrow">Simple wheel search</p>
+                <h2>TYREMENS SMART WHEEL SEARCH.</h2>
+                <p>
+                  Start with the vehicle registration. Once we know the car, this
+                  page can show tyre size, wheel diameter, fitment information and
+                  matching alloy wheel options.
+                </p>
               </div>
 
-              <label className="vehicleToggle">
-                <input
-                  type="checkbox"
-                  checked={vehicleFilterOn}
-                  onChange={(e) => setVehicleFilterOn(e.target.checked)}
-                />
-                Use vehicle filter
-              </label>
-            </div>
+              <div className="alloyIntroGrid">
+                <div>
+                  <strong>✓ VRM matched</strong>
+                  <span>Make, model, year, body and tyre data</span>
+                </div>
 
-            <div className="vehicleGrid">
-              <label>
-                <span>Make</span>
-                <select
-                  value={make}
-                  onChange={(e) => {
-                    setMake(e.target.value);
-                    setModel("all");
-                    setYear("all");
-                  }}
-                >
-                  <option value="all">All Makes</option>
-                  {vehicleOptions.makes.map((item) => (
-                    <option key={item} value={item}>{item}</option>
-                  ))}
-                </select>
-              </label>
+                <div>
+                  <strong>✓ Wheel-size led</strong>
+                  <span>Uses original rim size and sensible upgrade sizes</span>
+                </div>
 
-              <label>
-                <span>Model</span>
-                <select
-                  value={model}
-                  onChange={(e) => {
-                    setModel(e.target.value);
-                    setYear("all");
-                  }}
-                >
-                  <option value="all">All Models</option>
-                  {vehicleOptions.models.map((item) => (
-                    <option key={item} value={item}>{item}</option>
-                  ))}
-                </select>
-              </label>
-
-              <label>
-                <span>Year</span>
-                <select value={year} onChange={(e) => setYear(e.target.value)}>
-                  <option value="all">All Years</option>
-                  {vehicleOptions.years.map((item) => (
-                    <option key={item} value={item}>{item}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-
-            {selectedVehicle && (
-              <div className="vehicleResult">
-                <strong>{selectedVehicle.make} {selectedVehicle.model}</strong>
-                <span>Years: {selectedVehicle.years}</span>
-                <span>PCD: {selectedVehicle.pcd}</span>
-                <span>Bore: {selectedVehicle.bore}mm</span>
-                <span>Sizes: {selectedVehicle.diameters.join(", ")} inch</span>
+                <div>
+                  <strong>✓ Real stock</strong>
+                  <span>Loaded directly from your Firebase alloy database</span>
+                </div>
               </div>
-            )}
-
-            <CarPreview wheel={previewWheel} selectedVehicle={selectedVehicle} />
-          </section>
+            </section>
+          )}
 
           <section className="filterBox">
             <div className="filterGrid">
@@ -580,69 +492,92 @@ export default function AlloyWheels() {
                 <input
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search brand, model, finish, PCD or part number"
+                  placeholder="Search brand, model, finish, PCD or part number..."
                 />
               </label>
 
-              <Select label="Diameter" value={diameter} onChange={setDiameter} options={options.diameters} suffix='"' />
-              <Select label="PCD" value={pcd} onChange={setPcd} options={options.pcds} />
-              <Select label="Finish" value={finish} onChange={setFinish} options={options.finishes} />
-
-              <button onClick={clearFilters}>Clear</button>
-            </div>
-
-            <label className="stockToggle">
-              <input
-                type="checkbox"
-                checked={stockOnly}
-                onChange={(e) => setStockOnly(e.target.checked)}
+              <Select
+                label="Diameter"
+                value={diameter}
+                onChange={setDiameter}
+                options={options.diameters}
+                suffix='"'
               />
-              Show in-stock wheels only
-            </label>
+
+              <Select
+                label="Finish"
+                value={finish}
+                onChange={setFinish}
+                options={options.finishes}
+              />
+
+              <label className="stockToggle">
+                <input
+                  type="checkbox"
+                  checked={stockOnly}
+                  onChange={(e) => setStockOnly(e.target.checked)}
+                />
+                <span>In-stock only</span>
+              </label>
+
+              <button className="clearBtn" onClick={clearFilters}>
+                Clear Filters
+              </button>
+            </div>
           </section>
 
           <div className="resultTop">
-            <p>Showing <strong>{filtered.length}</strong> wheels</p>
-            <span>Multiple supplier CSV files supported</span>
+            <p>
+              <strong>{filtered.length}</strong> wheels found
+            </p>
+
+            <span>
+              {vehicle
+                ? "Filtered using VRM vehicle data"
+                : "Enter a reg to match wheels to your vehicle"}
+            </span>
           </div>
 
           <section className="wheelGrid">
             {filtered.map((wheel) => (
               <WheelCard
-                key={`${wheel.partNumber}-${wheel.sourceFile}`}
+                key={`${wheel.partNumber}-${wheel.id}`}
                 wheel={wheel}
                 onSelect={() => setSelectedWheel(wheel)}
-                setPreviewWheel={(wheel) => {
-                  setPreviewWheel(wheel);
-                  scrollToPreview();
-                }}
               />
             ))}
           </section>
 
-          {filtered.length === 0 && (
+          {filtered.length === 0 && !loadingFirebase && (
             <div className="noResults">
               <h2>No wheels found</h2>
-              <p>Try turning off stock only or clearing the filters.</p>
+              <p>
+                Try clearing filters, turning off stock only, or searching a
+                different diameter.
+              </p>
             </div>
           )}
         </main>
 
         {selectedWheel && (
-          <ProductModal wheel={selectedWheel} onClose={() => setSelectedWheel(null)} />
+          <ProductModal
+            wheel={selectedWheel}
+            vehicle={vehicle}
+            onClose={() => setSelectedWheel(null)}
+          />
         )}
       </div>
     </>
   );
 }
 
-function WheelCard({ wheel, onSelect, setPreviewWheel }) {
+function WheelCard({ wheel, onSelect }) {
   const price = wheel.rrp ? `£${Number(wheel.rrp).toFixed(2)}` : "POA";
   const inStock = Number(wheel.stock) > 0;
   const imageUrl = getWheelImage(wheel);
 
   return (
-    <div className="wheelCard">
+    <article className="wheelCard">
       <div className="wheelImageBox">
         {imageUrl ? (
           <img
@@ -663,19 +598,19 @@ function WheelCard({ wheel, onSelect, setPreviewWheel }) {
             <p>{wheel.brand}</p>
             <h2>{wheel.model || "Alloy Wheel"}</h2>
           </div>
+
           <span className={inStock ? "stock in" : "stock out"}>
             {inStock ? `${wheel.stock} in stock` : "Out"}
           </span>
         </div>
 
         <p className="desc">{wheel.description}</p>
-        <p className="source">Source: {wheel.sourceFile}</p>
 
-        <div className="specGrid">
-          <Spec label="Size" value={`${wheel.diameter}x${wheel.width}J`} />
-          <Spec label="PCD" value={wheel.pcd} />
-          <Spec label="ET" value={wheel.offset} />
-          <Spec label="Bore" value={`${wheel.bore}mm`} />
+        <div className="quickSpecRow">
+          <span>{wheel.diameter ? `${wheel.diameter}"` : "-"}</span>
+          <span>{wheel.width ? `${wheel.width}J` : "-"}</span>
+          <span>{wheel.pcd || "-"}</span>
+          <span>{wheel.finish || "-"}</span>
         </div>
 
         <div className="cardBottom">
@@ -684,15 +619,12 @@ function WheelCard({ wheel, onSelect, setPreviewWheel }) {
             <strong>{price}</strong>
           </div>
 
-          <div className="wheelActions">
-            <button onClick={onSelect}>View</button>
-            <button className="whiteBtn" onClick={() => setPreviewWheel(wheel)}>
-              View On Car
-            </button>
-          </div>
+          <button onClick={onSelect}>
+            View Wheel <span>→</span>
+          </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -705,13 +637,14 @@ function WheelPlaceholder({ brand, model }) {
         <span></span>
         <span></span>
       </div>
+
       <p>{brand}</p>
       <small>{model}</small>
     </div>
   );
 }
 
-function ProductModal({ wheel, onClose }) {
+function ProductModal({ wheel, vehicle, onClose }) {
   const imageUrl = getWheelImage(wheel);
 
   return (
@@ -722,6 +655,7 @@ function ProductModal({ wheel, onClose }) {
             <p>{wheel.brand}</p>
             <h2>{wheel.model || "Alloy Wheel"}</h2>
           </div>
+
           <button onClick={onClose}>Close</button>
         </div>
 
@@ -740,27 +674,41 @@ function ProductModal({ wheel, onClose }) {
             )}
           </div>
 
-          <div>
-            <h3>Wheel Details</h3>
+          <div className="modalInfo">
+            {vehicle && (
+              <p className="modalMatched">
+                Matched for: {vehicle.make} {vehicle.model}
+              </p>
+            )}
+
             <p className="modalDesc">{wheel.description}</p>
 
             <div className="specGrid">
               <Spec label="Part No" value={wheel.partNumber} />
               <Spec label="Finish" value={wheel.finish} />
-              <Spec label="Diameter" value={`${wheel.diameter}"`} />
-              <Spec label="Width" value={`${wheel.width}J`} />
+              <Spec label="Diameter" value={wheel.diameter ? `${wheel.diameter}"` : "-"} />
+              <Spec label="Width" value={wheel.width ? `${wheel.width}J` : "-"} />
               <Spec label="PCD" value={wheel.pcd} />
-              <Spec label="Offset" value={`ET${wheel.offset}`} />
-              <Spec label="Centre Bore" value={`${wheel.bore}mm`} />
+              <Spec label="Offset" value={wheel.offset ? `ET${wheel.offset}` : "-"} />
+              <Spec label="Centre Bore" value={wheel.bore ? `${wheel.bore}mm` : "-"} />
               <Spec label="Load Rating" value={wheel.load} />
-              <Spec label="Stock" value={Number(wheel.stock) > 0 ? `${wheel.stock} available` : "Out of stock"} />
-              <Spec label="RRP + VAT" value={wheel.rrp ? `£${Number(wheel.rrp).toFixed(2)}` : "POA"} />
-              <Spec label="Source File" value={wheel.sourceFile} />
+              <Spec
+                label="Stock"
+                value={
+                  Number(wheel.stock) > 0
+                    ? `${wheel.stock} available`
+                    : "Out of stock"
+                }
+              />
+              <Spec
+                label="RRP + VAT"
+                value={wheel.rrp ? `£${Number(wheel.rrp).toFixed(2)}` : "POA"}
+              />
             </div>
 
             <div className="modalActions">
               <button>Enquire</button>
-              <button className="whiteBtn">Build Package</button>
+              <button className="whiteBtn">Build Wheel & Tyre Package</button>
             </div>
           </div>
         </div>
@@ -769,68 +717,14 @@ function ProductModal({ wheel, onClose }) {
   );
 }
 
-function CarPreview({ wheel, selectedVehicle }) {
-  const bodyType = selectedVehicle?.bodyType || "generic";
-  const imageUrl = getWheelImage(wheel);
-
-  return (
-    <div className="carPreviewBox">
-      <div className="carInfo">
-        <h3>Wheel Configurator</h3>
-        <p>
-          {selectedVehicle
-            ? `${selectedVehicle.make} ${selectedVehicle.model}`
-            : "Select vehicle"}
-        </p>
-      </div>
-
-      <div className={`digitalCar ${bodyType}`}>
-        <div className="digitalGlow"></div>
-        <div className="digitalBody"></div>
-        <div className="digitalRoof"></div>
-        <div className="digitalWindow digitalRearWindow"></div>
-        <div className="digitalWindow digitalFrontWindow"></div>
-        <div className="digitalBonnet"></div>
-        <div className="digitalBoot"></div>
-        <div className="digitalLight digitalFrontLight"></div>
-        <div className="digitalLight digitalRearLight"></div>
-        <div className="digitalDoor"></div>
-
-        <div className="digitalWheel digitalRearWheel">
-          {imageUrl ? <img src={imageUrl} alt="" /> : <div className="digitalFakeWheel"></div>}
-        </div>
-
-        <div className="digitalWheel digitalFrontWheel">
-          {imageUrl ? <img src={imageUrl} alt="" /> : <div className="digitalFakeWheel"></div>}
-        </div>
-
-        <div className="digitalBadge">{selectedVehicle?.make || "TYREMEN"}</div>
-      </div>
-
-      {wheel && (
-        <div className="previewSelected">
-          Showing: <strong>{wheel.brand} {wheel.model}</strong>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ImportStat({ label, value }) {
-  return (
-    <div className="importStat">
-      <p>{label}</p>
-      <strong>{value}</strong>
-    </div>
-  );
-}
-
 function Select({ label, value, onChange, options, suffix = "" }) {
   return (
     <label>
       <span>{label}</span>
+
       <select value={value} onChange={(e) => onChange(e.target.value)}>
         <option value="all">All</option>
+
         {options.map((option) => (
           <option key={option} value={option}>
             {option}

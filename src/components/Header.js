@@ -153,7 +153,7 @@ export default function Header() {
     { label: "TIMING", path: "/timing-belt-hull" },
     { label: "ALIGNMENT", path: "/wheel-alignment-hull" },
     { label: "ALLOY WHEELS", path: "/alloy-wheels" },
-    { label: "TYRE SIZE CALCULATOR", path: "/tyre-size-calculator" },
+    { label: "SPARE WHEEL KIT", path: "/spare-wheel" },
   ];
 
   return (

@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import "./SpareWheel.css";
@@ -47,7 +48,7 @@ function clean(value) {
   return String(value || "")
     .toLowerCase()
     .replace(/-/g, " ")
-    .replace(/[^a-z0-9. ]/g, " ")
+    .replace(/[^a-z0-9. /]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -139,8 +140,116 @@ function scoreItem(vehicle, item) {
   return score;
 }
 
+function normaliseTyreSize(value) {
+  const text = String(value || "")
+    .toUpperCase()
+    .replace(/\s+/g, "")
+    .replace(/ZR/g, "R")
+    .replace(/RF/g, "R")
+    .replace(/XL/g, "");
+
+  let found = text.match(/(\d{3})\/(\d{2})R(\d{2})/);
+
+  if (!found) {
+    found = text.match(/(\d{3})\/(\d{2})\/(\d{2})/);
+  }
+
+  if (!found) return "";
+
+  return `${found[1]}/${found[2]}R${found[3]}`;
+}
+
+function findOriginalTyreSize(vehicle) {
+  const possibleValues = [
+    vehicle.tyreSize,
+    vehicle.tyre_size,
+    vehicle.frontTyreSize,
+    vehicle.front_tyre_size,
+    vehicle.tyres,
+    vehicle.tyre,
+    vehicle.standardTyreSize,
+    vehicle.vehicleTyreSize,
+    vehicle?.tyreDetails?.front,
+    vehicle?.tyreDetails?.frontTyre,
+    vehicle?.tyreDetails?.frontTyreSize,
+    vehicle?.tyreDetails?.standard,
+    vehicle?.tyreDetails?.standardTyreSize,
+    vehicle?.tyreDetails?.size,
+  ];
+
+  for (const value of possibleValues) {
+    const size = normaliseTyreSize(value);
+    if (size) return size;
+  }
+
+  const allVehicleText = JSON.stringify(vehicle || {});
+  return normaliseTyreSize(allVehicleText);
+}
+
+function tyreDiameter(size) {
+  const normalised = normaliseTyreSize(size);
+  const found = normalised.match(/(\d{3})\/(\d{2})R(\d{2})/);
+
+  if (!found) return null;
+
+  const width = Number(found[1]);
+  const profile = Number(found[2]);
+  const rim = Number(found[3]);
+
+  return rim * 25.4 + width * (profile / 100) * 2;
+}
+
+function tyreDifferencePercent(originalSize, spareSize) {
+  const original = tyreDiameter(originalSize);
+  const spare = tyreDiameter(spareSize);
+
+  if (!original || !spare) return null;
+
+  return ((spare - original) / original) * 100;
+}
+
+function formatDiff(value) {
+  if (value === null || Number.isNaN(value)) return "N/A";
+
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${value.toFixed(1)}%`;
+}
+
+function getDiffStatus(value) {
+  if (value === null || Number.isNaN(value)) {
+    return {
+      label: "Unable to calculate",
+      className: "unknown",
+    };
+  }
+
+  const abs = Math.abs(value);
+
+  if (abs <= 3) {
+    return {
+      label: "Excellent match",
+      className: "good",
+    };
+  }
+
+  if (abs <= 5) {
+    return {
+      label: "Acceptable temporary spare",
+      className: "warn",
+    };
+  }
+
+  return {
+    label: "Higher variance — temporary use only",
+    className: "bad",
+  };
+}
+
 export default function SpareWheel() {
-  const [vrm, setVrm] = useState("");
+  
+  const location = useLocation();
+  const carriedVrm = location.state?.vrm || "";	
+  const [vrm, setVrm] = useState(carriedVrm);
   const [vehicle, setVehicle] = useState(null);
   const [kits, setKits] = useState([]);
   const [match, setMatch] = useState(null);
@@ -195,7 +304,12 @@ export default function SpareWheel() {
     setLoading(false);
   };
 
-    return (
+  const originalTyreSize = vehicle ? findOriginalTyreSize(vehicle) : "";
+  const spareTyreSize = match ? match["Tyre Size"] : "";
+  const tyreDiff = tyreDifferencePercent(originalTyreSize, spareTyreSize);
+  const diffStatus = getDiffStatus(tyreDiff);
+
+  return (
     <>
       <Header />
 
@@ -208,6 +322,9 @@ export default function SpareWheel() {
             <input
               value={vrm}
               onChange={(e) => setVrm(e.target.value.toUpperCase())}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") searchVehicle();
+              }}
               placeholder="ENTER REG"
             />
 
@@ -218,6 +335,69 @@ export default function SpareWheel() {
 
           {message && <div className="spareMessage">{message}</div>}
         </div>
+
+        {!vehicle && (
+          <div className="spareIntro">
+            <div className="introCard">
+              <h2>Never get stuck without a spare</h2>
+              <p>
+                Many modern cars no longer come with a spare wheel. Road Hero
+                kits give you a proper emergency spare wheel matched to your
+                vehicle.
+              </p>
+            </div>
+
+            <div className="introGrid">
+              <div>
+                <strong>✓ Vehicle matched</strong>
+                <span>Correct wheel and tyre kit for your car</span>
+              </div>
+
+              <div>
+                <strong>✓ Complete kit</strong>
+                <span>Wheel, tyre, jack, brace and accessories</span>
+              </div>
+
+              <div>
+                <strong>✓ Peace of mind</strong>
+                <span>No waiting hours for recovery after a puncture</span>
+              </div>
+            </div>
+
+            <div className="introShowcase">
+              <div className="showcaseImage">
+                <img src="/roadhero/full-kit.png" alt="Road Hero full kit" />
+              </div>
+
+              <div className="showcaseContent">
+                <span>ROAD HERO EMERGENCY KIT</span>
+                <h2>Everything needed to get you safely back on the road</h2>
+
+                <div className="showcaseFeatures">
+                  <div>
+                    <strong>✓ Space Saver Wheel</strong>
+                    <p>Vehicle specific emergency spare wheel</p>
+                  </div>
+
+                  <div>
+                    <strong>✓ Tyre Pre-Fitted</strong>
+                    <p>Ready to use immediately roadside</p>
+                  </div>
+
+                  <div>
+                    <strong>✓ Jack & Wheel Brace</strong>
+                    <p>Everything needed for wheel replacement</p>
+                  </div>
+
+                  <div>
+                    <strong>✓ Storage Bag</strong>
+                    <p>Keeps your boot clean and organised</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {vehicle && (
           <div className="vehicleCard">
@@ -233,53 +413,78 @@ export default function SpareWheel() {
         )}
 
         {match && (
-          <div className="kitCard">
-            <div className="kitImage kitGallery">
-              <img src="/roadhero/kit-main.webp" alt="Road Hero kit" />
-              <img src="/roadhero/kit-open.webp" alt="Road Hero wheel" />
-              <img
-                src="/roadhero/kit-accessories.webp"
-                alt="Road Hero accessories"
-              />
-            </div>
+  <div className="kitCard">
+    <div className="kitImage kitGallery">
+      <img
+        className="mainKitImage"
+        src="/roadhero/kit-open.webp"
+        alt="Road Hero wheel"
+      />
 
-            <div className="kitInfo">
-              <span className="kitBadge">FITS YOUR VEHICLE</span>
+      <img src="/roadhero/kit-accessories.webp" alt="Road Hero accessories" />
+      <img src="/roadhero/kit-main.webp" alt="Road Hero storage bag" />
+    </div>
 
-              <h2>ROAD HERO KIT</h2>
+    <div className="kitInfo">
+      <span className="kitBadge">FITS YOUR VEHICLE</span>
+      <h2>ROAD HERO KIT</h2>
 
-              <ul>
-                <li>Space saver wheel</li>
-                <li>Tyre fitted</li>
-                <li>Jack and wheel brace</li>
-                <li>Accessory kit</li>
-                <li>Storage bag</li>
-              </ul>
+      <ul>
+        <li>Space saver wheel</li>
+        <li>Tyre fitted</li>
+        <li>Jack and wheel brace</li>
+        <li>Accessory kit</li>
+        <li>Storage bag</li>
+      </ul>
 
-              <div className="specs">
-                <div>
-                  <strong>Wheel Size</strong>
-                  <span>{match["Wheel Size"]}</span>
-                </div>
+      <div className="specs">
+        <div>
+          <strong>Wheel Size</strong>
+          <span>{match["Wheel Size"]}</span>
+        </div>
 
-                <div>
-                  <strong>Tyre Size</strong>
-                  <span>{match["Tyre Size"]}</span>
-                </div>
+        <div>
+          <strong>Tyre Size</strong>
+          <span>{match["Tyre Size"]}</span>
+        </div>
 
-                <div>
-                  <strong>Part Code</strong>
-                  <span>{match["Part code"]}</span>
-                </div>
-              </div>
+        <div>
+          <strong>Part Code</strong>
+          <span>{match["Part code"]}</span>
+        </div>
+      </div>
 
-              <div className="priceRow">
-                <h3>£{match["Sell Inc Vat"]}</h3>
-                <button>ADD TO BASKET</button>
-              </div>
-            </div>
-          </div>
-        )}
+      <div className="tyreCompare">
+        <strong>Rolling Diameter Check</strong>
+
+        <div>
+          <span>Original tyre</span>
+          <b>{originalTyreSize || "Not supplied by VRM"}</b>
+        </div>
+
+        <div>
+          <span>Spare tyre</span>
+          <b>{spareTyreSize}</b>
+        </div>
+
+        <div>
+          <span>Difference</span>
+          <b>{formatDiff(tyreDiff)}</b>
+        </div>
+
+        <div className={`diffStatus ${diffStatus.className}`}>
+          <span>Status</span>
+          <b>{diffStatus.label}</b>
+        </div>
+      </div>
+
+      	<div className="priceRow">
+        <h3>£{Number(match["Sell Inc Vat"]).toFixed(2)}</h3>
+        <button>ADD TO BASKET</button>
+      	</div>
+   	 </div>
+  	</div>
+	)}
       </div>
     </>
   );
