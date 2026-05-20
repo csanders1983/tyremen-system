@@ -4,9 +4,12 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import Header from "./components/Header";
 import "./AlloyWheels.css";
+import Footer from "./components/Footer";
+
 
 const VEHICLE_LOOKUP_URL =
   "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=";
+document.title = "Alloy Wheel Specialist Hull - Car,van & Motorhome";
 
 function clean(value) {
   return String(value || "")
@@ -330,7 +333,7 @@ export default function AlloyWheels() {
 
   return (
     <>
-      <Header />
+     
 
       <div className="alloyPage">
         <section className="alloyHero">
@@ -567,6 +570,7 @@ export default function AlloyWheels() {
           />
         )}
       </div>
+     <Footer />
     </>
   );
 }
@@ -744,3 +748,4 @@ function Spec({ label, value }) {
     </div>
   );
 }
+

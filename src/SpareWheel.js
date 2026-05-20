@@ -5,6 +5,9 @@ import "./SpareWheel.css";
 
 const VEHICLE_LOOKUP_URL =
   "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=";
+document.title = "Space Saver Spare Wheel Hull - RoadHero";
+
+
 
 function parseCSVLine(line) {
   const result = [];

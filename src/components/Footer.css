@@ -1,0 +1,129 @@
+.siteFooter {
+  margin-top: 70px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 208, 0, 0.18), transparent 32%),
+    linear-gradient(135deg, #050505, #111);
+  color: #fff;
+  border-top: 4px solid #ffd000;
+}
+
+.footerTop {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 55px 22px 35px;
+  display: grid;
+  grid-template-columns: 1.1fr 2fr;
+  gap: 45px;
+}
+
+.footerBrand h2 {
+  margin: 0 0 10px;
+  font-size: 42px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  color: #ffd000;
+}
+
+.footerBrand p {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.footerBrand span {
+  color: #d7d7d7;
+  font-size: 15px;
+}
+
+.footerLinks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.footerLinks h4 {
+  margin: 0 0 14px;
+  color: #ffd000;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.footerLinks a,
+.footerLinks p {
+  display: block;
+  margin: 8px 0;
+  color: #e8e8e8;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.footerLinks a:hover {
+  color: #ffd000;
+}
+
+.footerTrust {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 18px 22px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.footerTrust span {
+  background: rgba(255, 208, 0, 0.1);
+  border: 1px solid rgba(255, 208, 0, 0.28);
+  color: #ffd000;
+  padding: 12px 14px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.footerBottom {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 18px 22px 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  color: #bdbdbd;
+  font-size: 14px;
+}
+
+.footerBottom p {
+  margin: 0;
+}
+
+@media (max-width: 850px) {
+  .footerTop {
+    grid-template-columns: 1fr;
+  }
+
+  .footerLinks {
+    grid-template-columns: 1fr;
+  }
+
+  .footerTrust {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .footerTrust {
+    grid-template-columns: 1fr;
+  }
+
+  .footerBrand h2 {
+    font-size: 34px;
+  }
+}

@@ -151,7 +151,7 @@ button {
 
 .vehicleHud {
   display: grid;
-  grid-template-columns: 170px 1.45fr 0.8fr 1fr 0.9fr 150px;
+  grid-template-columns: 160px 2fr 1fr 1fr 1fr 1.1fr 140px;
   background:
     linear-gradient(135deg, rgba(18,18,18,0.92), rgba(5,5,5,0.76)),
     radial-gradient(circle at 20% 100%, rgba(255,208,0,0.2), transparent 34%);
@@ -747,8 +747,8 @@ button {
   }
 
   .vehicleHud {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: 135px 2.4fr 1.1fr 1.1fr 1fr 1.35fr 135px;
+}
 
   .hudBlock {
     border-right: none;
@@ -851,4 +851,234 @@ button {
   .midRow {
     width: calc(100% - 20px);
   }
+}
+/* PREMIUM SOFTENING PASS - keeps layout/workings the same */
+
+.homePage {
+  background: #f1f1f1;
+}
+
+.regSearch,
+.serviceCard,
+.whyBox,
+.steps div,
+.vehicleResult {
+  border-color: rgba(0, 0, 0, 0.10);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+}
+
+.regSearch {
+  background: linear-gradient(180deg, #ffffff, #f7f7f7);
+  border-top: 4px solid #ffd000;
+  padding: 28px;
+}
+
+.vehiclePlaceholder {
+  min-height: 330px;
+  background:
+    radial-gradient(circle at center, rgba(255, 208, 0, 0.10), transparent 35%),
+    linear-gradient(145deg, #111, #050505);
+  border: 1px solid rgba(255, 208, 0, 0.18);
+}
+
+.steps div {
+  background: linear-gradient(180deg, #ffffff, #f8f8f8);
+  border-left: 4px solid #ffd000;
+}
+
+.serviceCard {
+  background: linear-gradient(180deg, #ffffff, #fafafa);
+  min-height: 116px;
+}
+
+.serviceCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+}
+
+.midRow {
+  gap: 22px;
+}
+
+.whyBox {
+  background: linear-gradient(180deg, #ffffff, #f8f8f8);
+}
+
+.plateRow {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.vehicleImageBox {
+  background: linear-gradient(180deg, #ffffff, #f7f7f7);
+}
+
+.vehicleInfo {
+  background: #fff;
+}
+
+.vehicleActionGrid button,
+.motBanner button {
+  box-shadow: 0 8px 18px rgba(255, 208, 0, 0.22);
+}
+
+.footer {
+  background: linear-gradient(180deg, #050505, #000);
+}
+.vehicleInfo strong {
+  color: #111 !important;
+}
+.vehicleInfo,
+.vehicleInfo * {
+  color: #111 !important;
+}
+
+.vehicleInfo strong {
+  color: #111 !important;
+  font-size: 28px;
+  font-weight: 1000;
+}
+.homePage .vehicleResult .vehicleInfo strong,
+.homePage .vehicleResult .vehicleInfo strong *,
+.homePage .regSearch .vehicleResult .vehicleInfo strong {
+  color: #111 !important;
+  text-shadow: none !important;
+  -webkit-text-fill-color: #111 !important;
+}
+.vehicleHudInfo {
+  margin-top: -86px;
+}
+
+.vehicleHudInfo .vehicleHud {
+  opacity: 0.96;
+}
+
+.vehicleHudInfo .hudBlock strong {
+  color: #fff;
+}
+
+.vehicleHudInfo .hudReg strong {
+  color: #ffd000;
+}
+
+.vehicleHudInfo .hudBlock span,
+.vehicleHudInfo .hudBlock button {
+  color: rgba(255,255,255,0.72);
+}
+
+.vehicleHudInfo .hudClear {
+  opacity: 0.85;
+}
+.vehicleHud .hudBlock {
+  min-width: 0;
+}
+
+.vehicleHud .hudBlock strong,
+.vehicleHud .hudBlock span,
+.vehicleHud .hudBlock button {
+  overflow-wrap: anywhere;
+}
+
+.hudClear {
+  align-self: center;
+}
+.hudBlock {
+  padding: 14px 18px;
+  min-height: 96px;
+}
+
+.hudBlock small {
+  font-size: 10px;
+  letter-spacing: 1.8px;
+}
+
+.hudBlock strong {
+  font-size: 19px;
+  line-height: 1.05;
+}
+
+.hudReg strong {
+  font-size: 26px;
+}
+
+.hudBlock span,
+.hudBlock button {
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.hudVehicle strong {
+  font-size: 21px;
+}
+
+.hudClear {
+  width: calc(100% - 20px);
+  margin: auto 10px;
+  font-size: 10px;
+}
+.floatingOffer {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 320px;
+  background:
+    linear-gradient(145deg, rgba(0,0,0,0.96), rgba(20,20,20,0.96));
+  border: 2px solid #ffd000;
+  border-radius: 18px;
+  padding: 22px;
+  z-index: 999;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.45),
+    0 0 30px rgba(255,208,0,0.14);
+  backdrop-filter: blur(10px);
+}
+
+.floatingOffer small {
+  color: #ffd000;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.floatingOffer h3 {
+  color: #fff;
+  font-size: 34px;
+  line-height: 1;
+  margin: 10px 0;
+  font-weight: 1000;
+}
+
+.floatingOffer p {
+  color: rgba(255,255,255,0.72);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.floatingOffer button {
+  width: 100%;
+  height: 52px;
+  border-radius: 12px;
+  border: none;
+  background: #ffd000;
+  color: #000;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.floatingOffer button:hover {
+  transform: translateY(-2px);
+}
+
+.floatingOfferClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,0.08) !important;
+  color: #fff !important;
+  font-size: 18px;
+  padding: 0 !important;
 }

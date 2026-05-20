@@ -13,6 +13,7 @@ import clutchIcon from "./assets/icons/clutch.png";
 import timingIcon from "./assets/icons/timing.png";
 import diagnosticsIcon from "./assets/icons/diagnostics.png";
 
+document.title = "Tyremen Hull | Tyres, MOT, Servicing & Repairs";
 const VEHICLE_LOOKUP_URL =
   "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=";
 
@@ -50,6 +51,8 @@ export default function Home() {
     return localStorage.getItem("tyremenVrm") || "";
   });
 
+
+
   const [vehicle, setVehicle] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("tyremenVehicle") || "null");
@@ -80,7 +83,6 @@ export default function Home() {
 
   async function lookupVehicle() {
     const cleanReg = registration.toUpperCase().replace(/\s/g, "");
-
     if (!cleanReg) {
       alert("Please enter your registration");
       return;
@@ -139,11 +141,91 @@ export default function Home() {
     .join(" • ");
 
   const tyreSize = firstValue(vehicle?.tyreSize, vehicle?.frontTyreSize, vehicle?.tyres);
-  const motTitle = firstValue(vehicle?.motClass, vehicle?.motType, "MOT Class 4");
   const motExpiry = firstValue(vehicle?.motExpiryDate, vehicle?.motExpiry, vehicle?.motDueDate);
   const motMileage = firstValue(vehicle?.motMileage, vehicle?.lastMotMileage, vehicle?.mileage);
   const motStatus = firstValue(vehicle?.motStatus, vehicle?.lastMotStatus, "MOT info");
-  const airConGas = firstValue(vehicle?.airconGas, vehicle?.airConGas, vehicle?.acGas, vehicle?.gasType, "Likely R1234yf");
+  
+const rawWeight = firstValue(
+  vehicle?.revenueWeight,
+  vehicle?.grossWeight,
+  vehicle?.grossVehicleWeight,
+  vehicle?.gross_vehicle_weight,
+  vehicle?.grossVehicleMass,
+  vehicle?.grossVehicleMassKg,
+  vehicle?.maxWeight,
+  vehicle?.vehicleWeight,
+  vehicle?.weight
+);
+
+const vehicleWeight = Number(String(rawWeight || "").replace(/[^0-9]/g, ""));
+
+const vehicleText = [
+  vehicle?.body,
+  vehicle?.bodyType,
+  vehicle?.vehicleType,
+  vehicle?.type,
+  vehicle?.make,
+  vehicle?.model,
+  vehicle?.derivative,
+].join(" ").toLowerCase();
+
+const looksLikeVan =
+  vehicleText.includes("van") ||
+  vehicleText.includes("transit") ||
+  vehicleText.includes("sprinter") ||
+  vehicleText.includes("crafter") ||
+  vehicleText.includes("ducato") ||
+  vehicleText.includes("boxer") ||
+  vehicleText.includes("relay") ||
+  vehicleText.includes("vivaro") ||
+  vehicleText.includes("traffic") ||
+  vehicleText.includes("master");
+
+const motTitle =
+  vehicleWeight >= 3000 || looksLikeVan
+    ? "MOT Class 7"
+    : "MOT Class 4";
+
+const vehicleYear = Number(vehicle?.year);
+
+const calculatedAirConGas =
+  vehicleYear && vehicleYear <= 2014 ? "Likely R134A" : "Likely R1234yf";
+
+const airConGas = firstValue(
+  vehicle?.airconGas,
+  vehicle?.airConGas,
+  vehicle?.acGas,
+  vehicle?.gasType,
+  calculatedAirConGas
+);
+
+const knownMileage = Number(
+  String(
+    firstValue(
+      vehicle?.lastMotMileage,
+      vehicle?.motMileage,
+      vehicle?.mileage
+    )
+  ).replace(/[^0-9]/g, "")
+);
+
+let serviceRecommendation = "Service plans";
+
+if (vehicle) {
+  if (!knownMileage) {
+    serviceRecommendation = "Oil and Filter Service";
+  } else if (knownMileage >= 80000) {
+    serviceRecommendation = "Major service";
+  } else if (knownMileage >= 40000) {
+    serviceRecommendation = "Full service";
+  } else {
+    serviceRecommendation = "Interim service";
+  }
+}
+console.log("HOME VEHICLE:", vehicle);
+console.log("HOME WEIGHT:", rawWeight, vehicleWeight);
+console.log("HOME VAN DETECT:", looksLikeVan);
+console.log("HOME MOT:", motTitle);
 
   return (
     <div className="homePage">
@@ -177,19 +259,19 @@ export default function Home() {
         />
       </section>
 
-      {vehicle && (
-  <section className="vehicleHudWrap">
+      <section className={`vehicleHudWrap ${!vehicle ? "vehicleHudInfo" : ""}`}>
     <div className="vehicleHud">
       <div className="hudBlock hudReg">
         <small>YOUR VEHICLE</small>
-        <strong>{cleanDisplayReg}</strong>
-        <span>✓ Reg found</span>
+        <strong>{vehicle ? cleanDisplayReg : "ENTER REG"}</strong>
+	<span>{vehicle ? "✓ Reg found" : "Start with your registration"}</span>
       </div>
 
       <div className="hudBlock hudVehicle">
         <small>VEHICLE</small>
-        <strong>{vehicleName || "Vehicle found"}</strong>
-        <span>{vehicleSubLine || "View vehicle details"}</span>
+        <strong>{vehicle ? vehicleName || "Vehicle found" : "INSTANT VEHICLE LOOKUP"}</strong>
+	<span>{vehicle ? vehicleSubLine || "View vehicle details" : "Find tyres, MOT, servicing and air con gas"}</span>
+        
       </div>
 
       <div className="hudBlock">
@@ -203,33 +285,72 @@ export default function Home() {
       <div className="hudBlock">
   <small>MOT</small>
 
-  <strong>{motTitle} ✅</strong>
+  <strong>{vehicle ? `${motTitle}` : "Class 4 & 7"}</strong>
 
-  <span>{motExpiry ? `Expires ${motExpiry}` : motStatus}</span>
+  <button
+  type="button"
+  onClick={() => goTo("/mot-hull")}
+>
+  🧾 {vehicle ? "View MOT information" : "Class 4 & Class 7 MOTs"}
+</button>
 
-  {motMileage && <span>{motMileage} miles</span>}
-
-  {vehicle?.motAdvisories?.length > 0 && (
-    <span className="hudWarning">
-      ⚠ {vehicle.motAdvisories.length} advisories found
-    </span>
-  )}
+  
 </div>
 
       <div className="hudBlock">
-        <small>AIR CON</small>
-        <strong>{airConGas}</strong>
+        <small>AIR CONDITIONING</small>
+        <strong>{vehicle ? airConGas.replace("Likely ", ""): "All Gas Types"}</strong>
         <button type="button" onClick={() => goTo("/air-conditioning-hull")}>
-          ❄️ View air con info
-        </button>
+  ❄️ {vehicle ? "View air con info" : "Gas - Old & New"}
+</button>
       </div>
+
+<div className="hudBlock">
+  <small>SERVICING</small>
+
+  <strong>
+    {vehicle ? serviceRecommendation : "Service Plans"}
+  </strong>
+
+  <button
+    type="button"
+    onClick={() => goTo("/car-servicing-hull")}
+  >
+    🔧 {vehicle ? "View servicing options" : "Oil • Interim • Full • Major"}
+  </button>
+</div>
 
       <button className="hudClear" type="button" onClick={clearVehicle}>
         CLEAR SEARCH
       </button>
     </div>
   </section>
+
+{vehicle && (
+  <div className="floatingOffer">
+    <button
+      className="floatingOfferClose"
+      onClick={() =>
+        document.querySelector(".floatingOffer").style.display = "none"
+      }
+    >
+      ×
+    </button>
+
+    <small>LIMITED OFFER</small>
+
+    <h3>MOT FOR £20.00</h3>
+
+    <p>With selected Interim, Full or Major services.</p>
+
+    <button
+      onClick={() => navigate("/car-servicing-hull")}
+    >
+      VIEW SERVICES →
+    </button>
+  </div>
 )}
+
 
       <section className="regSearch">
         <div className="regMain">
@@ -244,10 +365,15 @@ export default function Home() {
               <div className="plateGb">GB</div>
 
               <input
-                value={registration}
-                onChange={(e) => setRegistration(e.target.value.toUpperCase())}
-                placeholder="ABC 123"
-              />
+  value={registration}
+  onChange={(e) => setRegistration(e.target.value.toUpperCase())}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      lookupVehicle();
+    }
+  }}
+  placeholder="ABC 123"
+/>
 
               <button onClick={lookupVehicle} disabled={loadingVehicle}>
                 {loadingVehicle ? "CHECKING..." : "FIND MY VEHICLE ✓"}

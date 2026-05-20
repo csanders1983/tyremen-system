@@ -17,9 +17,12 @@ import BasketPage from "./BasketPage";
 import AlloyWheels from "./AlloyWheels";
 import TyreSizeCalculator from "./TyreSizeCalculator";
 import SpareWheel from "./SpareWheel";
+import TermsConditions from "./TermsConditions";
+
 
 export default function App() {
   return (
+      <>
     <Routes>
 
       <Route path="/alloy-wheels" element={<AlloyWheels />} />   
@@ -46,12 +49,13 @@ export default function App() {
       <Route path="/basket" element={<BasketPage />} />
       <Route path="/tyre-size-calculator" element={<TyreSizeCalculator />} />
       <Route path="/spare-wheel" element={<SpareWheel />} />
-      
+      <Route path="/terms-conditions"element={<TermsConditions />} />
       <Route path="/tyres/:tyreSlug" element={<TyreProductPage />} />
-
-      {/* Admin */}
       <Route path="/admin" element={<Admin />} />
 
     </Routes>
+
+      <footer />
+    </>
   );
 }
