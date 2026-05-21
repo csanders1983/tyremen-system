@@ -317,6 +317,11 @@ button {
   font-weight: 1000;
   cursor: pointer;
   white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 /* BIG VEHICLE RESULT */
@@ -818,20 +823,36 @@ button {
   }
 
   .plateRow {
-    grid-template-columns: 54px 1fr;
-    height: auto;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+}
 
-  .plateRow input {
-    height: 60px;
-  }
+.plateGb {
+  width: 54px;
+  height: 60px;
+}
 
-  .plateRow button {
-    grid-column: 1 / -1;
-    height: 56px;
-    border-left: none;
-    border-top: 3px solid #111;
-  }
+.plateRow input {
+  flex: 1;
+  min-width: 0;
+  height: 60px;
+}
+
+.plateRow button {
+  width: 100%;
+  height: 56px;
+
+  border-left: none;
+  border-top: 3px solid #111;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 0;
+}
 
   
   .vehicleInfo strong {
@@ -1081,4 +1102,32 @@ button {
   color: #fff !important;
   font-size: 18px;
   padding: 0 !important;
+}
+@media (max-width: 700px) {
+  .plateRow button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+
+    padding: 0 !important;
+
+    width: 100% !important;
+  }
+}
+@media (max-width: 700px) {
+  .homePage .regSearch .plateRow button {
+    display: grid !important;
+    place-items: center !important;
+    text-align: center !important;
+
+    width: 100% !important;
+    height: 56px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    line-height: 1 !important;
+    text-indent: 0 !important;
+  }
 }

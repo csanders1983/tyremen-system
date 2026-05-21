@@ -376,7 +376,7 @@ console.log("HOME MOT:", motTitle);
 />
 
               <button onClick={lookupVehicle} disabled={loadingVehicle}>
-                {loadingVehicle ? "CHECKING..." : "FIND MY VEHICLE ✓"}
+              <span>{loadingVehicle ? "CHECKING..." : "FIND MY VEHICLE ✓"}</span>
               </button>
             </div>
           </div>
