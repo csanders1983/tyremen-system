@@ -1,11 +1,12 @@
 import React from "react";
 import "./TermsConditions.css";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default function TermsConditions() {
   return (
     <>
-      <Header />
+      
 
       <main className="policiesPage">
         <section className="policiesHero">
@@ -149,6 +150,7 @@ export default function TermsConditions() {
         </Policy>
       </section>
     </main>
+     <Footer />
     </>
   );
 }

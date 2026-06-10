@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import "./SpareWheel.css";
+import Footer from "./components/Footer";
 
 const VEHICLE_LOOKUP_URL =
   "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=";
@@ -314,7 +315,7 @@ export default function SpareWheel() {
 
   return (
     <>
-      <Header />
+      
 
       <div className="sparePage">
         <div className="spareHero">
@@ -489,6 +490,7 @@ export default function SpareWheel() {
   	</div>
 	)}
       </div>
+     <Footer />
     </>
   );
 }

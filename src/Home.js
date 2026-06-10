@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import heroCar from "./assets/hero-car.png";
 import "./Home.css";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import tyreIcon from "./assets/icons/tyre.png";
 import serviceIcon from "./assets/icons/service.png";
@@ -229,7 +230,7 @@ console.log("HOME MOT:", motTitle);
 
   return (
     <div className="homePage">
-      <Header />
+      
 
       <section className={`hero ${vehicle ? "heroWithVehicle" : ""}`}>
         <div className="heroLeft">
@@ -524,25 +525,7 @@ console.log("HOME MOT:", motTitle);
         </div>
       </section>
 
-      <footer className="footer">
-        <div>
-          <div className="footerLogo">TYREMEN</div>
-          <p>More than just a tyre shop.</p>
-        </div>
-
-        <div>
-          <h4>CONTACT US</h4>
-          <p>01482 328800</p>
-          <p>info@tyremen.co.uk</p>
-          <p>Witty Street, Hull HU3 4TX</p>
-        </div>
-
-        <button className="callBox">
-          CALL NOW
-          <br />
-          01482 328800
-        </button>
-      </footer>
+      <Footer />
     </div>
   );
 }

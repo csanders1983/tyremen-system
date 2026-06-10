@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import { db } from "./firebase";
 import { getBasket, servicePrices, clearBasket, getStockNumber } from "./Basket";
 import "./Booking.css";
@@ -240,7 +241,7 @@ export default function Booking() {
 
   return (
     <div className="bookingPage">
-      <Header />
+      
 
       <main className="bookingWrapPro">
         <section className="bookingHeroPro">
@@ -540,6 +541,7 @@ export default function Booking() {
           </section>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }

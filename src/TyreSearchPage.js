@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import tyres from "./data/tyres.json";
 import "./TyreSearchPage.css";
 
@@ -216,7 +217,7 @@ export default function TyreSearchPage() {
 
   return (
     <div className="tsrPage">
-      <Header />
+      
 
       <section className="tsrVehicleHero">
         {vehicle?.image && (
@@ -367,6 +368,7 @@ export default function TyreSearchPage() {
           <span>All tyres include VAT and fitting.</span>
         </div>
       </section>
+    <Footer />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Checkout from "./Checkout";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
@@ -18,11 +20,13 @@ import AlloyWheels from "./AlloyWheels";
 import TyreSizeCalculator from "./TyreSizeCalculator";
 import SpareWheel from "./SpareWheel";
 import TermsConditions from "./TermsConditions";
+import Contact from "./Contact";
 
 
 export default function App() {
   return (
       <>
+        <Header />
     <Routes>
 
       <Route path="/alloy-wheels" element={<AlloyWheels />} />   
@@ -52,6 +56,7 @@ export default function App() {
       <Route path="/terms-conditions"element={<TermsConditions />} />
       <Route path="/tyres/:tyreSlug" element={<TyreProductPage />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/contact" element={<Contact />} />
 
     </Routes>
 

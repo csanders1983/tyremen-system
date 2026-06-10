@@ -1,4 +1,4 @@
-
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -325,7 +325,7 @@ const addToBasket = (serviceName, type, price) => {
 
   return (
     <div className="landingPage">
-      <Header />
+      
 
       <section
         className={`landingHero ${heroImages[pageKey] ? "imageHero" : ""} ${
@@ -1039,11 +1039,7 @@ const addToBasket = (serviceName, type, price) => {
         </div>
       </section>
 
-      <section className="landingCTA">
-        <h2>Ready to book with Tyremen?</h2>
-        <p>Book online or call our Hull team today.</p>
-        <button onClick={() => navigate("/booking")}>Book Now</button>
-      </section>
+      <Footer />
     </div>
   );
 }

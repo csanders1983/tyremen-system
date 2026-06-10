@@ -15,9 +15,9 @@ export default function Footer() {
           <div>
             <h4>Services</h4>
             <a href="/tyres">Tyres</a>
-            <a href="/service">Servicing</a>
-            <a href="/mot">MOT</a>
-            <a href="/wheel-alignment">Wheel Alignment</a>
+            <a href="/car-servicing-hull">Servicing</a>
+            <a href="/mot-hull">MOT</a>
+            <a href="/wheel-alignment-hull">Wheel Alignment</a>
           </div>
 
           <div>

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import "./TyreProductPage.css";
 
 function cleanSize(value) {
@@ -197,7 +198,7 @@ export default function TyreProductPage() {
 
   return (
     <>
-      <Header />
+      
 
       <main className="tyreResultsPage">
         <section className="vehicleHero">
@@ -336,6 +337,7 @@ export default function TyreProductPage() {
           <a href="tel:01482328800">01482 328800</a>
         </section>
       </main>
+     <Footer />
     </>
   );
 }
