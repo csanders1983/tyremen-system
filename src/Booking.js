@@ -136,34 +136,51 @@ export default function Booking() {
 
   const serviceKey = passed.serviceKey || passed.key || passed.type || "mot";
 
-  const serviceName = isTyreBooking
-    ? tyreItems.map((item) => `${item.qty} x ${item.name}`).join(", ")
-    : passed.service ||
-      passed.name ||
-      passed.title ||
-      passed.serviceName ||
-      "Service / MOT";
+  
 
-  const totalPrice = isTyreBooking
-    ? tyreTotal
-    : Number(
+  
+
+  const hasPassedService =
+  passed.service ||
+  passed.name ||
+  passed.title ||
+  passed.serviceName ||
+  passed.serviceKey ||
+  passed.key ||
+  passed.type;
+
+const serviceItem = hasPassedService
+  ? {
+      name:
+        passed.service ||
+        passed.name ||
+        passed.title ||
+        passed.serviceName ||
+        "Service / MOT",
+      qty: 1,
+      price: Number(
         passed.price ||
           passed.total ||
           passed.servicePrice ||
           servicePrices[serviceKey] ||
           0
-      );
+      ),
+      type: "service",
+    }
+  : null;
 
-  const items = isTyreBooking
-    ? tyreItems
-    : [
-        {
-          name: serviceName,
-          qty: 1,
-          price: totalPrice,
-          type: "service",
-        },
-      ];
+const items = [
+  ...tyreItems,
+  ...(serviceItem ? [serviceItem] : []),
+];
+
+const totalPrice = items.reduce((sum, item) => {
+  return sum + Number(item.price || 0) * Number(item.qty || 1);
+}, 0);
+
+const serviceName = items
+  .map((item) => `${item.qty} x ${item.name}`)
+  .join(", ");
 
   const goToTyres = () => {
     const vrm = registration || vehicleData?.vrm || "";
@@ -248,7 +265,7 @@ export default function Booking() {
           <div>
             <span>BOOK ONLINE</span>
             <h1>
-              Book Your <em>Fitting</em>
+              Book Your <em>Service</em>
             </h1>
             <p>
               Choose your preferred date and time and send your booking straight
@@ -288,9 +305,8 @@ export default function Booking() {
 
         <section className="bookingSteps">
           <div>⌕ 1. Search</div>
-          <div>◎ 2. Choose Tyre</div>
-          <div>▣ 3. Basket</div>
-          <div className="active">▣ 4. Book Fitting</div>
+          <div>◎ 2. Choose Job</div>
+          <div className="active">▣ 3. Book Fitting</div>
         </section>
 
         {loadingVehicle && (
@@ -361,29 +377,7 @@ export default function Booking() {
           </section>
         )}
 
-        {vehicleData && tyreSize && !isTyreBooking && (
-          <section className="bookingUpsellCard">
-            <div>
-              <span>TYRE SIZE FOUND FROM YOUR VEHICLE</span>
-              <h2>Need tyres as well?</h2>
-              <p>
-                We found <strong>{tyreSize}</strong> for your{" "}
-                {vehicleData.make} {vehicleData.model}. Add tyres to this
-                booking before sending it.
-              </p>
-
-              {motAdvisories.length > 0 && (
-                <small>
-                  MOT advisory found — this may be worth checking before your visit.
-                </small>
-              )}
-            </div>
-
-            <button type="button" onClick={goToTyres}>
-              View tyres for {tyreSize} →
-            </button>
-          </section>
-        )}
+        
 
         <section className="bookingMainGrid">
           <aside className="bookingSummaryCard">
@@ -395,45 +389,39 @@ export default function Booking() {
               <small>Includes fitting, valve, balance and VAT.</small>
             </div>
 
-            {isTyreBooking ? (
-              <div className="miniTyreList">
-                {tyreItems.map((tyre, index) => (
-                  <div className="miniTyreItem" key={index}>
-                    {tyre.axle && (
-                      <span className="miniAxleTag">
-                        {tyre.axle.toUpperCase()} AXLE
-                      </span>
-                    )}
+            <div className="miniTyreList">
+  {items.map((item, index) => (
+    <div className="miniTyreItem" key={index}>
+      {item.type === "tyre" && item.axle && (
+        <span className="miniAxleTag">
+          {item.axle.toUpperCase()} AXLE
+        </span>
+      )}
 
-                    <strong>
-                      {tyre.qty} x {tyre.size} {tyre.loadIndex}
-                      {tyre.speedRating}
-                    </strong>
+      <strong>
+        {item.qty} x {item.type === "tyre"
+          ? `${item.size} ${item.loadIndex}${item.speedRating}`
+          : item.name}
+      </strong>
 
-                    <p>
-                      {tyre.brand} {tyre.pattern}
-                    </p>
+      {item.type === "tyre" ? (
+        <p>
+          {item.brand} {item.pattern}
+        </p>
+      ) : (
+        <p>Service / MOT</p>
+      )}
 
-                    {tyre.stockNumber && (
-                      <small>Stock No: {tyre.stockNumber}</small>
-                    )}
+      {item.stockNumber && (
+        <small>Stock No: {item.stockNumber}</small>
+      )}
 
-                    <b>
-                      £
-                      {(
-                        Number(tyre.price || 0) * Number(tyre.qty || 1)
-                      ).toFixed(2)}
-                    </b>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="serviceMiniBox">
-                <span>Service / MOT</span>
-                <b>{serviceName}</b>
-                <strong>£{totalPrice.toFixed(2)}</strong>
-              </div>
-            )}
+      <b>
+        £{(Number(item.price || 0) * Number(item.qty || 1)).toFixed(2)}
+      </b>
+    </div>
+  ))}
+</div>
 
             <div className="bookingHelpBox">
               <span>Need help?</span>

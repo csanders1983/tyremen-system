@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import servicePages from "./servicePages";
 import "./ServiceLandingPage.css";
-import { saveBasket } from "./Basket";
+import { addToBasket as addBasketItem } from "./Basket";
 import {
   collection,
   addDoc,
@@ -207,8 +207,12 @@ export default function ServiceLandingPage({ pageKey }) {
 
 const addToBasket = (serviceName, type, price) => {
   const basketItem = {
+    id: `${type}-${serviceName}-${Date.now()}`,
+    name: serviceName,
     service: serviceName,
-    type,
+    type: "service",
+    category: type,
+    qty: 1,
     price: Number(price || 0),
     vehicle: serviceVehicle || null,
     extras: "",
@@ -219,14 +223,14 @@ const addToBasket = (serviceName, type, price) => {
         ? "❄️"
         : type === "Alignment"
         ? "📐"
+        : type === "MOT"
+        ? "📋"
         : "🚗",
   };
 
-  saveBasket(basketItem);
+  addBasketItem(basketItem);
 
-  navigate(`/summary?service=${encodeURIComponent(serviceName)}`, {
-    state: basketItem,
-  });
+  navigate("/booking");
 };
 
   const submitQuote = async () => {
@@ -636,9 +640,13 @@ const addToBasket = (serviceName, type, price) => {
                     <li>✔ Repairs available if needed</li>
                   </ul>
 
-                  <button onClick={() => navigate("/booking")}>
-                    BOOK CLASS 4 MOT →
-                  </button>
+                  <button
+  onClick={() =>
+    addToBasket("Class 4 MOT", "MOT", motPrices.class4)
+  }
+>
+  BOOK CLASS 4 MOT →
+</button>
                 </div>
 
                 <div
@@ -674,11 +682,13 @@ const addToBasket = (serviceName, type, price) => {
                   </ul>
 
                   <button
-                    disabled={recommendedMotClass !== "class7"}
-                    onClick={() => navigate("/booking")}
-                  >
-                    BOOK CLASS 7 MOT →
-                  </button>
+  disabled={recommendedMotClass !== "class7"}
+  onClick={() =>
+    addToBasket("Class 7 MOT", "MOT", motPrices.class7)
+  }
+>
+  BOOK CLASS 7 MOT →
+</button>
                 </div>
               </div>
             </section>

@@ -1,225 +1,77 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "./firebase";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./TyreProductPage.css";
 
-function cleanSize(value) {
-  return String(value || "")
-    .replace(/\s/g, "")
-    .replace(/-/g, "")
-    .toUpperCase();
+function getSize(tyre) {
+  return `${tyre.Width || ""}/${tyre["Aspect Ratio"] || ""}R${tyre.Rim || ""}`;
 }
 
-function getTyreSize(tyre, fallbackSize) {
-  if (tyre.size) return tyre.size;
-  if (tyre.tyreSize) return tyre.tyreSize;
-  if (tyre.Size) return tyre.Size;
-  if (tyre["Tyre Size"]) return tyre["Tyre Size"];
-
-  const width = tyre.width || tyre.Width;
-  const profile = tyre.profile || tyre.Profile;
-  const rim = tyre.rim || tyre.Rim || tyre.diameter || tyre.Diameter;
-
-  if (width && profile && rim) {
-    return `${width}/${profile}R${rim}`;
-  }
-
-  return fallbackSize;
-}
-
-function normaliseTyre(tyre, tyreSize) {
-  const price = Number(
-    tyre.price ||
-      tyre.Price ||
-      tyre.retail ||
-      tyre.Retail ||
-      tyre.sell ||
-      tyre.Sell ||
-      tyre["Sell Price"] ||
-      tyre["Retail Price"] ||
-      0
-  );
-
-  return {
-    id: tyre.id,
-    brand: tyre.brand || tyre.Brand || tyre.make || tyre.Make || "",
-    model:
-      tyre.model ||
-      tyre.Model ||
-      tyre.pattern ||
-      tyre.Pattern ||
-      tyre.description ||
-      tyre.Description ||
-      "",
-    size: getTyreSize(tyre, tyreSize),
-    load:
-      tyre.load ||
-      tyre.Load ||
-      tyre.loadIndex ||
-      tyre["Load Index"] ||
-      "",
-    speed:
-      tyre.speed ||
-      tyre.Speed ||
-      tyre.speedRating ||
-      tyre["Speed Rating"] ||
-      "",
-    wet:
-      tyre.wet ||
-      tyre.Wet ||
-      tyre.wetGrip ||
-      tyre["Wet Grip"] ||
-      "",
-    fuel:
-      tyre.fuel ||
-      tyre.Fuel ||
-      tyre.fuelRating ||
-      tyre["Fuel Rating"] ||
-      "",
-    noise:
-      tyre.noise ||
-      tyre.Noise ||
-      tyre.noiseDb ||
-      tyre["Noise dB"] ||
-      "",
-    stock: Number(
-      tyre.stock ||
-        tyre.Stock ||
-        tyre.qty ||
-        tyre.Qty ||
-        tyre.quantity ||
-        tyre.Quantity ||
-        0
-    ),
-    price,
-    image:
-      tyre.image ||
-      tyre.Image ||
-      tyre.imageUrl ||
-      tyre.ImageUrl ||
-      "/images/tyres/default-tyre.png",
-    tag:
-      tyre.tag ||
-      tyre.Tag ||
-      tyre.category ||
-      tyre.Category ||
-      "Fully Fitted",
-    raw: tyre,
-  };
+function getPrice(tyre) {
+  const cost = Number(tyre.Price || 0);
+  return (cost + 25) * 1.2;
 }
 
 export default function TyreProductPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [allTyres, setAllTyres] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState("priceAsc");
+  const tyre =
+    location.state?.tyre ||
+    JSON.parse(localStorage.getItem("selectedTyre") || "null");
 
   const vehicle =
     location.state?.vehicle ||
     JSON.parse(localStorage.getItem("vehicle") || "null") ||
     {};
 
-  const tyreSize =
-    location.state?.tyreSize ||
-    localStorage.getItem("tyreSize") ||
-    vehicle?.tyreSize ||
-    vehicle?.frontTyreSize ||
-    "205/45R17";
+  const axle = location.state?.axle || "";
+
+  useEffect(() => {
+    if (location.state?.tyre) {
+      localStorage.setItem("selectedTyre", JSON.stringify(location.state.tyre));
+    }
+
+    if (location.state?.vehicle) {
+      localStorage.setItem("vehicle", JSON.stringify(location.state.vehicle));
+    }
+  }, [location.state]);
+
+  if (!tyre) {
+    return (
+      <>
+        <main className="tyreResultsPage">
+          <section className="helpBox">
+            <div>
+              <h2>Tyre not found</h2>
+              <p>Please go back to the tyre search and select a tyre again.</p>
+            </div>
+
+            <button onClick={() => navigate("/tyres")}>Back to tyres</button>
+          </section>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  const size = getSize(tyre);
+  const price = getPrice(tyre);
 
   const vehicleTitle =
     vehicle?.make && vehicle?.model
-      ? `${vehicle.make} ${vehicle.model} ${vehicle.derivative || ""}`.trim()
+      ? `${vehicle.make} ${vehicle.model}`.trim()
       : "Your Vehicle";
-
-  const vehicleYear =
-    vehicle?.year || vehicle?.manufactureYear || vehicle?.registrationYear || "";
-
-  const fuel = vehicle?.fuel || vehicle?.fuelType || vehicle?.FuelType || "";
-
-  const vehicleImage =
-    vehicle?.image ||
-    vehicle?.vehicleImage ||
-    vehicle?.imageUrl ||
-    "/images/vehicles/default-car.png";
-
-  useEffect(() => {
-    async function loadTyres() {
-      try {
-        const snap = await getDocs(collection(db, "tyres"));
-
-        const firebaseTyres = snap.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        setAllTyres(firebaseTyres);
-      } catch (err) {
-        console.error("Firebase tyre load error:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadTyres();
-  }, []);
-
-  const tyres = useMemo(() => {
-    let list = allTyres
-      .map((tyre) => normaliseTyre(tyre, tyreSize))
-      .filter((tyre) => cleanSize(tyre.size) === cleanSize(tyreSize));
-
-    if (sortBy === "priceAsc") {
-      list = [...list].sort((a, b) => a.price - b.price);
-    }
-
-    if (sortBy === "priceDesc") {
-      list = [...list].sort((a, b) => b.price - a.price);
-    }
-
-    return list;
-  }, [allTyres, tyreSize, sortBy]);
-
-  function viewTyre(tyre) {
-    localStorage.setItem("selectedTyre", JSON.stringify(tyre));
-
-    navigate(`/tyre/${tyre.id}`, {
-      state: {
-        tyre,
-        vehicle,
-        tyreSize,
-      },
-    });
-  }
 
   return (
     <>
-      
-
       <main className="tyreResultsPage">
         <section className="vehicleHero">
-          <div className="vehicleHeroImage">
-            <img src={vehicleImage} alt={vehicleTitle} />
-          </div>
-
           <div className="vehicleHeroText">
-            <h1>{vehicleTitle}</h1>
+            <h1>{tyre.Brand}</h1>
             <p>
-              {vehicleYear && (
-                <>
-                  {vehicleYear} <span>•</span>{" "}
-                </>
-              )}
-              {fuel && (
-                <>
-                  {fuel} <span>•</span>{" "}
-                </>
-              )}
-              Tyre size: <strong>{tyreSize}</strong>
+              {tyre.Model} <span>•</span> Tyre size:{" "}
+              <strong>{size}</strong>
             </p>
           </div>
         </section>
@@ -228,85 +80,69 @@ export default function TyreProductPage() {
           <div className="sizeLeft">
             <img src="/images/tyres/tyre-side.png" alt="" />
             <div>
-              <span>Your tyre size</span>
-              <h2>{tyreSize}</h2>
+              <span>Your selected tyre</span>
+              <h2>{size}</h2>
             </div>
           </div>
 
           <div className="trustGrid">
             <div>✅ Fully fitted price</div>
-            <div>🏁 Hull fitting centre</div>
-            <div>🛡️ Over 55 years trusted</div>
+            <div>✅ Hull fitting centre</div>
+            <div>✅ Over 55 years trusted</div>
             <div>☎ 01482 328800</div>
           </div>
         </section>
 
-        <section className="resultsHeader">
-          <div>
-            <h2>
-              {tyres.length} tyres found for <strong>{tyreSize}</strong>
-            </h2>
-            <p>All prices include fitting, VAT, valve and balance.</p>
-          </div>
-
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            <option value="priceAsc">Sort by: Price low to high</option>
-            <option value="priceDesc">Sort by: Price high to low</option>
-          </select>
-        </section>
-
-        {loading && <p className="loadingTyres">Loading tyres...</p>}
-
-        {!loading && tyres.length === 0 && (
-          <p className="loadingTyres">
-            No tyres found for {tyreSize}. Call us on 01482 328800.
-          </p>
-        )}
-
         <section className="tyreList">
-          {tyres.map((tyre) => (
-            <article className="tyreCardLong" key={tyre.id}>
-              <div className="tyreRibbon">Fully fitted</div>
+          <article className="tyreCardLong">
+            <div className="tyreRibbon">
+              {axle ? `${axle.toUpperCase()} FITTED` : "FULLY FITTED"}
+            </div>
 
-              <div className="tyreImageBox">
-                <div className="stockBadge">{tyre.stock} available</div>
-
-                <div
-                  className={`tagBadge ${
-                    tyre.tag !== "Budget Option" ? "redTag" : ""
-                  }`}
-                >
-                  {tyre.tag}
-                </div>
-
-                <img src={tyre.image} alt={`${tyre.brand} ${tyre.model}`} />
+            <div className="tyreImageBox">
+              <div className="stockBadge">
+                {Number(tyre.Quantity || 0)} available
               </div>
 
-              <div className="tyreInfo">
-                <h3>{tyre.brand}</h3>
-                <p>{tyre.model}</p>
+              <div className="tagBadge">Fully Fitted</div>
 
-                <div className="tyreSizeLine">
-                  {tyre.size}
-                  <span>XL</span>
-                </div>
+              <img src={tyre["Image URL"]} alt={tyre.Title} />
+            </div>
 
-                <div className="specGrid">
-                  {tyre.load && <span>Load {tyre.load}</span>}
-                  {tyre.speed && <span>Speed {tyre.speed}</span>}
-                  {tyre.wet && <span>Wet {tyre.wet}</span>}
-                  {tyre.fuel && <span>Fuel {tyre.fuel}</span>}
-                  {tyre.noise && <span>Noise {tyre.noise}</span>}
-                </div>
+            <div className="tyreInfo">
+              <h3>{tyre.Brand}</h3>
+              <p>{tyre.Model}</p>
+
+              <div className="tyreSizeLine">
+                {size}
+                {tyre.Reinforced && <span>{tyre.Reinforced}</span>}
               </div>
 
-              <div className="pricePanel">
-                <small>Fully fitted at Tyremen Hull</small>
-                <strong>£{Number(tyre.price || 0).toFixed(2)}</strong>
-                <button onClick={() => viewTyre(tyre)}>View Tyre →</button>
+              <div className="specGrid">
+                <span>Load {tyre["Load Index"] || "-"}</span>
+                <span>Speed {tyre["Speed Rating"] || "-"}</span>
+                <span>Wet {tyre["Wet Grip"] || "-"}</span>
+                <span>Fuel {tyre["Rolling Resistance"] || "-"}</span>
+                <span>
+                  Noise{" "}
+                  {tyre["Noise Performance"]
+                    ? `${tyre["Noise Performance"]} dB`
+                    : "-"}
+                </span>
               </div>
-            </article>
-          ))}
+            </div>
+
+            <div className="pricePanel">
+              <small>
+                Fully fitted at Tyremen Hull
+                {vehicleTitle !== "Your Vehicle" && ` for ${vehicleTitle}`}
+              </small>
+
+              <strong>£{price.toFixed(2)}</strong>
+
+              <button>Book This Tyre →</button>
+            </div>
+          </article>
         </section>
 
         <section className="fittingStrip">
@@ -330,14 +166,15 @@ export default function TyreProductPage() {
 
         <section className="helpBox">
           <div>
-            <h2>Need help choosing?</h2>
-            <p>Our experts can help you find the right tyres for your vehicle.</p>
+            <h2>Need help?</h2>
+            <p>Our experts can help you confirm this tyre is correct.</p>
           </div>
 
           <a href="tel:01482328800">01482 328800</a>
         </section>
       </main>
-     <Footer />
+
+      <Footer />
     </>
   );
 }

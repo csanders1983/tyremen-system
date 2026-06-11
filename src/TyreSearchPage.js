@@ -275,8 +275,8 @@ export default function TyreSearchPage() {
 
         <div className="tsrTrustGrid">
           <div>✅ Fully fitted price</div>
-          <div>🏁 Hull fitting centre</div>
-          <div>🛡️ Over 55 years trusted</div>
+          <div>✅ Hull fitting centre</div>
+          <div>✅ Over 55 years trusted</div>
           <div>☎ 01482 328800</div>
         </div>
       </section>
