@@ -230,7 +230,18 @@ const addToBasket = (serviceName, type, price) => {
 
   addBasketItem(basketItem);
 
-  navigate("/booking");
+  navigate("/booking", {
+  state: {
+    service: serviceName,
+    name: serviceName,
+    serviceName: serviceName,
+    serviceKey: type,
+    price: Number(price || 0),
+    servicePrice: Number(price || 0),
+    vehicle: serviceVehicle || null,
+    registration: serviceVehicle?.vrm || serviceReg || "",
+  },
+});
 };
 
   const submitQuote = async () => {

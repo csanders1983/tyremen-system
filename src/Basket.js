@@ -1,3 +1,5 @@
+
+
 export const servicePrices = {
   interim: 149,
   full: 199,
@@ -50,7 +52,31 @@ export const getFittedPrice = (tyre) => {
 
 export const addToBasket = (tyre, qty = 1) => {
   const basket = getBasket();
+  console.log("BASKET BEFORE", basket);
+  console.log("ADDING", tyre);
 
+  if (tyre.type === "service") {
+
+  console.log("BASKET BEFORE", basket);
+  console.log("ADDING", tyre);
+
+  basket.push({
+    id: `service-${tyre.category || "service"}-${tyre.name || tyre.service}-${Date.now()}-${Math.random()}`,
+    name: tyre.name || tyre.service || "Service / MOT",
+    service: tyre.service || tyre.name || "Service / MOT",
+    type: "service",
+    category: tyre.category || "",
+    price: Number(tyre.price || 0),
+    qty: Number(qty || 1),
+    vehicle: tyre.vehicle || null,
+    icon: tyre.icon || "",
+  });
+
+  console.log("BASKET AFTER", basket);
+
+  saveBasket(basket);
+  return;
+}
   const stockNumber = getStockNumber(tyre);
 
   const size =

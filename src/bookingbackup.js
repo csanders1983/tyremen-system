@@ -4,7 +4,7 @@ import { collection, addDoc } from "firebase/firestore";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { db } from "./firebase";
-import { getBasket, saveBasket, servicePrices, clearBasket, getStockNumber } from "./Basket";
+import { getBasket, servicePrices, clearBasket, getStockNumber } from "./Basket";
 import "./Booking.css";
 
 export default function Booking() {
@@ -16,9 +16,7 @@ export default function Booking() {
   const urlVrm = params.get("vrm") || "";
 
   const tyreBasket = getBasket();
-  const isTyreBooking =
-  Array.isArray(tyreBasket) &&
-  tyreBasket.some((item) => item.type === "tyre");
+  const isTyreBooking = Array.isArray(tyreBasket) && tyreBasket.length > 0;
 
   const basketVehicle =
     tyreBasket.find((item) => item.vehicle)?.vehicle || passed.vehicle || null;
@@ -116,9 +114,7 @@ export default function Booking() {
   };
 
   const tyreItems = isTyreBooking
-  ? tyreBasket
-      .filter((item) => item.type === "tyre")
-      .map((tyre) => ({
+    ? tyreBasket.map((tyre) => ({
         name: makeTyreName(tyre),
         qty: Number(tyre.qty || 1),
         price: Number(tyre.price || 0),
@@ -145,15 +141,13 @@ export default function Booking() {
   
 
   const hasPassedService =
-  (!Array.isArray(tyreBasket) || tyreBasket.length === 0) &&
-  (passed.service ||
-    passed.name ||
-    passed.title ||
-    passed.serviceName ||
-    passed.serviceKey ||
-    passed.key ||
-    passed.type);
-  
+  passed.service ||
+  passed.name ||
+  passed.title ||
+  passed.serviceName ||
+  passed.serviceKey ||
+  passed.key ||
+  passed.type;
 
 const serviceItem = hasPassedService
   ? {
@@ -175,21 +169,8 @@ const serviceItem = hasPassedService
     }
   : null;
 
-const basketServiceItems = Array.isArray(tyreBasket)
-  ? tyreBasket
-      .filter((item) => item.type === "service")
-      .map((item) => ({
-        ...item,
-        name: item.name || item.service || item.serviceName || "Service / MOT",
-        qty: Number(item.qty || 1),
-        price: Number(item.price || 0),
-        type: "service",
-      }))
-  : [];
-
 const items = [
   ...tyreItems,
-  ...basketServiceItems,
   ...(serviceItem ? [serviceItem] : []),
 ];
 
@@ -198,17 +179,7 @@ const totalPrice = items.reduce((sum, item) => {
 }, 0);
 
 const serviceName = items
-  .map((item) => {
-    const name =
-      item.name ||
-      item.service ||
-      item.serviceName ||
-      item.title ||
-      item.category ||
-      "Booking Item";
-
-    return `${item.qty || 1} x ${name}`;
-  })
+  .map((item) => `${item.qty} x ${item.name}`)
   .join(", ");
 
   const goToTyres = () => {
@@ -227,22 +198,6 @@ const serviceName = items
       },
     });
   };
-
-  const updateItemQty = (id, qty) => {
-  const updated = tyreBasket.map((item) =>
-    item.id === id ? { ...item, qty: Math.max(1, Number(qty || 1)) } : item
-  );
-
-  saveBasket(updated);
-  window.location.reload();
-};
-
-const removeItem = (id) => {
-  const updated = tyreBasket.filter((item) => item.id !== id);
-
-  saveBasket(updated);
-  window.location.reload();
-};
 
   const submitBooking = async () => {
     if (!date || !time || !name || !phone || !email || !registration) {
@@ -429,94 +384,44 @@ const removeItem = (id) => {
             <h2>You’re Booking</h2>
 
             <div className="bookingPriceBox">
-              <span>{isTyreBooking ? "Total fitted price" : "Booking total"}</span>
-<strong>£{totalPrice.toFixed(2)}</strong>
-<small>
-  {isTyreBooking
-    ? "Includes fitting, valve, balance and VAT."
-    : "All prices include VAT. No payment is taken online."}
-</small>
+              <span>Total fitted price</span>
+              <strong>£{totalPrice.toFixed(2)}</strong>
+              <small>Includes fitting, valve, balance and VAT.</small>
             </div>
 
             <div className="miniTyreList">
-  {items.map((item, index) => {
-    const itemName =
-      item.name ||
-      item.service ||
-      item.serviceName ||
-      item.title ||
-      "Service / MOT";
+  {items.map((item, index) => (
+    <div className="miniTyreItem" key={index}>
+      {item.type === "tyre" && item.axle && (
+        <span className="miniAxleTag">
+          {item.axle.toUpperCase()} AXLE
+        </span>
+      )}
 
-    return (
-      <div className="miniTyreItem" key={item.id || index}>
-        {item.type === "tyre" && item.axle && (
-          <span className="miniAxleTag">
-            {item.axle.toUpperCase()} AXLE
-          </span>
-        )}
+      <strong>
+        {item.qty} x {item.type === "tyre"
+          ? `${item.size} ${item.loadIndex}${item.speedRating}`
+          : item.name}
+      </strong>
 
-        <strong className="bookingItemTitle">
-  {item.type !== "tyre" && item.icon && <span>{item.icon}</span>}
+      {item.type === "tyre" ? (
+        <p>
+          {item.brand} {item.pattern}
+        </p>
+      ) : (
+        <p>Service / MOT</p>
+      )}
 
-  {item.type === "tyre"
-    ? `${item.qty} x ${item.size} ${item.loadIndex}${item.speedRating}`
-    : itemName}
-</strong>
+      {item.stockNumber && (
+        <small>Stock No: {item.stockNumber}</small>
+      )}
 
-<div className="bookingItemMeta">
-  Qty: {item.qty || 1}
+      <b>
+        £{(Number(item.price || 0) * Number(item.qty || 1)).toFixed(2)}
+      </b>
+    </div>
+  ))}
 </div>
-
-        {item.type === "tyre" ? (
-          <p>
-            {item.brand} {item.pattern}
-          </p>
-        ) : (
-          <p>
-  {item.category === "Service" && "Vehicle Service"}
-  {item.category === "MOT" && "MOT Test"}
-  {item.category === "Air Con" && "Air Conditioning"}
-  {item.category === "Alignment" && "Wheel Alignment"}
-  {!item.category && "Booking Item"}
-</p>
-        )}
-
-        {item.stockNumber && <small>Stock No: {item.stockNumber}</small>}
-
-        <b>
-          £{(Number(item.price || 0) * Number(item.qty || 1)).toFixed(2)}
-        </b>
-        <div className="bookingItemControls">
-  <button
-    type="button"
-    onClick={() => updateItemQty(item.id, Number(item.qty || 1) - 1)}
-  >
-    −
-  </button>
-
-  <span>{item.qty || 1}</span>
-
-  <button
-    type="button"
-    onClick={() => updateItemQty(item.id, Number(item.qty || 1) + 1)}
-  >
-    +
-  </button>
-
-  <button
-    type="button"
-    className="deleteItemBtn"
-    onClick={() => removeItem(item.id)}
-  >
-    ×
-  </button>
-</div>
-      </div>
-    );
-  })}
-</div>
-
-
 
             <div className="bookingHelpBox">
               <span>Need help?</span>
@@ -612,17 +517,13 @@ const removeItem = (id) => {
                 I confirm the details above are correct
               </label>
             </div>
-<div className="bookingReassurance">
-  <span>✓ No payment taken online</span>
-  <span>✓ Booking confirmed by our team</span>
-  <span>✓ Pay when work is completed</span>
-</div>
+
             <button
               className="continueBtn"
               onClick={submitBooking}
               disabled={submitting}
             >
-              <span>{submitting ? "Sending Booking..." : "Request Booking"}</span>
+              <span>{submitting ? "Sending Booking..." : "Submit Booking"}</span>
               <b>→</b>
             </button>
           </section>
