@@ -12,20 +12,28 @@ import airconIcon from "./assets/icons/aircon.png";
 import clutchIcon from "./assets/icons/clutch.png";
 import timingIcon from "./assets/icons/timing.png";
 import diagnosticsIcon from "./assets/icons/diagnostics.png";
+import Tyre from "./assets/header-ikons/Tyres.png";
+import Service from "./assets/header-ikons/Service.png";
+import Brakes from "./assets/header-ikons/Brakes.png";
+import MOT from "./assets/header-ikons/MOT.png";
+import Aircon from "./assets/header-ikons/Aircon.png";
+import Clutch from "./assets/header-ikons/Clutch.png";
+import Timing from "./assets/header-ikons/Timing.png";
+import Diagnostic from "./assets/header-ikons/Diagnostic.png";
 
 document.title = "Tyremen Hull | Tyres, MOT, Servicing & Repairs";
 const VEHICLE_LOOKUP_URL =
   "https://vehiclelookup-tx3ipea3qa-uc.a.run.app?vrm=";
 
 const services = [
-  { title: "TYRES", text: "View tyres", icon: tyreIcon, link: "/tyres" },
-  { title: "SERVICING", text: "Book a service", icon: serviceIcon, link: "/car-servicing-hull" },
-  { title: "BRAKES", text: "Brake check", icon: brakeIcon, link: "/brakes-hull" },
-  { title: "MOT", text: "Book an MOT", icon: motIcon, link: "/mot-hull" },
-  { title: "AIR CON", text: "Regas & repair", icon: airconIcon, link: "/air-conditioning-hull" },
-  { title: "CLUTCHES", text: "Fitting & repair", icon: clutchIcon, link: "/clutch-repairs-hull" },
-  { title: "TIMING BELT", text: "Check & replace", icon: timingIcon, link: "/timing-belt-hull" },
-  { title: "DIAGNOSTICS", text: "Vehicle diagnostics", icon: diagnosticsIcon, link: "/booking" },
+  { title: "Tyre", text: "View tyres", icon: Tyre, link: "/tyres" },
+  { title: "Service", text: "Book a service", icon: Service, link: "/car-servicing-hull" },
+  { title: "Brakes", text: "Brake check", icon: Brakes, link: "/brakes-hull" },
+  { title: "MOT", text: "Book an MOT", icon: MOT, link: "/mot-hull" },
+  { title: "Aircon", text: "Regas & repair", icon: Aircon, link: "/air-conditioning-hull" },
+  { title: "Clutch", text: "Fitting & repair", icon: Clutch, link: "/clutch-repairs-hull" },
+  { title: "Timing", text: "Check & replace", icon: Timing, link: "/timing-belt-hull" },
+  { title: "Diagnostic", text: "Vehicle diagnostics", icon: Diagnostic, link: "/booking" },
 ];
 
 function firstValue(...values) {
@@ -531,7 +539,7 @@ const bookingCards = [
                     <b>{card.price}</b>
                     <ul>
                       {card.bullets.filter(Boolean).map((bullet) => (
-                        <li key={bullet}>✓ {bullet}</li>
+                        <li key={bullet}> {bullet}</li>
                       ))}
                     </ul>
                     <span>{card.button} →</span>

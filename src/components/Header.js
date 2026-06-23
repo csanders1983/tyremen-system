@@ -1,6 +1,24 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import "./Header.css";
+import Service from "../assets/header-ikons/Service.png";
+import Brakes from "../assets/header-ikons/Brakes.png";
+import MOT from "../assets/header-ikons/MOT.png";
+import Aircon from "../assets/header-ikons/Aircon.png";
+import Clutch from "../assets/header-ikons/Clutch.png";
+import Timing from "../assets/header-ikons/Timing.png";
+import Diagnostic from "../assets/header-ikons/Diagnostic.png";
+import Alignment from "../assets/header-ikons/4way.png";
+import Alloy from "../assets/header-ikons/Alloy.png";
+import Spare from "../assets/header-ikons/Spare.png";
+import Tyre from "../assets/header-ikons/Tyres.png";
+
+import {
+  FaRegCalendarAlt,
+  FaPhoneAlt,
+} from "react-icons/fa";
+
+
 
 /* ICONS */
 
@@ -144,17 +162,17 @@ export default function Header() {
   });
 
   const navLinks = [
-    { label: "TYRES", path: "/tyres" },
-    { label: "SERVICING", path: "/car-servicing-hull" },
-    { label: "MOT", path: "/mot-hull" },
-    { label: "BRAKES", path: "/brakes-hull" },
-    { label: "AIR CON", path: "/air-conditioning-hull" },
-    { label: "CLUTCHES", path: "/clutch-repairs-hull" },
-    { label: "TIMING", path: "/timing-belt-hull" },
-    { label: "ALIGNMENT", path: "/wheel-alignment-hull" },
-    { label: "ALLOY WHEELS", path: "/alloy-wheels" },
-    { label: "SPARE WHEEL KIT", path: "/spare-wheel" },
-  ];
+  { label: "TYRES", icon: Tyre, path: "/tyres" },
+  { label: "SERVICING", icon: Service, path: "/car-servicing-hull" },
+  { label: "MOT", icon: MOT, path: "/mot-hull" },
+  { label: "BRAKES", icon: Brakes, path: "/brakes-hull" },
+  { label: "AIR CON", icon: Aircon, path: "/air-conditioning-hull" },
+  { label: "CLUTCHES", icon: Clutch, path: "/clutch-repairs-hull" },
+  { label: "TIMING", icon: Timing, path: "/timing-belt-hull" },
+  { label: "ALIGNMENT", icon: Alignment, path: "/wheel-alignment-hull" },
+  { label: "ALLOY WHEELS", icon: Alloy, path: "/alloy-wheels" },
+  { label: "SPARE WHEEL KIT", icon: Spare, path: "/spare-wheel" },
+];
 
   return (
     <>
@@ -186,24 +204,28 @@ export default function Header() {
           <div className="logoSub">MORE THAN JUST TYRES</div>
         </Link>
 
-        <nav>
-          {navLinks.map((item) => (
-            <Link key={item.path} to={linkTo(item.path)} state={vehicleState}>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <nav className="iconNav">
+  {navLinks.map((item) => (
+    <Link
+      key={item.path}
+      to={linkTo(item.path)}
+      state={vehicleState}
+      className="navItem"
+    >
+      <div className="navIcon">
+  <img src={item.icon} alt={`${item.label} icon`} />
+</div>
 
-        <button
-          className="bookNow"
-          onClick={() =>
-            navigate(linkTo("/booking"), {
-              state: vehicleState,
-            })
-          }
-        >
-          BOOK NOW
-        </button>
+<span className="navLabel">
+  {item.label}</span>
+    </Link>
+  ))}
+</nav>
+
+        <button className="bookNow design2Button" onClick={() => navigate(linkTo("/booking"), { state: vehicleState })}>
+  <FaRegCalendarAlt />
+  <span>BOOK NOW</span>
+</button>
       </header>
     </>
   );

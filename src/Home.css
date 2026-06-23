@@ -1072,7 +1072,7 @@ button {
 }
 
 .bookingCard li::before {
-  content: "✓ ";
+  content: "✓";
   color: #058f1f;
   font-weight: 1000;
 }
