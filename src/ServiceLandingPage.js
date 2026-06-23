@@ -30,6 +30,8 @@ export default function ServiceLandingPage({ pageKey }) {
   const [registration, setRegistration] = useState("");
   const [description, setDescription] = useState("");
   const [sent, setSent] = useState(false);
+  const [showAdvisories, setShowAdvisories] = useState(false);
+  const [showServiceOffer, setShowServiceOffer] = useState(false);
 
   const [serviceReg, setServiceReg] = useState(() => {
     return localStorage.getItem("tyremenVrm") || "";
@@ -162,6 +164,16 @@ export default function ServiceLandingPage({ pageKey }) {
     loadServicePricesForVehicle(serviceVehicle);
   }, [pageKey, serviceVehicle]);
 
+useEffect(() => {
+  if (pageKey !== "servicingHull") return;
+
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get("motOffer") === "true") {
+    setAddMotOffer(true);
+  }
+}, [pageKey]);
+
   if (!page) return null;
 
   const airconType =
@@ -180,6 +192,7 @@ export default function ServiceLandingPage({ pageKey }) {
 
     const res = await fetch(VEHICLE_LOOKUP_URL + encodeURIComponent(cleanReg));
     const data = await res.json();
+    
 
     if (!data.success) {
       alert("Vehicle lookup failed. Please check the registration.");
@@ -354,13 +367,26 @@ const addToBasket = (serviceName, type, price) => {
       >
         <div>
           <p className="landingEyebrow">{page.eyebrow}</p>
-          <h1>{page.title}</h1>
-          <p className="landingIntro">{page.intro}</p>
+          <h1>
+  {pageKey === "motHull" ? (
+    <>
+      Book Your MOT Only <span className="motHeroPrice">£40</span>
+    </>
+  ) : (
+    page.title
+  )}
+</h1>
+          {pageKey === "motHull" ? (
+  <div className="motHeroBenefits">
+    <span><span className="yellowTick">✔</span> Over 55 years experience</span>
+    <span><span className="yellowTick">✔</span> Trusted Hull garage</span>
+    <span><span className="yellowTick">✔</span> Same day availability</span>
+  </div>
+) : (
+  <p className="landingIntro">{page.intro}</p>
+)}
 
-          <p className="heroTrust">
-            ✔ Over 55 years experience • ✔ Trusted Hull garage • ✔ Same day
-            availability
-          </p>
+          
 
           {pageKey === "servicingHull" ? (
             <div className="serviceHeroOffer">
@@ -401,10 +427,11 @@ const addToBasket = (serviceName, type, price) => {
           <h3>{page.highlight}</h3>
 
           {page.bullets.map((item) => (
-            <div key={item} className="landingBullet">
-              ✓ {item}
-            </div>
-          ))}
+  <div key={item} className="landingBullet">
+    <span className="yellowTick">✓</span>
+    {item}
+  </div>
+))}
         </div>
       </section>
 
@@ -434,29 +461,85 @@ const addToBasket = (serviceName, type, price) => {
             </div>
 
             {serviceVehicle && (
-              <div className="serviceVehicleResult">
-                <strong>
-                  {serviceVehicle.vrm} — {serviceVehicle.year}{" "}
-                  {serviceVehicle.make} {serviceVehicle.model}
-                </strong>
+  <div className="compactVehicleBox">
+    <div className="compactVehicleTop">
+      <div className="compactReg">
+        {serviceVehicle.vrm}
+      </div>
 
-                <span>
-                  ENGINE: {serviceVehicle.engineCC || "Unknown"}cc
-                  {serviceVehicle.engineLitres
-                    ? ` / ${serviceVehicle.engineLitres}L`
-                    : ""}
-                </span>
-              </div>
-            )}
+      <div>
+        <strong>
+          {serviceVehicle.year} {serviceVehicle.make} {serviceVehicle.model}
+        </strong>
 
-            {serviceVehicle?.image && (
-              <div className="serviceVehicleImageBox">
-                <img
-                  src={serviceVehicle.image}
-                  alt={serviceVehicle.model || "Vehicle"}
-                />
-              </div>
-            )}
+        <span>
+          {serviceVehicle.body ||
+            serviceVehicle.bodyType ||
+            "Vehicle"}
+          {" • "}
+          {serviceVehicle.engineLitres}L {serviceVehicle.fuel}
+        </span>
+      </div>
+    </div>
+
+    {serviceVehicle.image && (
+      <img
+        src={serviceVehicle.image}
+        alt={serviceVehicle.model || "Vehicle"}
+      />
+    )}
+
+    <div className="compactVehicleGrid">
+      <div>
+  <span>ENGINE</span>
+  <strong>{serviceVehicle.engineCC}cc</strong>
+</div>
+
+<div>
+  <span>TYRE SIZE</span>
+  <strong>
+    {serviceVehicle.tyreSize ||
+      serviceVehicle.frontTyreSize ||
+      "Unknown"}
+  </strong>
+</div>
+
+<div>
+  <span>MOT DUE</span>
+  <strong
+    className={
+      serviceVehicle.motDue
+        ? (() => {
+            const daysRemaining = Math.floor(
+              (new Date(serviceVehicle.motDue).getTime() - Date.now()) /
+                (1000 * 60 * 60 * 24)
+            );
+
+            if (daysRemaining < 30) return "motDueRed";
+            if (daysRemaining <= 90) return "motDueAmber";
+            return "motDueGreen";
+          })()
+        : ""
+    }
+  >
+    {serviceVehicle.motDue
+      ? new Date(serviceVehicle.motDue).toLocaleDateString("en-GB")
+      : "N/A"}
+  </strong>
+</div>
+
+<div>
+  <span>NEXT SERVICE</span>
+  <strong>
+    {serviceVehicle.motMileage
+      ? `${(Number(serviceVehicle.motMileage) + 6000).toLocaleString()} mi`
+      : "N/A"}
+  </strong>
+</div>
+    </div>
+  </div>
+)}
+      
 
             <div className="serviceMotToggle">
               <div>
@@ -476,12 +559,12 @@ const addToBasket = (serviceName, type, price) => {
 
           <div className="motDealCards serviceSalesCards serviceCardsLive">
             {serviceCards.map((card, index) => {
-              const motBlocked = addMotOffer && card.key === "oil";
+              const motBlocked = false;
 
               const totalPrice =
-                addMotOffer && card.key !== "oil"
-                  ? Number(card.price || 0) + 20
-                  : Number(card.price || 0);
+  addMotOffer
+    ? Number(card.price || 0) + 20
+    : Number(card.price || 0);
 
               const isOpen = openService === card.key;
 
@@ -494,19 +577,15 @@ const addToBasket = (serviceName, type, price) => {
                 >
                   <div className="motTag">SERVICE OPTION</div>
 
-                  {addMotOffer && card.key !== "oil" && (
-                    <div className="serviceMotAdded">MOT ADDED +£20</div>
-                  )}
+                  {addMotOffer && (
+                   <div className="serviceMotAdded">MOT ADDED +£20</div>
+                   )}
 
                   <h3>{card.title}</h3>
                   <p>{card.text}</p>
 
                   <div className="servicePriceWrap">
-                    {serviceVehicle?.vrm && (
-                      <div className="serviceCardReg">
-                        {serviceVehicle.vrm}
-                      </div>
-                    )}
+                    
 
                     <div className="servicePrice">
                       £{Number(totalPrice || 0).toFixed(2)}
@@ -514,42 +593,20 @@ const addToBasket = (serviceName, type, price) => {
                   </div>
 
                   <div className="serviceButtonsWrap">
-                    <button
-                      type="button"
-                      className={`includesToggle modernBtn ${
-                        isOpen ? "activeToggle" : ""
-                      }`}
-                      onClick={() =>
-                        setOpenService(isOpen ? null : card.key)
-                      }
-                    >
-                      <span className="btnIcon">{isOpen ? "−" : "+"}</span>
+                 
 
-                      <span className="btnText">
-                        {isOpen ? "HIDE INCLUDED" : "WHAT’S INCLUDED"}
-                      </span>
-
-                      <span className={`btnArrow ${isOpen ? "rotate" : ""}`}>
-                        ▾
-                      </span>
-                    </button>
-
-                    <div
-                      className={`includesContent ${isOpen ? "open" : ""}`}
-                    >
-                      <ul>
-                        {card.included.map((item) => (
-                          <li key={item}>✓ {item}</li>
-                        ))}
-                      </ul>
-                    </div>
-
+                    
+<div className="serviceIncludesMini">
+  {card.included.slice(0, 4).map((item) => (
+    <div key={item}>{item}</div>
+  ))}
+</div>
                     <button
                       className="bookNowModern"
                       disabled={motBlocked}
                       onClick={() =>
                         addToBasket(
-                          addMotOffer && card.key !== "oil"
+                          addMotOffer && card.key
                             ? `${card.title} + MOT`
                             : card.title,
                           "Service",
@@ -585,7 +642,7 @@ const addToBasket = (serviceName, type, price) => {
               <div className="motDealText">
                 <span>MOT TESTING HULL</span>
 
-                <h2>Book Your MOT Today — Class 4 & Class 7 Available</h2>
+                <h2>Your Vehicle MOT Information</h2>
 
                 <p>
                   Fast MOT testing in Hull with clear advice, fair pricing and
@@ -593,30 +650,137 @@ const addToBasket = (serviceName, type, price) => {
                 </p>
 
                 {serviceVehicle && (
-                  <div className="serviceVehicleResult motVehicleResult">
-                    <strong>
-                      {serviceVehicle.vrm} — {serviceVehicle.year}{" "}
-                      {serviceVehicle.make} {serviceVehicle.model}
-                    </strong>
+                  <>
+                    <div className="compactVehicleBox">
+                      <div className="compactVehicleTop">
+                        <div className="compactReg">{serviceVehicle.vrm}</div>
 
-                    <span>
-                      RECOMMENDED MOT:{" "}
-                      {recommendedMotClass === "class7"
-                        ? "CLASS 7"
-                        : "CLASS 4"}
-                    </span>
-                  </div>
-                )}
+                        <div>
+                          <strong>
+                            {serviceVehicle.year} {serviceVehicle.make} {serviceVehicle.model}
+                          </strong>
 
-                {serviceVehicle?.image && (
-                  <div className="motVehicleImageBox">
-                    <img
-                      src={serviceVehicle.image}
-                      alt={serviceVehicle.model || "Vehicle"}
-                    />
-                  </div>
+                          <span>
+                            {serviceVehicle.body || serviceVehicle.bodyType || "Vehicle"}
+                            {" • "}
+                            {serviceVehicle.engineLitres}L {serviceVehicle.fuel}
+                          </span>
+                        </div>
+                      </div>
+
+                      {serviceVehicle.image && (
+                        <img
+                          src={serviceVehicle.image}
+                          alt={serviceVehicle.model || "Vehicle"}
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
+                        />
+                      )}
+
+                      <div className="compactVehicleGrid">
+                        <div>
+                          <span>MOT CLASS</span>
+                          <strong>
+                            {recommendedMotClass === "class7" ? "Class 7" : "Class 4"}
+                          </strong>
+                           <small className="serviceHint">
+                            MOT Class based on Registration.
+                            </small>
+                        </div>
+
+                        <div>
+                          <span>MOT DUE</span>
+                          <strong
+                            className={
+                              serviceVehicle.motDue
+                                ? (() => {
+                                    const daysRemaining = Math.floor(
+                                      (new Date(serviceVehicle.motDue).getTime() - Date.now()) /
+                                        (1000 * 60 * 60 * 24)
+                                    );
+
+                                    if (daysRemaining < 30) return "motDueRed";
+                                    if (daysRemaining <= 90) return "motDueAmber";
+                                    return "motDueGreen";
+                                  })()
+                                : ""
+                            }
+                          >
+                            {serviceVehicle.motDue
+                              ? new Date(serviceVehicle.motDue).toLocaleDateString("en-GB")
+                              : "N/A"}
+                          </strong>
+                            <small className="serviceHint">
+                            Book anytime from 1 month before.
+                            </small>
+                        </div>
+
+                        <div>
+                          <span>MOT MILEAGE</span>
+                          <strong>
+                            {serviceVehicle.motMileage
+                              ? `${Number(serviceVehicle.motMileage).toLocaleString()} mi`
+                              : "N/A"}
+                          </strong>
+                           <small className="serviceHint">
+                            Vehicle mileage from last MOT.
+                            </small>
+                        </div>
+
+                        <div className="nextServicePopupTrigger">
+                          <span>NEXT SERVICE</span>
+                          <strong>
+                            {serviceVehicle.motMileage
+                              ? `${(Number(serviceVehicle.motMileage) + 6000).toLocaleString()} mi`
+                              : "N/A"}
+                          </strong>
+                            <small className="serviceHint">
+                               Recommended every 6,000 miles.
+                             </small>
+
+                          <button
+                            type="button"
+                            onClick={() => setShowServiceOffer(true)}
+                          >
+                            View offer →
+                          </button>
+                        </div>
+
+
+                        {serviceVehicle.motAdvisories?.length > 0 && (
+                          <div>
+                            <span>ADVISORIES</span>
+                            <strong>{serviceVehicle.motAdvisories.length}</strong>
+                            <small className="serviceHint">
+                             Found from the last MOT
+                             </small>
+                            <button
+                              type="button"
+                              className="viewAdvisoriesBtn"
+                              onClick={() => setShowAdvisories(!showAdvisories)}
+                            >
+                              {showAdvisories ? "Hide" : "View"} →
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    
+                    {showAdvisories && serviceVehicle.motAdvisories?.length > 0 && (
+                      <div className="vehicleAdvisoriesPanel">
+                        {serviceVehicle.motAdvisories.map((advisory, index) => (
+                          <div key={index} className="vehicleAdvisory">
+                            ⚠ {advisory.Text}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
+
 
               <div className="motDealCards">
                 <div
@@ -719,40 +883,81 @@ const addToBasket = (serviceName, type, price) => {
             </p>
 
             {serviceVehicle && (
-              <div className="airconVehicleResult">
-                <div className="airconVehicleIcon">🧊</div>
+  <div className="compactVehicleBox">
+    <div className="compactVehicleTop">
+      <div className="compactReg">{serviceVehicle.vrm}</div>
 
-                <div className="airconVehicleTop">
-                  <strong>
-                    {serviceVehicle.vrm} — {serviceVehicle.year}{" "}
-                    {serviceVehicle.make} {serviceVehicle.model}
-                  </strong>
+      <div>
+        <strong>
+          {serviceVehicle.year} {serviceVehicle.make} {serviceVehicle.model}
+        </strong>
 
-                  <span>
-                    {serviceVehicle.engineLitres
-                      ? `${serviceVehicle.engineLitres}L`
-                      : ""}
-                    {serviceVehicle.fuel ? ` ${serviceVehicle.fuel}` : ""}{" "}
-                    {serviceVehicle.transmission || ""}{" "}
-                    {serviceVehicle.bodyType || ""}
-                  </span>
-                </div>
+        <span>
+          {serviceVehicle.body || serviceVehicle.bodyType}
+          {" • "}
+          {serviceVehicle.engineLitres}L {serviceVehicle.fuel}
+        </span>
+      </div>
+    </div>
 
-                <div className="airconRecommendedGas">
-                  <b>RECOMMENDED GAS:</b>
-                  <em>{airconType === "r1234yf" ? "R1234yf" : "R134a"}</em>
-                </div>
-              </div>
-            )}
+    <img
+  src={serviceVehicle.image}
+  alt={serviceVehicle.model}
+  onError={(e) => {
+    e.target.style.display = "none";
+  }}
+/>
 
-            {serviceVehicle?.image && (
-              <div className="airconVehicleImageBox">
-                <img
-                  src={serviceVehicle.image}
-                  alt={serviceVehicle.model || "Vehicle"}
-                />
-              </div>
-            )}
+    <div className="compactVehicleGrid">
+      <div>
+        <span>GAS TYPE</span>
+        <strong>
+          {airconType === "r1234yf"
+            ? "R1234yf"
+            : "R134a"}
+        </strong>
+      </div>
+
+      <div>
+        <span>ENGINE</span>
+        <strong>
+          {serviceVehicle.engineLitres}L
+        </strong>
+      </div>
+
+      <div>
+        <span>MOT DUE</span>
+<strong
+  className={
+    serviceVehicle.motDue
+      ? (() => {
+          const daysRemaining = Math.floor(
+            (new Date(serviceVehicle.motDue).getTime() - Date.now()) /
+              (1000 * 60 * 60 * 24)
+          );
+
+          if (daysRemaining < 30) return "motDueRed";
+          if (daysRemaining <= 90) return "motDueAmber";
+          return "motDueGreen";
+        })()
+      : ""
+  }
+>
+  {serviceVehicle.motDue
+    ? new Date(serviceVehicle.motDue).toLocaleDateString("en-GB")
+    : "N/A"}
+</strong>
+      </div>
+
+      <div>
+        <span>TYRE SIZE</span>
+        <strong>
+          {serviceVehicle.frontTyreSize}
+        </strong>
+      </div>
+    </div>
+  </div>
+)}
           </div>
 
           <div className="motDealCards airconSalesCards">
@@ -800,7 +1005,7 @@ const addToBasket = (serviceName, type, price) => {
                   <div className="motTag">{card.tag}</div>
 
                                            {isRecommended && serviceVehicle?.vrm && (
-  		<div className="airconRegTag">{serviceVehicle.vrm}</div>
+  		<div className="airconRegTag"></div>
 		)}
 
                   <h3>{card.title}</h3>
@@ -832,82 +1037,232 @@ const addToBasket = (serviceName, type, price) => {
         </section>
       )}
 
-      {pageKey === "alignmentHull" && (
-        <section className="motDealStrip salesMot">
-          <div className="motDealText">
-            <span>WHEEL ALIGNMENT HULL</span>
-            <h2>Precision Wheel Alignment</h2>
-            <p>
-              Improve tyre life, handling and fuel efficiency with professional
-              wheel alignment at Tyremen Hull.
-            </p>
+      {pageKey === "alignmentHull" &&
+        (() => {
+          const vehicleText = [
+            serviceVehicle?.bodyType,
+            serviceVehicle?.vehicleType,
+            serviceVehicle?.model,
+            serviceVehicle?.make,
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
 
-            <div className="motOfferBanner">
-              <div>
-                <strong>DRIVE STRAIGHT</strong>
-                <span>Stop uneven tyre wear today</span>
-              </div>
+          const isVan =
+            vehicleText.includes("van") ||
+            vehicleText.includes("transit") ||
+            vehicleText.includes("transporter") ||
+            vehicleText.includes("vivaro") ||
+            vehicleText.includes("traffic") ||
+            vehicleText.includes("sprinter") ||
+            vehicleText.includes("ducato") ||
+            vehicleText.includes("boxer") ||
+            vehicleText.includes("relay") ||
+            Number(serviceVehicle?.grossWeightKg || 0) > 3000;
 
-              <button onClick={() => navigate("/booking")}>
-                BOOK ALIGNMENT →
-              </button>
-            </div>
-          </div>
+          const alignmentOptions = [
+            {
+              key: "car",
+              title: "CAR ALIGNMENT",
+              text: "Standard front alignment",
+              price: "£35.95",
+              serviceName: "Wheel Alignment Car",
+              basketPrice: 35.95,
+              tag: "ALIGNMENT",
+            },
+            {
+              key: "van",
+              title: "VAN ALIGNMENT",
+              text: "Larger vehicle alignment",
+              price: "£43.00",
+              serviceName: "Wheel Alignment Van",
+              basketPrice: 43,
+              tag: "VANS & COMMERCIALS",
+            },
+            {
+              key: "fourWheel",
+              title: "4 WHEEL ALIGNMENT",
+              text: "Full computer alignment",
+              price: "£95.00",
+              serviceName: "4 Wheel Alignment",
+              basketPrice: 95,
+              tag: "FULL SETUP",
+            },
+          ];
 
-          <div className="motDealCards">
-            {[
-              [
-                "CAR ALIGNMENT",
-                "Standard front alignment",
-                "£35.95",
-                "Wheel Alignment Car",
-                35.95,
-              ],
-              [
-                "VAN ALIGNMENT",
-                "Larger vehicle alignment",
-                "£43.00",
-                "Wheel Alignment Van",
-                43,
-              ],
-              [
-                "4 WHEEL ALIGNMENT",
-                "Full computer alignment",
-                "£95.00",
-                "4 Wheel Alignment",
-                95,
-              ],
-            ].map(([title, text, price, serviceName, basketPrice], index) => (
-              <div
-                className={`motCard ${index === 2 ? "featured" : ""}`}
-                key={title}
-              >
-                <div className="motTag">
-                  {index === 2 ? "FULL SETUP" : "ALIGNMENT"}
+          return (
+            <section className="motDealStrip salesMot alignmentOnlyStrip">
+              <div className="motDealText alignmentIntroPanel">
+                <span>WHEEL ALIGNMENT HULL</span>
+                <h2>Precision Wheel Alignment</h2>
+                <p>
+                  Improve tyre life, handling and fuel efficiency with professional
+                  wheel alignment at Tyremen Hull.
+                </p>
+
+                <div className="serviceVrmBox alignmentVrmBox">
+                  <input
+                    placeholder="ENTER REG"
+                    value={serviceReg}
+                    onChange={(e) => setServiceReg(e.target.value.toUpperCase())}
+                  />
+
+                  <button type="button" onClick={lookupServicePricing}>
+                    {pricingLoading ? "CHECKING..." : "CHECK VEHICLE"}
+                  </button>
                 </div>
 
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <div className="motPrice">{price}</div>
+                {serviceVehicle && (
+  <div className="compactVehicleBox">
+    <div className="compactVehicleTop">
+      <div className="compactReg">{serviceVehicle.vrm}</div>
 
-                <ul>
-                  <li>✔ Prevent uneven tyre wear</li>
-                  <li>✔ Improve fuel efficiency</li>
-                  <li>✔ Better handling & safety</li>
-                </ul>
+      <div>
+        <strong>
+          {serviceVehicle.year} {serviceVehicle.make} {serviceVehicle.model}
+        </strong>
 
-                <button
-                  onClick={() =>
-                    addToBasket(serviceName, "Alignment", basketPrice)
-                  }
-                >
-                  BOOK NOW →
-                </button>
+        <span>
+          {serviceVehicle.body || serviceVehicle.bodyType}
+          {" • "}
+          {serviceVehicle.engineLitres}L {serviceVehicle.fuel}
+        </span>
+      </div>
+    </div>
+
+    {serviceVehicle.image && (
+      <img
+        src={serviceVehicle.image}
+        alt={serviceVehicle.model}
+      />
+    )}
+
+    <div className="compactVehicleGrid">
+      <div>
+        <span>ALIGNMENT</span>
+        <strong>
+          {isVan ? "Van" : "Car"}
+        </strong>
+      </div>
+
+      <div>
+        <span>TYRE SIZE</span>
+        <strong>
+          {serviceVehicle.frontTyreSize}
+        </strong>
+      </div>
+
+      <div>
+        <span>MOT DUE</span>
+<strong
+  className={
+    serviceVehicle.motDue
+      ? (() => {
+          const daysRemaining = Math.floor(
+            (new Date(serviceVehicle.motDue).getTime() - Date.now()) /
+              (1000 * 60 * 60 * 24)
+          );
+
+          if (daysRemaining < 30) return "motDueRed";
+          if (daysRemaining <= 90) return "motDueAmber";
+          return "motDueGreen";
+        })()
+      : ""
+  }
+>
+  {serviceVehicle.motDue
+    ? new Date(serviceVehicle.motDue).toLocaleDateString("en-GB")
+    : "N/A"}
+</strong>
+      </div>
+
+      <div>
+        <span>PCD</span>
+        <strong>
+          {serviceVehicle.tyreDetails?.[0]?.Hub?.Pcd || "N/A"}
+        </strong>
+      </div>
+    </div>
+  </div>
+)}
+
+                <div className="motOfferBanner alignmentOfferBanner">
+                  <div>
+                    <strong>DRIVE STRAIGHT</strong>
+                    <span>Stop uneven tyre wear today</span>
+                  </div>
+
+                  <button onClick={() => navigate("/booking")}>
+                    BOOK ALIGNMENT →
+                  </button>
+                </div>
               </div>
-            ))}
-          </div>
-        </section>
-      )}
+
+              <div className="motDealCards alignmentSalesCards">
+                {alignmentOptions.map((card) => {
+                  const isRecommended =
+                    (card.key === "car" && !isVan) ||
+                    (card.key === "van" && isVan);
+
+                  const isWrongVehicle =
+                    serviceVehicle &&
+                    ((card.key === "car" && isVan) ||
+                      (card.key === "van" && !isVan));
+
+                  return (
+                    <div
+                      className={`motCard alignmentCard ${
+                        isRecommended ? "recommendedAlignment" : ""
+                      } ${
+                        isWrongVehicle ? "notRecommendedAlignment" : ""
+                      } ${card.key === "fourWheel" ? "featured" : ""}`}
+                      key={card.key}
+                    >
+                      {isRecommended && (
+                        <div className="motRecommendedTag alignmentRecommendedTag">
+                          RECOMMENDED
+                        </div>
+                      )}
+
+                      <div className="motTag">{card.tag}</div>
+
+                      {isRecommended && serviceVehicle?.vrm && (
+                        <div className="motRegTag alignmentRegTag">
+                          {serviceVehicle.vrm}
+                        </div>
+                      )}
+
+                      <h3>{card.title}</h3>
+                      <p>{card.text}</p>
+                      <div className="motPrice">{card.price}</div>
+
+                      <ul>
+                        <li>✔ Prevent uneven tyre wear</li>
+                        <li>✔ Improve fuel efficiency</li>
+                        <li>✔ Better handling & safety</li>
+                      </ul>
+
+                      <button
+                        disabled={isWrongVehicle}
+                        onClick={() =>
+                          addToBasket(
+                            card.serviceName,
+                            "Alignment",
+                            card.basketPrice
+                          )
+                        }
+                      >
+                        {isWrongVehicle ? "WRONG VEHICLE TYPE" : "BOOK NOW →"}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })()}
+
 
       {(pageKey === "timingHull" || pageKey === "clutchHull") && (
         <section className="quoteConvertStrip">
@@ -1046,6 +1401,31 @@ const addToBasket = (serviceName, type, price) => {
           </div>
         ))}
       </section>
+
+{showServiceOffer && (
+  <div className="serviceOfferModalOverlay">
+    <div className="serviceOfferModal">
+      <button
+        className="serviceOfferClose"
+        onClick={() => setShowServiceOffer(false)}
+      >
+        ×
+      </button>
+
+      <span>SERVICE + MOT OFFER</span>
+
+      <h3>Save £20 on your MOT</h3>
+
+      <p>
+        Book an Interim, Full or Major Service and add your MOT for only £20.00.
+      </p>
+
+      <a href="/car-servicing-hull?motOffer=true">
+        Book Service + MOT →
+      </a>
+    </div>
+  </div>
+)}
 
       <section className="faqSection">
         <h2>Frequently Asked Questions</h2>

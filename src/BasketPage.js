@@ -37,7 +37,12 @@ export default function BasketPage() {
 
   const continueBooking = () => {
     localStorage.removeItem("tyremenFittingOption");
-    navigate("/booking");
+    navigate("/booking", {
+  state: {
+    vehicle,
+    registration: vehicle?.vrm || "",
+  },
+});
   };
 
   return (
@@ -119,7 +124,13 @@ export default function BasketPage() {
                         {item.brand} {item.pattern}
                       </h3>
 
-                      <strong>{item.size}</strong>
+                      <strong>{item.size || "SIZE MISSING"}</strong>
+
+{item.registration && (
+  <small className="basketItemReg">
+    Reg: {item.registration}
+  </small>
+)}
 
                       <div className="basketSpecs">
                         <span>Load {item.loadIndex || "-"}</span>

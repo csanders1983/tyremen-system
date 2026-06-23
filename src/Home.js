@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import heroCar from "./assets/hero-car.png";
 import "./Home.css";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 import tyreIcon from "./assets/icons/tyre.png";
@@ -153,6 +152,7 @@ const rawWeight = firstValue(
   vehicle?.gross_vehicle_weight,
   vehicle?.grossVehicleMass,
   vehicle?.grossVehicleMassKg,
+  vehicle?.grossWeightKg,
   vehicle?.maxWeight,
   vehicle?.vehicleWeight,
   vehicle?.weight
@@ -227,6 +227,92 @@ console.log("HOME VEHICLE:", vehicle);
 console.log("HOME WEIGHT:", rawWeight, vehicleWeight);
 console.log("HOME VAN DETECT:", looksLikeVan);
 console.log("HOME MOT:", motTitle);
+
+const formattedMotDue = (() => {
+  const motDate = firstValue(vehicle?.motDue, vehicle?.motExpiryDate, vehicle?.motExpiry, vehicle?.motDueDate);
+  if (!motDate) return "Check MOT date";
+
+  const parsedDate = new Date(motDate);
+  if (Number.isNaN(parsedDate.getTime())) return String(motDate);
+
+  return parsedDate.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+})();
+
+const displayEngine = firstValue(
+  vehicle?.engineLitres ? `${vehicle.engineLitres}L` : "",
+  vehicle?.engineCC ? `${vehicle.engineCC}cc` : ""
+);
+
+const standardTyreDetail = Array.isArray(vehicle?.tyreDetails)
+  ? vehicle.tyreDetails.find((item) => item?.IsStandardFitmentForVehicle) || vehicle.tyreDetails[0]
+  : null;
+
+const wheelPcd = firstValue(standardTyreDetail?.Hub?.Pcd);
+const wheelTorque = firstValue(standardTyreDetail?.Fixing?.TorqueNm);
+const frontWheelSize = firstValue(standardTyreDetail?.Front?.Rim?.SizeDescription);
+const rearTyreSize = firstValue(vehicle?.rearTyreSize, standardTyreDetail?.Rear?.Tyre?.SizeDescription);
+
+const bookingCards = [
+  {
+    title: "TYRES",
+    icon: tyreIcon,
+    value: tyreSize || "Find sizes",
+    price: "View live prices",
+    bullets: ["Matched to your reg", "Fitted in Hull", rearTyreSize && rearTyreSize !== tyreSize ? `Rear: ${rearTyreSize}` : "Balancing available"],
+    button: "VIEW TYRES",
+    link: "/tyres",
+    featured: true,
+  },
+  {
+    title: "SERVICE",
+    icon: serviceIcon,
+    value: serviceRecommendation,
+    price: knownMileage ? `${knownMileage.toLocaleString()} miles` : "Book service",
+    bullets: ["Oil, interim, full & major", "Quality parts & oils", "Service reset"],
+    button: "BOOK SERVICE",
+    link: "/car-servicing-hull",
+  },
+  {
+    title: "MOT",
+    icon: motIcon,
+    value: motTitle,
+    price: formattedMotDue,
+    bullets: ["Class 4 & Class 7", "DVSA approved", "Book online"],
+    button: "BOOK MOT",
+    link: "/mot-hull",
+  },
+  {
+    title: "AIR CON",
+    icon: airconIcon,
+    value: airConGas.replace("Likely ", ""),
+    price: "Regas & repair",
+    bullets: ["Gas matched by vehicle", "Leak detection", "Performance check"],
+    button: "BOOK AIR CON",
+    link: "/air-conditioning-hull",
+  },
+  {
+    title: "BRAKES",
+    icon: brakeIcon,
+    value: "Brake check",
+    price: "Inspection",
+    bullets: ["Pads & discs", "Safety inspection", "Clear advice"],
+    button: "BOOK BRAKES",
+    link: "/brakes-hull",
+  },
+  {
+    title: "DIAGNOSTICS",
+    icon: diagnosticsIcon,
+    value: "Fault scan",
+    price: "Warning lights",
+    bullets: ["Code reading", "Health report", "Repair advice"],
+    button: "BOOK NOW",
+    link: "/booking",
+  },
+];
 
   return (
     <div className="homePage">
@@ -353,106 +439,152 @@ console.log("HOME MOT:", motTitle);
 )}
 
 
-      <section className="regSearch">
+      <section className={`regSearch ${vehicle ? "regSearchFound" : ""}`}>
         <div className="regMain">
           <h3>
             FIND TYRES, SERVICE OR MOT <span>BY REG</span>
           </h3>
 
           <div className="plateLine">
-            <div className="ukFlag"></div>
-
             <div className="plateRow">
               <div className="plateGb">GB</div>
 
               <input
-  value={registration}
-  onChange={(e) => setRegistration(e.target.value.toUpperCase())}
-  onKeyDown={(e) => {
-    if (e.key === "Enter") {
-      lookupVehicle();
-    }
-  }}
-  placeholder="ABC 123"
-/>
+                value={registration}
+                onChange={(e) => setRegistration(e.target.value.toUpperCase())}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    lookupVehicle();
+                  }
+                }}
+                placeholder="ABC 123"
+              />
 
               <button onClick={lookupVehicle} disabled={loadingVehicle}>
-              <span>{loadingVehicle ? "CHECKING..." : "FIND MY VEHICLE ✓"}</span>
+                <span>{loadingVehicle ? "CHECKING..." : "FIND MY VEHICLE ✓"}</span>
               </button>
             </div>
           </div>
 
           {vehicle ? (
-            <div className="vehicleResult">
-              <div className="vehicleImageBox">
-                {vehicle.image && (
-                  <img src={vehicle.image} alt={vehicle.model || "Vehicle"} />
-                )}
+            <div className="vehicleBookingPanel">
+              <div className="vehicleFoundBadge">✓ Registration found</div>
+
+              <div className="vehicleDashboard">
+                <div className="vehicleHeroImage">
+                  {vehicle.image ? (
+                    <img src={vehicle.image} alt={vehicle.model || "Vehicle"} />
+                  ) : (
+                    <img src={heroCar} alt="Vehicle" />
+                  )}
+                </div>
+
+                <div className="vehicleDashboardInfo">
+                  <small>YOUR VEHICLE</small>
+                  <h2>{vehicleName || "Vehicle found"}</h2>
+                  <p>{vehicleSubLine}</p>
+
+                  <div className="vehicleMetaGrid">
+                    <div>
+                      <span>ENGINE</span>
+                      <strong>{displayEngine || "Vehicle data"}</strong>
+                    </div>
+                    <div>
+                      <span>TYRE SIZE</span>
+                      <strong>{tyreSize || "Check sizes"}</strong>
+                    </div>
+                    <div>
+                      <span>MOT</span>
+                      <strong>{motTitle}</strong>
+                    </div>
+                    <div>
+                      <span>AIR CON</span>
+                      <strong>{airConGas.replace("Likely ", "")}</strong>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="vehicleInfo">
-                <strong>{vehicleName || "Vehicle found"}</strong>
+              <div className="vehicleDataStrip">
+                <span>✓ Parts and services matched to {cleanDisplayReg}</span>
+                {frontWheelSize && <span>Wheel: {frontWheelSize}</span>}
+                {wheelPcd && <span>PCD: {wheelPcd}</span>}
+                {wheelTorque && <span>Torque: {wheelTorque}Nm</span>}
+                <button type="button" onClick={clearVehicle}>CHANGE VEHICLE</button>
+              </div>
 
-                <p>{vehicleSubLine}</p>
+              <div className="bookingTitle">
+                <h3>WHAT WOULD <span>YOU</span> LIKE TO BOOK?</h3>
+              </div>
 
-                <p>
-                  {vehicle.engineCC ? `${vehicle.engineCC}cc` : ""}
-                  {tyreSize ? ` • ${tyreSize}` : ""}
-                </p>
-
-                <div className="vehicleActionGrid">
-                  <button onClick={() => goTo("/tyres")}>TYRES →</button>
-                  <button onClick={() => goTo("/car-servicing-hull")}>
-                    SERVICE →
+              <div className="bookingCardGrid">
+                {bookingCards.map((card) => (
+                  <button
+                    key={card.title}
+                    type="button"
+                    className={`bookingCard ${card.featured ? "bookingCardFeatured" : ""}`}
+                    onClick={() => goTo(card.link)}
+                  >
+                    <img src={card.icon} alt="" />
+                    <strong>{card.title}</strong>
+                    <em>{card.value}</em>
+                    <b>{card.price}</b>
+                    <ul>
+                      {card.bullets.filter(Boolean).map((bullet) => (
+                        <li key={bullet}>✓ {bullet}</li>
+                      ))}
+                    </ul>
+                    <span>{card.button} →</span>
                   </button>
-                  <button onClick={() => goTo("/mot-hull")}>MOT →</button>
-                </div>
+                ))}
               </div>
             </div>
           ) : (
-            <div className="vehiclePlaceholder">
-              <div className="placeholderInner">
-                <div className="placeholderReg">YOUR VEHICLE WILL APPEAR HERE</div>
+            <div className="lookupStartPanel">
+              <div className="vehiclePlaceholder">
+                <div className="placeholderInner">
+                  <div className="placeholderReg">YOUR VEHICLE WILL APPEAR HERE</div>
 
-                <h4>Enter your registration to begin</h4>
+                  <h4>Enter your registration to begin</h4>
 
-                <p>
-                  Instantly find tyres, MOT pricing, servicing, air conditioning
-                  gas type and more.
-                </p>
+                  <p>
+                    Instantly find tyres, MOT pricing, servicing, air conditioning
+                    gas type and more.
+                  </p>
 
-                <div className="placeholderTags">
-                  <span>✓ Tyre Sizes</span>
-                  <span>✓ MOT Info</span>
-                  <span>✓ Service Booking</span>
-                  <span>✓ Air Con Gas</span>
+                  <div className="placeholderTags">
+                    <span>✓ Tyre Sizes</span>
+                    <span>✓ MOT Info</span>
+                    <span>✓ Service Booking</span>
+                    <span>✓ Air Con Gas</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="steps">
+                <div>
+                  <b>1</b>
+                  <em>🔍</em>
+                  <span>ENTER REG</span>
+                  <small>We’ll find your vehicle</small>
+                </div>
+
+                <div>
+                  <b>2</b>
+                  <em>🛠️</em>
+                  <span>CHOOSE SERVICE</span>
+                  <small>Tyres, Service or MOT</small>
+                </div>
+
+                <div>
+                  <b>3</b>
+                  <em>🗓️</em>
+                  <span>BOOK ONLINE</span>
+                  <small>Fitted in Hull</small>
                 </div>
               </div>
             </div>
           )}
-        </div>
-
-        <div className="steps">
-          <div>
-            <b>1</b>
-            <em>🔍</em>
-            <span>ENTER REG</span>
-            <small>We’ll find your vehicle</small>
-          </div>
-
-          <div>
-            <b>2</b>
-            <em>🛠️</em>
-            <span>CHOOSE SERVICE</span>
-            <small>Tyres, Service or MOT</small>
-          </div>
-
-          <div>
-            <b>3</b>
-            <em>🗓️</em>
-            <span>BOOK ONLINE</span>
-            <small>Fitted in Hull</small>
-          </div>
         </div>
       </section>
 

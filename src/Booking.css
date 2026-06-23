@@ -746,6 +746,13 @@
   align-items: center;
   justify-content: center;
 }
+.bookingItemReg {
+  display: block;
+  margin-top: 4px;
+  color: #ffd000;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
 
 @media (max-width: 760px) {
   .bookingReassurance {

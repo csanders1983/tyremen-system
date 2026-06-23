@@ -20,8 +20,11 @@ export default function Booking() {
   Array.isArray(tyreBasket) &&
   tyreBasket.some((item) => item.type === "tyre");
 
-  const basketVehicle =
-    tyreBasket.find((item) => item.vehicle)?.vehicle || passed.vehicle || null;
+  const latestBasketVehicle =
+  [...tyreBasket].reverse().find((item) => item.vehicle)?.vehicle || null;
+
+const basketVehicle =
+  passed.vehicle || latestBasketVehicle || null;
 
   const [vehicleData, setVehicleData] = useState(basketVehicle);
   const [loadingVehicle, setLoadingVehicle] = useState(false);
@@ -33,8 +36,26 @@ export default function Booking() {
   const [email, setEmail] = useState("");
 
   const [registration, setRegistration] = useState(
-    basketVehicle?.vrm || passed.registration || urlVrm || ""
-  );
+  passed.registration ||
+    passed.vehicle?.vrm ||
+    latestBasketVehicle?.vrm ||
+    urlVrm ||
+    ""
+);
+
+  const currentBasketVrm =
+  tyreBasket.find((item) => item.vehicle?.vrm)?.vehicle?.vrm || "";
+
+useEffect(() => {
+  if (!registration || !currentBasketVrm) return;
+
+  if (
+    registration.toUpperCase().replace(/\s/g, "") !==
+    currentBasketVrm.toUpperCase().replace(/\s/g, "")
+  ) {
+    
+  }
+}, [registration, currentBasketVrm]);
 
   const [confirm, setConfirm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -51,6 +72,7 @@ export default function Booking() {
     "14:00",
     "14:30",
     "15:00",
+    "16:00",
   ];
 
   useEffect(() => {
@@ -119,10 +141,12 @@ export default function Booking() {
   ? tyreBasket
       .filter((item) => item.type === "tyre")
       .map((tyre) => ({
+        id: tyre.id,
         name: makeTyreName(tyre),
         qty: Number(tyre.qty || 1),
         price: Number(tyre.price || 0),
         type: "tyre",
+        category: tyre.category || "Tyre",
         axle: tyre.axle || "",
         stockNumber: getStockNumber(tyre),
         size: tyre.size || "",
@@ -131,6 +155,8 @@ export default function Booking() {
         loadIndex: tyre.loadIndex || "",
         speedRating: tyre.speedRating || "",
         runflat: tyre.runflat || "",
+        registration: tyre.registration || tyre.vehicle?.vrm || "",
+        vehicle: tyre.vehicle || null,
       }))
     : [];
 
@@ -300,7 +326,22 @@ const removeItem = (id) => {
 
     setSubmitting(false);
   };
+const estimatedMinutes = tyreBasket.reduce((total, item) => {
+  const name = (item.name || "").toLowerCase();
 
+  if (name.includes("class 4 mot")) return total + 60;
+  if (name.includes("class 7 mot")) return total + 60;
+
+  if (name.includes("oil")) return total + 45;
+  if (name.includes("interim")) return total + 60;
+  if (name.includes("full service")) return total + 70;
+  if (name.includes("major service")) return total + 90;
+
+  if (name.includes("air con")) return total + 45;
+  if (name.includes("alignment")) return total + 45;
+
+  return total;
+}, 0);
   return (
     <div className="bookingPage">
       
@@ -463,6 +504,14 @@ const removeItem = (id) => {
     : itemName}
 </strong>
 
+
+{(item.registration || item.vehicle?.vrm) && (
+  <small className="bookingItemReg">
+    Reg: {item.registration || item.vehicle?.vrm}
+  </small>
+)}
+
+
 <div className="bookingItemMeta">
   Qty: {item.qty || 1}
 </div>
@@ -515,10 +564,7 @@ const removeItem = (id) => {
     );
   })}
 </div>
-
-
-
-            <div className="bookingHelpBox">
+              <div className="bookingHelpBox">
               <span>Need help?</span>
               <strong>01482 328800</strong>
               <small>Call us and we’ll help with your booking.</small>
@@ -554,13 +600,15 @@ const removeItem = (id) => {
               </div>
 
               <div className="durationBox">
-                <b>
-                  ⏱ Estimated appointment duration: <span>45 minutes</span>
-                </b>
-                <small>
-                  You’ll be notified by email once we receive your booking.
-                </small>
-              </div>
+                                  <b>
+                                   ⏱ Estimated appointment duration:{" "}
+                               <span>
+                              {estimatedMinutes > 0
+                             ? `${estimatedMinutes} minutes`
+                            : "To be confirmed"}
+                          </span>
+                       </b>
+                     </div>
             </div>
 
             <div className="bookingFormCard">
@@ -622,7 +670,7 @@ const removeItem = (id) => {
               onClick={submitBooking}
               disabled={submitting}
             >
-              <span>{submitting ? "Sending Booking..." : "Request Booking"}</span>
+              <span>{submitting ? "Sending Booking..." : "Make Booking"}</span>
               <b>→</b>
             </button>
           </section>

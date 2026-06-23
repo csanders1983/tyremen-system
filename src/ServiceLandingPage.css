@@ -336,18 +336,6 @@
   cursor: pointer;
 }
 
-.serviceVehicleResult {
-  max-width: 620px;
-  margin-top: 16px;
-  background: #050505;
-  color: #fff;
-  border-left: 6px solid #ffd000;
-  border-radius: 12px;
-  padding: 16px 18px;
-  display: grid;
-  gap: 6px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
-}
 
 .serviceVehicleResult strong {
   display: block;
@@ -362,10 +350,7 @@
   font-weight: 1000;
 }
 
-.serviceVehicleImageBox {
-  margin-top: 18px;
-  max-width: 540px;
-}
+
 
 .serviceVehicleImageBox img {
   max-height: 210px;
@@ -1438,4 +1423,2952 @@
     #9cebff 0%,
     #52d2ff 100%
   ) !important;
+}
+/* =========================================================
+   TYREMEN SERVICING CARDS PREMIUM PATCH — SCOPED ONLY
+   Safe version: only affects the servicing page service cards,
+   the servicing MOT offer/toggle and the servicing hero offer.
+   It does NOT change header, footer, MOT page, Aircon page,
+   Alignment page, content cards, FAQ, or global layout.
+   Paste/remove this whole block as one section.
+========================================================= */
+
+/* Hero servicing offer only */
+.serviceHeroOffer {
+  background:
+    radial-gradient(circle at top left, rgba(255, 208, 0, 0.24), transparent 34%),
+    linear-gradient(135deg, rgba(8, 8, 8, 0.96), rgba(22, 22, 22, 0.94)) !important;
+  border: 1px solid rgba(255, 208, 0, 0.78) !important;
+  border-bottom: 4px solid #ffd000 !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.serviceHeroOffer .offerIcon {
+  background: #ffd000 !important;
+  color: #050505 !important;
+}
+
+.serviceHeroOffer .offerMain strong,
+.serviceHeroOffer .offerText b {
+  color: #ffd000 !important;
+}
+
+.serviceHeroOffer .offerSave {
+  background: #ffd000 !important;
+  color: #050505 !important;
+}
+
+/* Servicing section shell only */
+.serviceOnlyStrip {
+  background:
+    radial-gradient(circle at top right, rgba(255, 208, 0, 0.1), transparent 32%),
+    linear-gradient(180deg, #111 0%, #070707 100%) !important;
+  border: 1px solid rgba(255, 208, 0, 0.32) !important;
+  border-top: 5px solid #ffd000 !important;
+  color: #fff !important;
+  overflow: visible !important;
+}
+
+.serviceOnlyStrip .serviceIntroPanel {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 22px !important;
+  padding: 28px !important;
+}
+
+.serviceOnlyStrip .serviceIntroPanel span {
+  color: #ffd000 !important;
+}
+
+.serviceOnlyStrip .serviceIntroPanel h2 {
+  color: #fff !important;
+}
+
+.serviceOnlyStrip .serviceIntroPanel p {
+  color: rgba(255, 255, 255, 0.74) !important;
+}
+
+/* VRM input area only */
+.serviceOnlyStrip .serviceVrmBox input {
+  background: #fff !important;
+  border: 2px solid rgba(255, 208, 0, 0.45) !important;
+  color: #050505 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+.serviceOnlyStrip .serviceVrmBox button {
+  background: linear-gradient(180deg, #ffe15a 0%, #ffd000 100%) !important;
+  color: #050505 !important;
+  box-shadow: 0 12px 24px rgba(255, 208, 0, 0.18) !important;
+}
+
+.serviceOnlyStrip .serviceVehicleResult {
+  background: rgba(0, 0, 0, 0.86) !important;
+  border-left: 5px solid #ffd000 !important;
+  border: 1px solid rgba(255, 208, 0, 0.32) !important;
+  color: #fff !important;
+}
+
+.serviceOnlyStrip .serviceVehicleResult strong {
+  color: #ffd000 !important;
+}
+
+.serviceOnlyStrip .serviceVehicleResult span {
+  color: #fff !important;
+}
+
+/* MOT toggle / offer box only */
+.serviceOnlyStrip .serviceMotToggle {
+  background:
+    linear-gradient(135deg, rgba(255, 208, 0, 0.11), rgba(0, 0, 0, 0.88)) !important;
+  border: 1px dashed rgba(255, 208, 0, 0.9) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+.serviceOnlyStrip .serviceMotToggle strong {
+  color: #fff !important;
+  font-size: 22px !important;
+}
+
+.serviceOnlyStrip .serviceMotToggle strong::after {
+  content: " SAVE £20";
+  color: #ffd000;
+}
+
+.serviceOnlyStrip .serviceMotToggle span {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.serviceOnlyStrip .serviceMotToggle button {
+  background: linear-gradient(180deg, #ffe15a 0%, #ffd000 100%) !important;
+  color: #050505 !important;
+  border: 1px solid rgba(255, 208, 0, 0.8) !important;
+  border-radius: 12px !important;
+}
+
+.serviceOnlyStrip .serviceMotToggle button.active {
+  background: linear-gradient(180deg, #20c742 0%, #11962c 100%) !important;
+  color: #fff !important;
+}
+
+/* Card grid only */
+.serviceOnlyStrip .serviceSalesCards {
+  align-items: stretch !important;
+}
+
+/* Service cards only - do not target all .motCard */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 540px !important;
+  padding: 30px 24px 24px !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, #151819 0%, #090a0b 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transform: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(255, 208, 0, 0.78) !important;
+  box-shadow:
+    0 24px 54px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(255, 208, 0, 0.12) !important;
+}
+
+/* Featured Interim card only */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard.featured,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(2) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 208, 0, 0.28), transparent 38%),
+    linear-gradient(180deg, #191816 0%, #080808 100%) !important;
+  border: 2px solid #ffd000 !important;
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.48),
+    0 0 34px rgba(255, 208, 0, 0.2) !important;
+}
+
+/* Card icons */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard::before {
+  display: block;
+  margin: 0 auto 18px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 38px;
+  line-height: 70px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(1)::before {
+  content: "♢";
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(2)::before {
+  content: "🔧";
+  border-color: rgba(255, 208, 0, 0.75);
+  color: #ffd000;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(3)::before {
+  content: "🛡";
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(4)::before {
+  content: "♛";
+}
+
+/* Tag */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .motTag {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 auto 12px !important;
+  padding: 7px 14px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: rgba(255, 255, 255, 0.84) !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(2) .motTag {
+  background: #ffd000 !important;
+  color: #050505 !important;
+  border-color: #ffd000 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(2) .motTag::before {
+  content: "POPULAR";
+  font-size: 12px;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(2) .motTag {
+  font-size: 0 !important;
+}
+
+/* Card text */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard h3 {
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 27px !important;
+  line-height: 1.02 !important;
+  margin: 10px 0 8px !important;
+  letter-spacing: -0.8px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(2) h3 {
+  color: #ffd000 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard p {
+  min-height: 38px !important;
+  margin: 0 0 18px !important;
+  color: rgba(255, 255, 255, 0.76) !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+}
+
+/* Price */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .servicePriceWrap {
+  margin: 18px 0 20px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
+  text-align: center !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .servicePriceWrap::before {
+  content: "FROM";
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .servicePrice {
+  color: #fff !important;
+  font-size: 38px !important;
+  line-height: 1 !important;
+  font-weight: 1000 !important;
+  letter-spacing: -1.5px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard:nth-child(2) .servicePrice {
+  color: #ffd000 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .servicePrice::after {
+  content: " INC VAT";
+  display: block;
+  margin-top: 7px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .serviceCardReg {
+  background: #ffd000 !important;
+  color: #050505 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 18px rgba(255, 208, 0, 0.2) !important;
+}
+
+/* MOT added badge */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .serviceMotAdded {
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  background: linear-gradient(180deg, #23c84a, #11932e) !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  padding: 8px 12px !important;
+  box-shadow: 0 10px 22px rgba(18, 168, 32, 0.28) !important;
+}
+
+/* Buttons only inside service cards */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .serviceButtonsWrap {
+  margin-top: auto !important;
+  gap: 10px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern {
+  min-height: 52px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 208, 0, 0.8) !important;
+  box-shadow: none !important;
+}
+
+.includesToggle {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  color: #fff !important;
+  min-height: 46px !important;
+}
+
+.includesToggle:hover {
+  border-color: #ffd000 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle .btnText,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle .btnArrow {
+  color: #fff !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern {
+  background: linear-gradient(180deg, #ffe15a 0%, #ffd000 100%) !important;
+  color: #050505 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern .btnText,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern .bookArrow {
+  color: #050505 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .btnIcon {
+  background: #050505 !important;
+  color: #ffd000 !important;
+  border: 1px solid rgba(255, 208, 0, 0.35) !important;
+}
+
+/* Included dropdown */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent.open {
+  max-height: 240px !important;
+  padding: 14px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent li {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 12px !important;
+  line-height: 1.38 !important;
+}
+
+/* Disabled oil card when MOT selected */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard.serviceDisabled {
+  opacity: 0.42 !important;
+  filter: grayscale(0.9) !important;
+}
+
+/* Mobile only for servicing cards */
+@media (max-width: 1100px) {
+  .serviceOnlyStrip .serviceSalesCards {
+    grid-template-columns: repeat(2, minmax(220px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .serviceOnlyStrip .serviceSalesCards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .serviceOnlyStrip .serviceSalesCards .serviceOptionCard {
+    min-height: auto !important;
+  }
+
+  .serviceOnlyStrip .serviceIntroPanel {
+    padding: 22px !important;
+  }
+
+  .serviceOnlyStrip .serviceMotToggle {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* =========================================================
+   TYREMEN MOT / ALIGNMENT / AIR CON PREMIUM CARD PATCH
+   Safe add-on: paste AFTER your existing ServiceLandingPage.css
+   and AFTER the servicing cards patch you already like.
+
+   It only targets:
+   - MOT page: .motOnlyStrip
+   - Air Con page: .airconOnlyStrip
+   - Alignment page: the generic sales strip, excluding service/MOT/aircon
+
+   Header, footer, hero, content cards and FAQ are not targeted.
+========================================================= */
+
+/* =========================
+   SHARED PREMIUM SHELLS
+========================= */
+.motOnlyStrip,
+.airconOnlyStrip,
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) {
+  background:
+    radial-gradient(circle at top right, rgba(255, 208, 0, 0.11), transparent 34%),
+    linear-gradient(180deg, #111 0%, #070707 100%) !important;
+  border: 1px solid rgba(255, 208, 0, 0.32) !important;
+  border-top: 5px solid #ffd000 !important;
+  color: #fff !important;
+  overflow: visible !important;
+}
+
+.motOnlyStrip .motDealText,
+.airconOnlyStrip .airconIntroPanel,
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motDealText {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 22px !important;
+  padding: 28px !important;
+}
+
+.motOnlyStrip .motDealText span,
+.airconOnlyStrip .airconIntroPanel span,
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motDealText span {
+  color: #ffd000 !important;
+}
+
+.motOnlyStrip .motDealText h2,
+.airconOnlyStrip .airconIntroPanel h2,
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motDealText h2 {
+  color: #fff !important;
+}
+
+.motOnlyStrip .motDealText p,
+.airconOnlyStrip .airconIntroPanel p,
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motDealText p {
+  color: rgba(255, 255, 255, 0.74) !important;
+}
+
+/* =========================
+   MOT PAGE CARDS
+========================= */
+.motOnlyStrip .motDealCards {
+  align-items: stretch !important;
+}
+
+.motOnlyStrip .motCard {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 540px !important;
+  padding: 34px 28px 28px !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, #151819 0%, #090a0b 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transform: none !important;
+}
+
+.motOnlyStrip .motCard:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(255, 208, 0, 0.78) !important;
+  box-shadow:
+    0 24px 54px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(255, 208, 0, 0.12) !important;
+}
+
+.motOnlyStrip .motCard.recommendedMot {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 208, 0, 0.28), transparent 38%),
+    linear-gradient(180deg, #191816 0%, #080808 100%) !important;
+  border: 2px solid #ffd000 !important;
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.48),
+    0 0 34px rgba(255, 208, 0, 0.2) !important;
+}
+
+.motOnlyStrip .motCard::before {
+  display: block;
+  margin: 6px auto 18px;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 38px;
+  line-height: 74px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.motOnlyStrip .motCard:nth-child(1)::before { content: "📋"; }
+.motOnlyStrip .motCard:nth-child(2)::before { content: "🚐"; }
+
+.motOnlyStrip .motCard.recommendedMot::before {
+  border-color: rgba(255, 208, 0, 0.75);
+  color: #ffd000;
+}
+
+.motOnlyStrip .motRecommendedTag {
+  top: 14px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: #ffd000 !important;
+  color: #050505 !important;
+  border-radius: 999px !important;
+  padding: 8px 16px !important;
+  box-shadow: 0 10px 22px rgba(255, 208, 0, 0.22) !important;
+}
+
+.motOnlyStrip .motRegTag {
+  display: flex !important;
+  width: fit-content !important;
+  margin: 0 auto 16px !important;
+  background: #ffd000 !important;
+  color: #050505 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  font-size: 22px !important;
+  letter-spacing: 2px !important;
+  box-shadow: 0 8px 18px rgba(255, 208, 0, 0.2) !important;
+}
+
+.motOnlyStrip .motTag {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 auto 12px !important;
+  padding: 7px 14px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: rgba(255, 255, 255, 0.84) !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+}
+
+.motOnlyStrip .motCard h3 {
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 32px !important;
+  line-height: 1.02 !important;
+  margin: 10px 0 8px !important;
+  letter-spacing: -0.8px !important;
+}
+
+.motOnlyStrip .motCard.recommendedMot h3 {
+  color: #ffd000 !important;
+}
+
+.motOnlyStrip .motCard p {
+  color: rgba(255, 255, 255, 0.76) !important;
+  text-align: center !important;
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+}
+
+.motOnlyStrip .motPrice {
+  margin: 22px 0 22px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 48px !important;
+  letter-spacing: -1.5px !important;
+}
+
+.motOnlyStrip .motPrice::before {
+  content: "FROM";
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.motOnlyStrip .recommendedMot .motPrice {
+  color: #ffd000 !important;
+}
+
+.motOnlyStrip .motPrice::after {
+  content: " INC VAT";
+  display: block;
+  margin-top: 7px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.motOnlyStrip .motCard ul {
+  margin: 0 0 24px !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.motOnlyStrip .motCard li {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 14px !important;
+  line-height: 1.38 !important;
+  margin-bottom: 10px !important;
+}
+
+.motOnlyStrip .motCard button {
+  margin-top: auto !important;
+  min-height: 54px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 208, 0, 0.8) !important;
+  background: linear-gradient(180deg, #ffe15a 0%, #ffd000 100%) !important;
+  color: #050505 !important;
+  font-weight: 1000 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+
+.motOnlyStrip .notRecommendedMot {
+  opacity: 0.38 !important;
+  filter: grayscale(0.9) !important;
+  pointer-events: none !important;
+}
+
+/* =========================
+   ALIGNMENT PAGE CARDS
+   Selector targets the only generic sales strip left after
+   service/MOT/aircon have their own classes.
+========================= */
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motOfferBanner {
+  background: linear-gradient(135deg, rgba(255, 208, 0, 0.12), rgba(0, 0, 0, 0.88)) !important;
+  border: 1px dashed rgba(255, 208, 0, 0.9) !important;
+  border-radius: 18px !important;
+  padding: 20px !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motOfferBanner strong {
+  color: #fff !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motOfferBanner span {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motOfferBanner button {
+  background: linear-gradient(180deg, #ffe15a 0%, #ffd000 100%) !important;
+  color: #050505 !important;
+  border-radius: 12px !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 500px !important;
+  padding: 30px 24px 24px !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, #151819 0%, #090a0b 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transform: none !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(255, 208, 0, 0.78) !important;
+  box-shadow:
+    0 24px 54px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(255, 208, 0, 0.12) !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard.featured,
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard:nth-child(3) {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 208, 0, 0.28), transparent 38%),
+    linear-gradient(180deg, #191816 0%, #080808 100%) !important;
+  border: 2px solid #ffd000 !important;
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.48),
+    0 0 34px rgba(255, 208, 0, 0.2) !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard::before {
+  display: block;
+  margin: 0 auto 18px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 36px;
+  line-height: 70px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard:nth-child(1)::before { content: "📐"; }
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard:nth-child(2)::before { content: "🚐"; }
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard:nth-child(3)::before { content: "⚙️"; border-color: rgba(255, 208, 0, 0.75); }
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motTag {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 auto 12px !important;
+  padding: 7px 14px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: rgba(255, 255, 255, 0.84) !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard:nth-child(3) .motTag {
+  background: #ffd000 !important;
+  color: #050505 !important;
+  border-color: #ffd000 !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard h3 {
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 29px !important;
+  line-height: 1.02 !important;
+  margin: 10px 0 8px !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard:nth-child(3) h3 {
+  color: #ffd000 !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard p {
+  min-height: 42px !important;
+  color: rgba(255, 255, 255, 0.76) !important;
+  text-align: center !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motPrice {
+  margin: 22px 0 24px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 44px !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motPrice::before {
+  content: "FROM";
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard:nth-child(3) .motPrice {
+  color: #ffd000 !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard ul {
+  margin: 0 0 24px !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard li {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 14px !important;
+  margin-bottom: 10px !important;
+}
+
+.landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard button {
+  margin-top: auto !important;
+  min-height: 54px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 208, 0, 0.8) !important;
+  background: linear-gradient(180deg, #ffe15a 0%, #ffd000 100%) !important;
+  color: #050505 !important;
+  font-weight: 1000 !important;
+  cursor: pointer !important;
+}
+
+/* =========================
+   AIR CON PAGE CARDS
+========================= */
+.airconOnlyStrip .airconVehicleResult {
+  background: rgba(0, 0, 0, 0.86) !important;
+  border: 1px solid rgba(89, 216, 255, 0.32) !important;
+  color: #fff !important;
+}
+
+.airconOnlyStrip .airconVehicleIcon {
+  color: #7fe7ff !important;
+}
+
+.airconOnlyStrip .airconVehicleTop strong {
+  color: #7fe7ff !important;
+}
+
+.airconOnlyStrip .airconSalesCards {
+  align-items: stretch !important;
+}
+
+.airconOnlyStrip .airconCard {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 500px !important;
+  padding: 30px 24px 24px !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, #151819 0%, #090a0b 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transform: none !important;
+}
+
+.airconOnlyStrip .airconCard:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(89, 216, 255, 0.78) !important;
+  box-shadow:
+    0 24px 54px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(83, 216, 255, 0.13) !important;
+}
+
+.airconOnlyStrip .airconCard.airconRecommended,
+.airconOnlyStrip .airconCard.featured {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(89, 216, 255, 0.28), transparent 38%),
+    linear-gradient(180deg, #0d1d29 0%, #081119 100%) !important;
+  border: 2px solid #59d8ff !important;
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.48),
+    0 0 34px rgba(83, 216, 255, 0.18) !important;
+}
+
+.airconOnlyStrip .airconCard::before {
+  display: block;
+  margin: 0 auto 18px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 36px;
+  line-height: 70px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.airconOnlyStrip .airconCard:nth-child(1)::before { content: "❄️"; }
+.airconOnlyStrip .airconCard:nth-child(2)::before { content: "🧊"; }
+.airconOnlyStrip .airconCard:nth-child(3)::before { content: "🔍"; }
+
+.airconOnlyStrip .airconCard.airconRecommended::before,
+.airconOnlyStrip .airconCard.featured::before {
+  border-color: rgba(89, 216, 255, 0.75);
+  color: #7fe7ff;
+}
+
+.airconOnlyStrip .airconCard .motTag {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 auto 12px !important;
+  padding: 7px 14px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: rgba(255, 255, 255, 0.84) !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+}
+
+.airconOnlyStrip .airconCard.airconRecommended .motTag,
+.airconOnlyStrip .airconCard.featured .motTag {
+  background: linear-gradient(180deg, #7fe7ff 0%, #35c8ff 100%) !important;
+  color: #00303a !important;
+  border-color: #59d8ff !important;
+}
+
+.airconOnlyStrip .airconRegTag {
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  background: #7fe7ff !important;
+  color: #00303a !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 2px !important;
+}
+
+.airconOnlyStrip .airconCard h3 {
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 31px !important;
+  line-height: 1.02 !important;
+  margin: 10px 0 8px !important;
+}
+
+.airconOnlyStrip .airconCard.airconRecommended h3,
+.airconOnlyStrip .airconCard.featured h3 {
+  color: #7fe7ff !important;
+}
+
+.airconOnlyStrip .airconCard p {
+  color: rgba(255, 255, 255, 0.76) !important;
+  text-align: center !important;
+}
+
+.airconOnlyStrip .airconPrice {
+  margin: 22px 0 24px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 48px !important;
+  letter-spacing: -1.5px !important;
+}
+
+.airconOnlyStrip .airconPrice::before {
+  content: "FROM";
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.airconOnlyStrip .airconCard.airconRecommended .airconPrice,
+.airconOnlyStrip .airconCard.featured .airconPrice {
+  color: #7fe7ff !important;
+}
+
+.airconOnlyStrip .airconPrice::after {
+  content: " INC VAT";
+  display: block;
+  margin-top: 7px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.airconOnlyStrip .airconCard ul {
+  margin: 0 0 24px !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.airconOnlyStrip .airconCard li {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 14px !important;
+  line-height: 1.38 !important;
+  margin-bottom: 10px !important;
+}
+
+.airconOnlyStrip .airconBookBtn {
+  margin-top: auto !important;
+  min-height: 54px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(89, 216, 255, 0.8) !important;
+  background: linear-gradient(180deg, #7fe7ff 0%, #35c8ff 100%) !important;
+  color: #00303a !important;
+  font-weight: 1000 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 1100px) {
+  .motOnlyStrip .motDealCards,
+  .airconOnlyStrip .airconSalesCards,
+  .landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motDealCards {
+    grid-template-columns: repeat(2, minmax(220px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .motOnlyStrip .motDealCards,
+  .airconOnlyStrip .airconSalesCards,
+  .landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motDealCards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .motOnlyStrip .motCard,
+  .airconOnlyStrip .airconCard,
+  .landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motCard {
+    min-height: auto !important;
+  }
+
+  .motOnlyStrip .motDealText,
+  .airconOnlyStrip .airconIntroPanel,
+  .landingPage > .motDealStrip.salesMot:not(.serviceOnlyStrip):not(.motOnlyStrip):not(.airconOnlyStrip) .motDealText {
+    padding: 22px !important;
+  }
+
+.alignmentOnlyStrip {
+  max-width: 1480px !important;
+  grid-template-columns: 0.9fr 1.35fr !important;
+  gap: 34px !important;
+  align-items: stretch !important;
+}
+
+.alignmentIntroPanel {
+  position: relative;
+  z-index: 2;
+}
+
+.alignmentVrmBox {
+  margin-top: 22px !important;
+}
+
+.alignmentVehicleResult {
+  margin-top: 18px !important;
+  border-left-color: #ffd000 !important;
+}
+
+.alignmentVehicleResult span {
+  color: #fff !important;
+}
+
+.alignmentVehicleImageBox {
+  margin-top: 20px !important;
+  max-width: 560px !important;
+}
+
+.alignmentVehicleImageBox img {
+  width: 100% !important;
+  max-height: 240px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.alignmentSalesCards {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(220px, 1fr)) !important;
+  gap: 22px !important;
+  align-items: stretch !important;
+}
+
+.alignmentCard {
+  position: relative !important;
+  min-height: 500px !important;
+  padding: 30px !important;
+  border-radius: 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at top right, rgba(255, 208, 0, 0.13), transparent 34%),
+    #fff !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.alignmentCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.26;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.alignmentCard > * {
+  position: relative;
+  z-index: 2;
+}
+
+.alignmentRecommended {
+  background:
+    radial-gradient(circle at top right, rgba(255, 208, 0, 0.23), transparent 38%),
+    linear-gradient(180deg, #111 0%, #050505 100%) !important;
+  color: #fff !important;
+  border: 3px solid #ffd000 !important;
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.25),
+    0 0 28px rgba(255, 208, 0, 0.18) !important;
+  transform: translateY(-4px);
+}
+
+.alignmentPremium:not(.alignmentRecommended) {
+  background:
+    radial-gradient(circle at top right, rgba(255, 208, 0, 0.15), transparent 36%),
+    linear-gradient(180deg, #202020 0%, #101010 100%) !important;
+  color: #fff !important;
+  border: 2px solid rgba(255, 208, 0, 0.45) !important;
+}
+
+.alignmentNotRecommended {
+  opacity: 0.42 !important;
+  filter: grayscale(1) !important;
+}
+
+.alignmentNotRecommended:hover {
+  transform: none !important;
+}
+
+.alignmentRecommendedTag {
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: #ffd000 !important;
+  color: #000 !important;
+  border-radius: 0 0 999px 999px !important;
+  padding: 10px 22px !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 0.7px !important;
+  white-space: nowrap !important;
+  z-index: 5 !important;
+}
+
+.alignmentRegTag {
+  display: inline-flex !important;
+  width: fit-content !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 34px 0 16px !important;
+  padding: 10px 20px !important;
+  background: #ffd000 !important;
+  color: #000 !important;
+  border: 3px solid #fff !important;
+  border-radius: 10px !important;
+  font-size: 24px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 2px !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28) !important;
+}
+
+.alignmentCard .motTag {
+  width: fit-content !important;
+  margin-bottom: 18px !important;
+}
+
+.alignmentRecommended .motTag,
+.alignmentPremium .motTag {
+  background: #ffd000 !important;
+  color: #000 !important;
+}
+
+.alignmentCard h3 {
+  font-size: 31px !important;
+  line-height: 1.05 !important;
+  margin: 0 0 8px !important;
+}
+
+.alignmentCard p {
+  font-size: 16px !important;
+  line-height: 1.35 !important;
+  margin: 0 0 24px !important;
+}
+
+.alignmentRecommended p,
+.alignmentPremium p,
+.alignmentRecommended li,
+.alignmentPremium li {
+  color: #fff !important;
+}
+
+.alignmentPrice {
+  font-size: 50px !important;
+  line-height: 1 !important;
+  font-weight: 1000 !important;
+  color: #050505 !important;
+  margin: 0 0 28px !important;
+  letter-spacing: -2px !important;
+}
+
+.alignmentRecommended .alignmentPrice,
+.alignmentPremium .alignmentPrice {
+  color: #ffd000 !important;
+}
+
+.alignmentCard ul {
+  padding: 0 !important;
+  margin: 0 0 28px !important;
+  list-style: none !important;
+}
+
+.alignmentCard li {
+  font-size: 15px !important;
+  margin-bottom: 10px !important;
+  font-weight: 800 !important;
+}
+
+.alignmentCard button {
+  margin-top: auto !important;
+  width: 100% !important;
+  min-height: 58px !important;
+  border: none !important;
+  border-radius: 14px !important;
+  background: linear-gradient(180deg, #ffd91a 0%, #ffd000 100%) !important;
+  color: #000 !important;
+  font-size: 14px !important;
+  font-weight: 1000 !important;
+  cursor: pointer !important;
+  box-shadow: 0 10px 22px rgba(255, 208, 0, 0.24) !important;
+}
+
+.alignmentCard button:disabled {
+  background: #d7d7d7 !important;
+  color: #777 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
+/* ---------- AIR CON REG BADGE FIX ---------- */
+
+.airconCard {
+  overflow: visible !important;
+}
+
+.airconRegTagFixed,
+.airconRegTag {
+  position: static !important;
+  display: inline-flex !important;
+  width: fit-content !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 0 18px !important;
+  padding: 9px 18px !important;
+  background: #ffd000 !important;
+  color: #000 !important;
+  border: 3px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 10px !important;
+  font-size: 22px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 2px !important;
+  line-height: 1 !important;
+  transform: none !important;
+  z-index: 3 !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28) !important;
+}
+
+.airconRecommended .airconRegTagFixed,
+.airconRecommended .airconRegTag {
+  background: linear-gradient(180deg, #7fe7ff 0%, #35c8ff 100%) !important;
+  color: #00303a !important;
+}
+
+@media (max-width: 1100px) {
+  .alignmentOnlyStrip {
+    grid-template-columns: 1fr !important;
+  }
+
+  .alignmentSalesCards {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .alignmentVrmBox {
+    grid-template-columns: 1fr !important;
+  }
+
+  .alignmentCard {
+    min-height: auto !important;
+  }
+
+  .alignmentRecommended {
+    transform: none !important;
+  }
+}
+/* AIRCON REG FIX */
+
+.airconCard .airconRegTag {
+  position: static !important;
+  display: inline-flex !important;
+  margin: 0 auto 18px !important;
+  z-index: auto !important;
+}
+
+.airconCard.featured {
+  padding-top: 30px !important;
+}
+
+.airconCard .motRecommendedTag,
+.airconCard .motRegTag {
+  display: none !important;
+}
+}
+
+
+.airconOnlyStrip .airconSalesCards .airconCard {
+  position: relative !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+}
+
+/* Keep the snowflake/magnifier icon at the top, separate from the reg */
+.airconOnlyStrip .airconSalesCards .airconCard::before {
+  position: static !important;
+  display: block !important;
+  flex: 0 0 auto !important;
+  order: 0 !important;
+  margin: 0 auto 18px !important;
+  z-index: 1 !important;
+  transform: none !important;
+}
+
+/* Service option / recommended pill */
+.airconOnlyStrip .airconSalesCards .airconCard .motTag {
+  position: static !important;
+  display: block !important;
+  flex: 0 0 auto !important;
+  order: 1 !important;
+  width: fit-content !important;
+  margin: 0 auto 16px !important;
+  z-index: 1 !important;
+  transform: none !important;
+}
+
+/* FINAL FIX: stop reg plate floating over the icon */
+.airconOnlyStrip .airconSalesCards .airconCard .airconRegTag,
+.airconOnlyStrip .airconSalesCards .airconCard.airconRecommended .airconRegTag,
+.airconOnlyStrip .airconSalesCards .airconCard.featured .airconRegTag {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+
+  display: flex !important;
+  flex: 0 0 auto !important;
+  order: 2 !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: fit-content !important;
+  max-width: 100% !important;
+  margin: 0 auto 18px !important;
+  padding: 9px 18px !important;
+
+  background: linear-gradient(180deg, #86ecff 0%, #4bd0f5 100%) !important;
+  color: #031016 !important;
+  border: 2px solid #050505 !important;
+  border-radius: 8px !important;
+
+  font-size: 22px !important;
+  line-height: 1 !important;
+  font-weight: 1000 !important;
+  letter-spacing: 2px !important;
+
+  box-shadow: 0 10px 20px rgba(75, 208, 245, 0.25) !important;
+  z-index: 1 !important;
+}
+
+.airconOnlyStrip .airconSalesCards .airconCard h3 {
+  order: 3 !important;
+}
+
+.airconOnlyStrip .airconSalesCards .airconCard p {
+  order: 4 !important;
+}
+
+.airconOnlyStrip .airconSalesCards .airconCard .airconPrice {
+  order: 5 !important;
+}
+
+.airconOnlyStrip .airconSalesCards .airconCard ul {
+  order: 6 !important;
+}
+
+.airconOnlyStrip .airconSalesCards .airconCard .airconBookBtn {
+  order: 7 !important;
+  margin-top: auto !important;
+}
+
+/* Hide any MOT-style reg/recommended badges that accidentally leak into Aircon cards */
+.airconOnlyStrip .airconSalesCards .airconCard .motRegTag,
+.airconOnlyStrip .airconSalesCards .airconCard .motRecommendedTag {
+  display: none !important;
+}
+
+/* Keep the recommended Aircon card clean and spaced */
+.airconOnlyStrip .airconSalesCards .airconCard.airconRecommended,
+.airconOnlyStrip .airconSalesCards .airconCard.featured {
+  padding-top: 30px !important;
+}
+
+@media (max-width: 700px) {
+  .airconOnlyStrip .airconSalesCards .airconCard .airconRegTag {
+    font-size: 19px !important;
+    padding: 8px 14px !important;
+    letter-spacing: 1.5px !important;
+  }
+}
+.alignmentOnlyStrip {
+  background:
+    radial-gradient(circle at top right, rgba(255, 208, 0, 0.11), transparent 34%),
+    linear-gradient(180deg, #111 0%, #070707 100%) !important;
+  border: 1px solid rgba(255, 208, 0, 0.32) !important;
+  border-top: 5px solid #ffd000 !important;
+  color: #fff !important;
+  overflow: visible !important;
+}
+
+.alignmentOnlyStrip .alignmentIntroPanel {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 22px !important;
+  padding: 28px !important;
+}
+
+.alignmentOnlyStrip .alignmentIntroPanel span,
+.alignmentOnlyStrip .alignmentIntroPanel h2 {
+  color: #fff !important;
+}
+
+.alignmentOnlyStrip .alignmentIntroPanel > span {
+  color: #ffd000 !important;
+}
+
+.alignmentOnlyStrip .alignmentIntroPanel p {
+  color: rgba(255,255,255,.74) !important;
+}
+
+.alignmentOnlyStrip .alignmentVrmBox input {
+  background: #fff !important;
+  color: #050505 !important;
+  border: 2px solid rgba(255, 208, 0, 0.45) !important;
+}
+
+.alignmentOnlyStrip .alignmentVrmBox button,
+.alignmentOnlyStrip .alignmentOfferBanner button,
+.alignmentOnlyStrip .alignmentCard button {
+  background: linear-gradient(180deg, #ffe15a 0%, #ffd000 100%) !important;
+  color: #050505 !important;
+}
+
+.alignmentOnlyStrip .alignmentVehicleResult {
+  background: rgba(0, 0, 0, 0.86) !important;
+  border-left: 5px solid #ffd000 !important;
+  border: 1px solid rgba(255, 208, 0, 0.32) !important;
+}
+
+.alignmentOnlyStrip .alignmentVehicleResult strong {
+  color: #ffd000 !important;
+}
+
+.alignmentOnlyStrip .alignmentVehicleResult span {
+  color: #fff !important;
+}
+
+.alignmentOnlyStrip .alignmentVehicleImageBox img {
+  width: 100% !important;
+  max-height: 270px !important;
+  object-fit: contain !important;
+}
+
+.alignmentOnlyStrip .alignmentOfferBanner {
+  margin-top: 24px !important;
+  background: linear-gradient(135deg, rgba(255, 208, 0, 0.12), rgba(0, 0, 0, 0.88)) !important;
+  border: 1px dashed rgba(255, 208, 0, 0.9) !important;
+  border-radius: 18px !important;
+  padding: 20px !important;
+}
+
+.alignmentOnlyStrip .alignmentOfferBanner strong {
+  color: #fff !important;
+}
+
+.alignmentOnlyStrip .alignmentOfferBanner span {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.alignmentOnlyStrip .alignmentSalesCards {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(220px, 1fr)) !important;
+  gap: 22px !important;
+  align-items: stretch !important;
+}
+
+.alignmentOnlyStrip .alignmentCard {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 500px !important;
+  padding: 30px 24px 24px !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, #151819 0%, #090a0b 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transform: none !important;
+}
+
+.alignmentOnlyStrip .alignmentCard:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(255, 208, 0, 0.78) !important;
+}
+
+.alignmentOnlyStrip .alignmentCard::before {
+  display: block;
+  margin: 0 auto 18px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 36px;
+  line-height: 70px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.alignmentOnlyStrip .alignmentCard:nth-child(1)::before { content: "📐"; }
+.alignmentOnlyStrip .alignmentCard:nth-child(2)::before { content: "🚐"; }
+.alignmentOnlyStrip .alignmentCard:nth-child(3)::before { content: "⚙️"; }
+
+.alignmentOnlyStrip .recommendedAlignment,
+.alignmentOnlyStrip .alignmentCard.featured {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 208, 0, 0.28), transparent 38%),
+    linear-gradient(180deg, #191816 0%, #080808 100%) !important;
+  border: 2px solid #ffd000 !important;
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.48),
+    0 0 34px rgba(255, 208, 0, 0.2) !important;
+}
+
+.alignmentOnlyStrip .recommendedAlignment::before,
+.alignmentOnlyStrip .alignmentCard.featured::before {
+  border-color: rgba(255, 208, 0, 0.75) !important;
+}
+
+.alignmentOnlyStrip .alignmentRecommendedTag {
+  position: static !important;
+  transform: none !important;
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 auto 14px !important;
+  background: #ffd000 !important;
+  color: #050505 !important;
+  border-radius: 999px !important;
+  padding: 8px 16px !important;
+}
+
+.alignmentOnlyStrip .alignmentRegTag {
+  position: static !important;
+  display: flex !important;
+  width: fit-content !important;
+  margin: 0 auto 16px !important;
+  background: #ffd000 !important;
+  color: #050505 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  font-size: 22px !important;
+  letter-spacing: 2px !important;
+}
+
+.alignmentOnlyStrip .alignmentCard .motTag {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 auto 12px !important;
+  padding: 7px 14px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: rgba(255, 255, 255, 0.84) !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+}
+
+.alignmentOnlyStrip .alignmentCard h3 {
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 29px !important;
+  line-height: 1.02 !important;
+  margin: 10px 0 8px !important;
+}
+
+.alignmentOnlyStrip .recommendedAlignment h3,
+.alignmentOnlyStrip .alignmentCard.featured h3 {
+  color: #ffd000 !important;
+}
+
+.alignmentOnlyStrip .alignmentCard p,
+.alignmentOnlyStrip .alignmentCard li {
+  color: rgba(255,255,255,.82) !important;
+}
+
+.alignmentOnlyStrip .alignmentCard p {
+  text-align: center !important;
+  min-height: 42px !important;
+}
+
+.alignmentOnlyStrip .alignmentCard .motPrice {
+  margin: 22px 0 24px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 48px !important;
+  letter-spacing: -1.5px !important;
+}
+
+.alignmentOnlyStrip .recommendedAlignment .motPrice,
+.alignmentOnlyStrip .alignmentCard.featured .motPrice {
+  color: #ffd000 !important;
+}
+
+.alignmentOnlyStrip .alignmentCard ul {
+  margin: 0 0 24px !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.alignmentOnlyStrip .alignmentCard li {
+  font-size: 14px !important;
+  line-height: 1.38 !important;
+  margin-bottom: 10px !important;
+}
+
+.alignmentOnlyStrip .alignmentCard button {
+  margin-top: auto !important;
+  min-height: 54px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 208, 0, 0.8) !important;
+  font-weight: 1000 !important;
+  cursor: pointer !important;
+  width: 100% !important;
+}
+
+.alignmentOnlyStrip .notRecommendedAlignment {
+  opacity: 0.38 !important;
+  filter: grayscale(0.9) !important;
+}
+
+.alignmentOnlyStrip .notRecommendedAlignment button {
+  background: #2a2a2a !important;
+  color: #aaa !important;
+  cursor: not-allowed !important;
+}
+
+@media (max-width: 1200px) {
+  .alignmentOnlyStrip,
+  .alignmentOnlyStrip .alignmentSalesCards {
+    grid-template-columns: 1fr !important;
+  }
+}
+.landingHero {
+  min-height: 400px !important;
+  padding: 75px 40px 95px !important;
+}
+
+.landingHero h1 {
+  font-size: 50px !important;
+  line-height: 0.95 !important;
+  max-width: 760px !important;
+}
+
+.landingIntro {
+  font-size: 18px !important;
+  line-height: 1.5 !important;
+  max-width: 720px !important;
+}
+
+.heroTrust {
+  font-size: 15px !important;
+}
+
+.landingPanel {
+  padding: 24px !important;
+}
+
+.landingPanel h3 {
+  font-size: 25px !important;
+}
+
+.landingBullet {
+  font-size: 14px !important;
+}
+
+/* Offer */
+.serviceHeroOffer {
+  max-width: 840px !important;
+  min-height: 88px !important;
+  margin-top: 30px !important;
+}
+
+.serviceHeroOffer .offerMain strong {
+  font-size: 28px !important;
+}
+
+.serviceHeroOffer .offerText {
+  font-size: 18px !important;
+}
+
+.serviceHeroOffer .offerSave {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+/* SERVICE CARDS - CLEAN INCLUDED + BUTTON UPDATE */
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  box-shadow: none !important;
+  min-height: 46px !important;
+  border-radius: 12px !important;
+  grid-template-columns: 1fr auto !important;
+  padding: 0 16px !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnIcon {
+  display: none !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnText {
+  color: rgba(255,255,255,.9) !important;
+  font-size: 12px !important;
+  letter-spacing: 1px !important;
+  text-align: left !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnText::before {
+  content: "VIEW CHECKLIST";
+  font-size: 12px;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnText {
+  font-size: 0 !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnArrow {
+  color: #ffd000 !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle:hover {
+  border-color: #ffd000 !important;
+  background: rgba(255,208,0,.06) !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesContent.open {
+  margin-top: 4px !important;
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesContent ul::before {
+  content: "SERVICE INCLUDES";
+  display: block;
+  color: #ffd000;
+  font-size: 11px;
+  font-weight: 1000;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesContent li {
+  color: rgba(255,255,255,.9) !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  padding: 6px 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.06) !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesContent li:last-child {
+  border-bottom: none !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern {
+  background: linear-gradient(180deg,#ffe15a 0%,#ffd000 100%) !important;
+  border: 1px solid rgba(255,208,0,.8) !important;
+  min-height: 56px !important;
+  border-radius: 12px !important;
+  grid-template-columns: 1fr auto !important;
+  padding: 0 18px !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern .calendarIcon,
+.serviceOnlyStrip .serviceOptionCard .bookNowModern .btnIcon {
+  display: none !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern .btnText {
+  color: #050505 !important;
+  font-size: 14px !important;
+  letter-spacing: .7px !important;
+  text-align: left !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern .bookArrow {
+  color: #050505 !important;
+  font-size: 20px !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.05) !important;
+}
+/* SERVICE CARD CHECKLIST + BUTTON PATCH - SAFE CSS ONLY */
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  box-shadow: none !important;
+  min-height: 42px !important;
+  border-radius: 999px !important;
+  grid-template-columns: 1fr auto !important;
+  padding: 0 16px !important;
+  margin-bottom: 2px !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnIcon {
+  display: none !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnText {
+  font-size: 0 !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnText::before {
+  content: "VIEW CHECKLIST";
+  color: rgba(255,255,255,.9);
+  font-size: 11px;
+  font-weight: 1000;
+  letter-spacing: 1.2px;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle .btnArrow {
+  color: #ffd000 !important;
+  font-size: 16px !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle:hover,
+.serviceOnlyStrip .serviceOptionCard .includesToggle.activeToggle {
+  border-color: #ffd000 !important;
+  background: rgba(255,208,0,.07) !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesToggle.activeToggle .btnText::before {
+  content: "HIDE CHECKLIST";
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesContent.open {
+  margin-top: 6px !important;
+  margin-bottom: 4px !important;
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 16px !important;
+  padding: 14px 16px !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesContent ul::before {
+  content: "SERVICE INCLUDES";
+  display: block;
+  color: #ffd000;
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: 1.4px;
+  margin-bottom: 10px;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesContent li {
+  color: rgba(255,255,255,.9) !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  padding: 6px 0 !important;
+  margin: 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.06) !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .includesContent li:last-child {
+  border-bottom: none !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern {
+  background: linear-gradient(180deg,#ffe15a 0%,#ffd000 100%) !important;
+  border: 1px solid rgba(255,208,0,.85) !important;
+  min-height: 56px !important;
+  border-radius: 14px !important;
+  grid-template-columns: 1fr auto !important;
+  padding: 0 18px !important;
+  box-shadow: 0 12px 24px rgba(255,208,0,.16) !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern .btnIcon {
+  display: none !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern .btnText {
+  color: #050505 !important;
+  font-size: 14px !important;
+  font-weight: 1000 !important;
+  letter-spacing: .8px !important;
+  text-align: left !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern .bookArrow {
+  color: #050505 !important;
+  font-size: 21px !important;
+}
+
+.serviceOnlyStrip .serviceOptionCard .bookNowModern:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.04) !important;
+}
+/* FINAL OVERRIDE - SERVICE CARD CHECKLIST BUTTON */
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,.22) !important;
+  box-shadow: none !important;
+  min-height: 42px !important;
+  border-radius: 999px !important;
+  grid-template-columns: 1fr auto !important;
+  padding: 0 16px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn .btnIcon {
+  display: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn .btnText {
+  font-size: 0 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn .btnText::before {
+  content: "VIEW CHECKLIST";
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 1.3px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn.activeToggle .btnText::before {
+  content: "HIDE CHECKLIST";
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn .btnArrow {
+  color: #ffd000 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern {
+  grid-template-columns: 1fr auto !important;
+  border-radius: 14px !important;
+  min-height: 56px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern .btnIcon {
+  display: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern .btnText {
+  font-size: 14px !important;
+  letter-spacing: .8px !important;
+  text-align: left !important;
+}
+.checklistTextButton {
+  background: transparent !important;
+  border: none !important;
+  color: #ffd000 !important;
+  font-size: 12px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 1.2px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  padding: 8px 0 !important;
+  box-shadow: none !important;
+}
+
+.checklistTextButton span {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+
+.checklistTextButton:hover span,
+.checklistTextButton.activeChecklist span {
+  transform: translateX(4px);
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern .btnIcon {
+  display: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern {
+  grid-template-columns: 1fr auto !important;
+}
+/* MAKE CHECKLIST FEEL LIKE AN INLINE PANEL, NOT DROPDOWN */
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .checklistTextButton {
+  margin: 6px auto 10px !important;
+  width: fit-content !important;
+  background: transparent !important;
+  border: none !important;
+  color: #ffd000 !important;
+  font-size: 12px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 1.2px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  padding: 6px 0 !important;
+  box-shadow: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .checklistTextButton span {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .checklistTextButton:hover span {
+  transform: translateX(4px);
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent.open {
+  max-height: 180px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 0 4px !important;
+  margin: 0 !important;
+  overflow-y: auto !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent ul {
+  background: rgba(255,255,255,.045) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 14px !important;
+  padding: 14px !important;
+  margin: 0 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent ul::before {
+  content: "SERVICE INCLUDES";
+  display: block;
+  color: #ffd000;
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: 1.4px;
+  margin-bottom: 8px;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent li {
+  color: rgba(255,255,255,.9) !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  padding: 5px 0 !important;
+  margin: 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.05) !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent li:last-child {
+  border-bottom: none !important;
+}
+
+/* Make the service card buttons area clean */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .serviceButtonsWrap {
+  margin-top: auto !important;
+  display: grid !important;
+  gap: 10px !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* Clean checklist trigger button */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .checklistTextButton,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn {
+  width: fit-content !important;
+  min-height: auto !important;
+  margin: 0 auto 4px !important;
+  padding: 6px 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #ffd000 !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 1px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  grid-template-columns: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .checklistTextButton:hover,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle:hover,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn:hover {
+  color: #ffe15a !important;
+  transform: none !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Hide old plus/minus icon if old JSX is still there */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle .btnIcon,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn .btnIcon {
+  display: none !important;
+}
+
+/* Rename old button text if old JSX is still there */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle .btnText,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn .btnText {
+  font-size: 0 !important;
+  color: transparent !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle .btnText::before,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn .btnText::before {
+  content: "VIEW CHECKLIST" !important;
+  color: #ffd000 !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 1px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.activeToggle .btnText::before,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn.activeToggle .btnText::before {
+  content: "HIDE CHECKLIST" !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle .btnArrow,
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesToggle.modernBtn .btnArrow {
+  color: #ffd000 !important;
+  font-size: 14px !important;
+}
+
+/* Compact checklist panel - not a huge black scroll box */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent {
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: max-height .25s ease, opacity .2s ease, padding .2s ease !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent.open {
+  max-height: none !important;
+  overflow: visible !important;
+
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 12px !important;
+
+  padding: 12px !important;
+  margin-top: 6px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent ul {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent li {
+  list-style: none !important;
+  font-size: 12px !important;
+  padding: 4px 0 !important;
+  color: rgba(255,255,255,.9) !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent ul {
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  list-style: none !important;
+  background: rgba(255,255,255,.045) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent ul::before {
+  content: "SERVICE INCLUDES" !important;
+  display: block !important;
+  color: #ffd000 !important;
+  font-size: 9px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 1.2px !important;
+  margin-bottom: 7px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent li {
+  color: rgba(255,255,255,.9) !important;
+  font-size: 11px !important;
+  line-height: 1.32 !important;
+  padding: 3px 0 !important;
+  margin: 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.045) !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent li:last-child {
+  border-bottom: none !important;
+}
+
+/* Book button cleanup */
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern {
+  width: 100% !important;
+  min-height: 56px !important;
+  border-radius: 14px !important;
+  background: linear-gradient(180deg,#ffe15a 0%,#ffd000 100%) !important;
+  border: 1px solid rgba(255,208,0,.85) !important;
+  color: #050505 !important;
+  box-shadow: 0 12px 24px rgba(255,208,0,.16) !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  align-items: center !important;
+  padding: 0 18px !important;
+  cursor: pointer !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern .btnIcon {
+  display: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern .btnText {
+  color: #050505 !important;
+  font-size: 14px !important;
+  font-weight: 1000 !important;
+  letter-spacing: .7px !important;
+  text-align: left !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern .bookArrow {
+  color: #050505 !important;
+  font-size: 20px !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .bookNowModern:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.04) !important;
+}
+
+/* Mobile - keep cards clean */
+@media (max-width: 720px) {
+  .serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent.open {
+    max-height: 180px !important;
+  }
+}
+.checklistTextButton {
+  background: transparent !important;
+  border: none !important;
+  color: #ffd000 !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 1px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  padding: 6px 0 !important;
+}
+
+.checklistTextButton span {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent {
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent.open {
+  max-height: 180px !important;
+  opacity: 1 !important;
+  overflow-y: auto !important;
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  margin: 6px 0 !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard .includesContent li {
+  color: rgba(255,255,255,.9) !important;
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  padding: 4px 0 !important;
+}
+.includesContent {
+  display: none !important;
+}
+.checklistTextButton,
+.includesContent {
+  display: none !important;
+}
+.serviceIncludesMini {
+  margin: 14px 0;
+  text-align: left;
+}
+
+.serviceIncludesMini div {
+  font-size: 12px;
+  color: rgba(255,255,255,.85);
+  line-height: 1.5;
+  padding: 2px 0;
+}
+.serviceIncludesMini {
+  margin: 16px 0;
+  text-align: left;
+}
+
+.serviceIncludesMini div {
+  position: relative;
+  padding: 4px 0 4px 22px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255,255,255,.92);
+}
+
+.serviceIncludesMini div::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 4px;
+
+  color: #ffd000;
+  font-weight: 900;
+  font-size: 14px;
+
+  text-shadow: 0 0 8px rgba(255,208,0,.35);
+}
+.smartVehicleCard {
+  margin-top: 18px;
+  max-width: 620px;
+  background: #050505;
+  color: #fff;
+  border: 1px solid rgba(255, 208, 0, 0.35);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 18px 38px rgba(0,0,0,.28);
+}
+
+.smartReg {
+  display: inline-flex;
+  background: #ffd000;
+  color: #050505;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 24px;
+  font-weight: 1000;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.smartVehicleCard h3 {
+  margin: 0 0 6px;
+  color: #fff;
+  font-size: 22px;
+}
+
+.smartVehicleCard p {
+  color: rgba(255,255,255,.75);
+  margin: 0;
+}
+
+.smartVehicleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.smartVehicleGrid div {
+  background: rgba(255,255,255,.06);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.smartVehicleGrid span,
+.smartAdvisories span {
+  display: block;
+  color: #ffd000;
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: 1.2px;
+  margin-bottom: 5px;
+}
+
+.smartVehicleGrid strong {
+  color: #fff;
+  font-size: 15px;
+}
+
+.smartAdvisories {
+  margin-top: 14px;
+  background: rgba(255, 208, 0, 0.08);
+  border: 1px solid rgba(255, 208, 0, 0.25);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.smartAdvisories p {
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 6px 0 0;
+}
+.motDealText .smartVehicleCard,
+.airconIntroPanel .smartVehicleCard,
+.alignmentIntroPanel .smartVehicleCard,
+.serviceIntroPanel .smartVehicleCard {
+  width: 100% !important;
+  max-width: 620px !important;
+  margin-top: 18px !important;
+}
+
+.motDealCards .smartVehicleCard,
+.airconSalesCards .smartVehicleCard,
+.alignmentSalesCards .smartVehicleCard,
+.serviceSalesCards .smartVehicleCard {
+  display: none !important;
+}
+.motDealStrip,
+.serviceOnlyStrip,
+.motOnlyStrip,
+.airconOnlyStrip,
+.alignmentOnlyStrip {
+  align-items: start !important;
+}
+
+.motDealCards,
+.serviceSalesCards,
+.airconSalesCards,
+.alignmentSalesCards {
+  align-items: start !important;
+}
+
+.serviceOnlyStrip .serviceSalesCards .serviceOptionCard,
+.motOnlyStrip .motCard,
+.airconOnlyStrip .airconCard,
+.alignmentOnlyStrip .alignmentCard {
+  height: auto !important;
+}
+.compactVehicleBox {
+  margin-top: 18px;
+  max-width: 620px;
+  background: #050505;
+  border: 1px solid rgba(255,208,0,.45);
+  border-radius: 18px;
+  padding: 16px;
+  color: #fff;
+}
+
+.compactVehicleTop {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.compactReg {
+  background: #ffd000;
+  color: #050505;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 22px;
+  font-weight: 1000;
+  letter-spacing: 2px;
+}
+
+.compactVehicleTop strong {
+  display: block;
+  font-size: 17px;
+  color: #fff;
+}
+
+.compactVehicleTop span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255,255,255,.68);
+  font-size: 13px;
+}
+
+.compactVehicleBox img {
+  display: block;
+  width: 100%;
+  max-height: 110px;
+  object-fit: contain;
+  margin: 8px 0;
+}
+
+.compactVehicleGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.compactVehicleGrid div {
+  background: rgba(255,255,255,.06);
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.compactVehicleGrid span {
+  display: block;
+  color: #ffd000;
+  font-size: 9px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.compactVehicleGrid strong {
+  color: #fff;
+  font-size: 11px;
+}
+/* VEHICLE BOX - LIGHT TIGHTEN ONLY */
+
+.compactVehicleBox {
+  padding: 14px 16px !important;
+}
+
+.compactVehicleBox img {
+  max-height: 120px !important;
+  margin: 6px auto 10px !important;
+}
+
+.compactVehicleGrid div {
+  padding: 10px 12px !important;
+}
+
+.compactVehicleGrid strong {
+  font-size: 12px !important;
+}
+
+.compactVehicleTop {
+  margin-bottom: 4px !important;
+}
+/* MOT PAGE SPACING FIX */
+
+.motOnlyStrip {
+  margin-top: -28px !important;
+}
+
+.motOnlyStrip .motDealText {
+  min-height: 430px !important;
+}
+
+.motOnlyStrip .motDealCards {
+  align-items: stretch !important;
+}
+
+.motOnlyStrip .motCard {
+  min-height: 430px !important;
+}
+
+.motOnlyStrip .motVehicleImageBox img {
+  max-height: 135px !important;
+}
+
+.motOnlyStrip .compactVehicleBox {
+  max-width: 560px !important;
+}
+.motHeroPrice {
+  color: #ffd000;
+  text-shadow:
+    0 0 20px rgba(255,208,0,.35),
+    0 0 40px rgba(255,208,0,.15);
+}
+.motHeroBenefits {
+  color: #fff;
+}
+
+.motHeroBenefits .tick {
+  color: #ffd000;
+  font-weight: 900;
+}
+.motHeroBenefits {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-weight: 700;
+  color: #fff;
+}
+
+.motHeroBenefits .tick {
+  color: #ffd000;
+  margin-right: 6px;
+}
+.landingHero h1 {
+  color: #fff;
+}
+
+.landingHero h1::first-letter {
+  color: inherit;
+}
+
+.motHeroPrice {
+  color: #ffd000;
+}
+.motHeroPrice {
+  color: #ffd000;
+  font-weight: 1000;
+
+  text-shadow:
+    0 0 10px rgba(255,208,0,.3),
+    0 0 20px rgba(255,208,0,.15);
+}
+.motHeroBenefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.motHeroBenefits .tick {
+  color: #ffd000;
+  font-weight: 1000;
+  margin-right: 6px;
+}
+.landingPanel h3 {
+  font-size: 24px !important;
+}
+.motDueValue {
+  color: #ffd000 !important;
+  font-weight: 800;
+}
+.motDueGreen {
+  color: #34c759;
+  font-weight: 800;
+}
+
+.motDueAmber {
+  color: #ffb800;
+  font-weight: 800;
+}
+
+.motDueRed {
+  color: #ff3b30;
+  font-weight: 800;
+}
+.motDueGreen {
+  color: #34c759 !important;
+}
+
+.motDueRed {
+  color: #ff3b30 !important;
+}
+.motDueGreen {
+  color: #34c759 !important;
+}
+
+.motDueAmber {
+  color: #ffb800 !important;
+}
+
+.motDueRed {
+  color: #ff3b30 !important;
+}
+.vehicleAdvisories {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vehicleAdvisory {
+  background: rgba(255, 184, 0, 0.12);
+  border-left: 3px solid #ffb800;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #fff;
+  text-align: left;
+}
+.viewAdvisoriesBtn {
+  background: none;
+  border: none;
+  color: #ffd000;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  padding: 0;
+}
+
+.vehicleAdvisoriesPanel {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vehicleAdvisory {
+  background: rgba(255, 184, 0, 0.08);
+  border-left: 3px solid #ffd000;
+  padding: 12px;
+  border-radius: 8px;
+  color: #fff;
+}
+.nextServiceBox {
+  border: 1px solid rgba(255,208,0,.8) !important;
+  background: linear-gradient(180deg, rgba(255,208,0,.14), rgba(255,208,0,.04)) !important;
+  box-shadow: 0 0 22px rgba(255,208,0,.12);
+}
+
+.nextServiceBox strong {
+  color: #ffd000 !important;
+  font-size: 14px !important;
+}
+
+.nextServiceBox button {
+  margin-top: 8px;
+  background: #ffd000;
+  color: #000;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 10px;
+  font-size: 10px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+.nextServiceBox {
+  border: 1px solid rgba(255,208,0,.8);
+  background: linear-gradient(
+    180deg,
+    rgba(255,208,0,.14),
+    rgba(255,208,0,.04)
+  );
+}
+
+.serviceOffer {
+  display: block;
+  color: #34c759;
+  font-size: 10px;
+  font-weight: 1000;
+  margin-top: 6px;
+}
+
+.serviceOfferLink {
+  display: block;
+  margin-top: 4px;
+  color: #ffd000;
+  font-size: 11px;
+  font-weight: 1000;
+  text-decoration: none;
+}
+
+.serviceOfferLink:hover {
+  text-decoration: underline;
+}
+.nextServiceBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.nextServiceBox strong {
+  font-size: 20px;
+  color: #ffd000;
+  margin: 8px 0;
+}
+
+.serviceOffer {
+  color: #34c759;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.serviceOfferLink {
+  color: #ffd000;
+  font-size: 12px;
+  font-weight: 900;
+  text-decoration: none;
+  margin-top: 6px;
+}
+.compactVehicleGrid .nextServiceBox {
+  border: 1px solid #ffd000 !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 208, 0, 0.14),
+    rgba(255, 208, 0, 0.04)
+  ) !important;
+}
+
+.compactVehicleGrid .nextServiceBox strong {
+  color: #ffd000 !important;
+}
+
+.compactVehicleGrid .nextServiceBox .serviceOffer {
+  display: block !important;
+  color: #34c759 !important;
+  font-size: 10px !important;
+  font-weight: 1000 !important;
+  margin-top: 6px !important;
+}
+
+.compactVehicleGrid .nextServiceBox .serviceOfferLink {
+  display: block !important;
+  margin-top: 4px !important;
+  color: #ffd000 !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  text-decoration: none !important;
+}
+.nextServicePopupTrigger button {
+  margin-top: 6px;
+  background: transparent;
+  border: none;
+  color: #ffd000;
+  font-size: 11px;
+  font-weight: 1000;
+  padding: 0;
+  cursor: pointer;
+}
+
+.serviceOfferModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.72);
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+}
+
+.serviceOfferModal {
+  width: min(420px, 92vw);
+  background: #050505;
+  border: 2px solid #ffd000;
+  border-radius: 20px;
+  padding: 26px;
+  color: #fff;
+  position: relative;
+}
+
+.serviceOfferModal span {
+  color: #ffd000;
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: 1.5px;
+}
+
+.serviceOfferModal h3 {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.serviceOfferModal p {
+  color: rgba(255,255,255,.8);
+}
+
+.serviceOfferModal a {
+  display: block;
+  margin-top: 18px;
+  background: #ffd000;
+  color: #000;
+  text-align: center;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 1000;
+  text-decoration: none;
+}
+
+.serviceOfferClose {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+}
+.serviceHint {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 400;
 }

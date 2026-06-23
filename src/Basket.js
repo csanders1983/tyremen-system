@@ -69,6 +69,7 @@ export const addToBasket = (tyre, qty = 1) => {
     price: Number(tyre.price || 0),
     qty: Number(qty || 1),
     vehicle: tyre.vehicle || null,
+    registration: tyre.registration || tyre.vehicle?.vrm || "",
     icon: tyre.icon || "",
   });
 
@@ -108,6 +109,8 @@ export const addToBasket = (tyre, qty = 1) => {
   } else {
     basket.push({
       id,
+      type: "tyre",
+      category: "Tyre",
       stockNumber,
 
       brand: tyre.Brand || tyre.brand || "",
@@ -129,6 +132,7 @@ export const addToBasket = (tyre, qty = 1) => {
         tyre.Image || tyre["Image URL"] || tyre.image || "/tyre-placeholder.png",
 
       vehicle,
+      registration: tyre.registration || tyre.vehicle?.vrm || vehicle?.vrm || "",
       axle,
 
       purchaseType: tyre.purchaseType || "fitted",

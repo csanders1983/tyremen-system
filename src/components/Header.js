@@ -176,7 +176,7 @@ export default function Header() {
 
         <div className="topRight">
           <span className="hoursLabel">OPENING HOURS</span>
-          <span>Mon - Fri: 8:00am - 5:30pm | Sat: 8:00am - 1:00pm</span>
+          <span>Mon - Fri: 8:30am - 5:30pm | Sat: 8:30am - 2:00pm</span>
         </div>
       </div>
 

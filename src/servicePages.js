@@ -64,19 +64,19 @@ const servicePages = {
   motHull: {
   slug: "/mot-hull",
   eyebrow: "MOT TESTING HULL",
-  title: "MOT Hull – Book Your MOT Test at Tyremen (Only £40)",
+  title: "Book Your MOT Only £40",
   metaTitle: "MOT Hull | Class 4 & Class 7 MOT Testing | Tyremen",
   metaDescription:
     "Book your MOT in Hull with Tyremen. Class 4 and Class 7 MOT testing from £40, same-day availability and trusted local garage.",
   highlight: "MOT Testing in Hull",
   intro:
-    "Book your MOT in Hull with Tyremen. We offer reliable MOT testing, clear advice, and fair pricing. Book your MOT online today with a trusted local garage.",
+  "✔ Over 55 years experience • ✔ Trusted Hull garage • ✔ Same day availability",
   ctaPrimary: "BOOK MOT ONLINE",
   ctaSecondary: "CALL TO BOOK MOT",
   bullets: [
     "Class 4 MOT testing",
-    "Only £40 standard MOT",
-    "MOT £20.00 with selected servicing",
+    "Class 7 MOT testing",
+    "Offer MOT £20.00 with selected servicing",
     "Same-day MOT slots available",
     "Trusted Hull garage for 55+ years",
   ],

@@ -2,9 +2,18 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "./components/Footer";
 import "./TyreProductPage.css";
+import { addToBasket as addBasketItem } from "./Basket";
 
 function getSize(tyre) {
-  return `${tyre.Width || ""}/${tyre["Aspect Ratio"] || ""}R${tyre.Rim || ""}`;
+  const width = tyre.Width || tyre.width || tyre["Section Width"] || "";
+  const profile = tyre["Aspect Ratio"] || tyre.aspectRatio || tyre.Profile || "";
+  const rim = tyre.Rim || tyre.rim || tyre["Rim Size"] || "";
+
+  if (width && profile && rim) {
+    return `${width}/${profile}R${rim}`;
+  }
+
+  return tyre.Size || tyre.size || tyre["Tyre Size"] || "";
 }
 
 function getPrice(tyre) {
@@ -54,14 +63,50 @@ export default function TyreProductPage() {
       </>
     );
   }
-
   const size = getSize(tyre);
   const price = getPrice(tyre);
+
+const bookTyre = () => {
+  const basketItem = {
+    id: `tyre-${Date.now()}`,
+    name: `${tyre.Brand || ""} ${tyre.Model || ""}`.trim(),
+    service: `${tyre.Brand || ""} ${tyre.Model || ""}`.trim(),
+    type: "tyre",
+    category: "Tyre",
+    qty: 1,
+    price: Number(price || 0),
+
+    size,
+    brand: tyre.Brand || "",
+    pattern: tyre.Model || "",
+    loadIndex: tyre["Load Index"] || "",
+    speedRating: tyre["Speed Rating"] || "",
+    runflat: tyre.Reinforced || "",
+    axle: axle || "",
+
+    registration: vehicle?.vrm || "",
+    vehicle: vehicle || null,
+
+    extras: "",
+    icon: "🛞",
+  };
+
+  addBasketItem(basketItem);
+
+  navigate("/booking", {
+    state: {
+      vehicle,
+      registration: vehicle?.vrm || "",
+    },
+  });
+};
+  
 
   const vehicleTitle =
     vehicle?.make && vehicle?.model
       ? `${vehicle.make} ${vehicle.model}`.trim()
       : "Your Vehicle";
+
 
   return (
     <>
@@ -140,7 +185,9 @@ export default function TyreProductPage() {
 
               <strong>£{price.toFixed(2)}</strong>
 
-              <button>Book This Tyre →</button>
+              <button type="button" onClick={bookTyre}>
+                Book This Tyre →
+                </button>
             </div>
           </article>
         </section>

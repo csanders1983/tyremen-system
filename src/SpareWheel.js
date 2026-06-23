@@ -86,6 +86,7 @@ function getSeriesModel(vehicle) {
       if (body.includes("coupe")) return "2 series coupe";
       if (body.includes("tourer")) return "2 series active tourer";
       return "2 series";
+
     }
     if (code.startsWith("3")) return "3 series";
     if (code.startsWith("4")) return "4 series";
@@ -110,12 +111,34 @@ function scoreItem(vehicle, item) {
   const end = Number(item["Year End"] || 2099);
 
   if (csvMake !== make) return -99999;
-  if (year && (year < start || year > end)) return -99999;
+if (year && (year < start || year > end)) return -99999;
 
-  let score = 0;
+const wantedModel = getSeriesModel(vehicle);
+const engineCode = getEngineCode(model);
 
-  const wantedModel = getSeriesModel(vehicle);
-  const engineCode = getEngineCode(model);
+const modelMatched =
+  csvModel === wantedModel ||
+  wantedModel.includes(csvModel) ||
+  csvModel.includes(wantedModel) ||
+  model.includes(csvModel) ||
+  (csvNick && model.includes(csvNick)) ||
+  (csvNick && wantedModel.includes(csvNick));
+
+if (!modelMatched) return -99999;
+
+let score = 0;
+
+  
+  csvModel === wantedModel ||
+  wantedModel.includes(csvModel) ||
+  csvModel.includes(wantedModel) ||
+  model.includes(csvModel) ||
+  csvNick.includes(wantedModel) ||
+  wantedModel.includes(csvNick);
+
+if (!modelMatched) return -99999;
+
+  
 
   if (csvModel === wantedModel) score += 2000;
   if (wantedModel.includes(csvModel)) score += 1000;
@@ -293,11 +316,16 @@ export default function SpareWheel() {
         .filter((row) => row.score > 0)
         .sort((a, b) => b.score - a.score);
 
-      const found = scored[0]?.item || null;
+      const found = scored[0]?.score >= 2000 ? scored[0].item : null;
 
       if (!found) {
         setMessage("No Road Hero kit found for this vehicle.");
       }
+      if (!found) {
+  setMessage(
+  "We do not currently have a confirmed Road Hero spare wheel kit for this vehicle. Please call 01482 328800 and our team will check alternative options."
+);
+}
 
       setMatch(found);
     } catch (err) {
