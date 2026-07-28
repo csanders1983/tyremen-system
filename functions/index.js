@@ -4,7 +4,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 
-const API_KEY = "PASTE_NEW_KEY_HERE";
+const API_KEY = process.env.VDG_API_KEY;
 const PACKAGE_NAME = "VDICheck";
 const ENDPOINT = "https://uk.api.vehicledataglobal.com/r2/lookup";
 
@@ -13,6 +13,15 @@ exports.vehicleLookup = functions.https.onRequest(async (req, res) => {
   res.set("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") return res.status(204).send("");
+
+if (!API_KEY) {
+  console.error("Missing VDG_API_KEY environment variable");
+
+  return res.status(500).json({
+    success: false,
+    error: "Vehicle lookup API is not configured",
+  });
+}
 
   try {
     const vrm = String(req.body.vrm || req.query.vrm || "")

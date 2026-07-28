@@ -3,6 +3,8 @@ const admin = require("firebase-admin");
 const axios = require("axios");
 const cors = require("cors")({ origin: true });
 
+// Environment configuration updated
+
 admin.initializeApp();
 
 const db = admin.firestore();
