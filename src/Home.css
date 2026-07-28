@@ -31,7 +31,7 @@ button {
 /* HERO */
 
 .hero {
-  min-height: 600px;
+  min-height: 500px;
   background: #050505;
   display: grid;
   grid-template-columns: 43% 57%;
@@ -69,15 +69,20 @@ button {
 }
 
 .heroWithVehicle {
-  min-height: 650px;
-  padding-bottom: 86px;
+  min-height: 520px;
+  padding-bottom: 55px;
 }
 
 .heroLeft {
-  background: linear-gradient(90deg, rgba(3,3,3,0.98), rgba(3,3,3,0.84) 74%, rgba(3,3,3,0));
+  background: linear-gradient(
+    90deg,
+    rgba(3, 3, 3, 0.98),
+    rgba(3, 3, 3, 0.84) 74%,
+    rgba(3, 3, 3, 0)
+  );
   display: flex;
   align-items: flex-start;
-  padding: 115px 20px 70px 180px;
+  padding: 75px 20px 45px 180px;
   position: relative;
   z-index: 5;
 }
@@ -621,7 +626,7 @@ button {
 }
 
 .serviceCard span {
-  color: #333;
+  color: #ffff;
   margin-top: 4px;
   font-size: 14px;
 }
@@ -806,7 +811,7 @@ button {
   align-items: center;
   min-height: 285px;
   padding: 28px 36px;
-  background: linear-gradient(135deg, #ffffff 0%, #ffffff 58%, #fafafa 100%);
+  background: #000000;
   border: 1px solid #dedede;
   border-radius: 18px;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
@@ -836,15 +841,15 @@ button {
 .vehicleDashboardInfo small {
   display: inline-block;
   margin-bottom: 8px;
-  color: var(--tyre-yellow-dark);
-  font-size: 12px;
+  color: var(--tyre-yellow);
+  font-size: 18px;
   font-weight: 1000;
   letter-spacing: .16em;
 }
 
 .vehicleDashboardInfo h2 {
   margin: 0 0 10px;
-  color: #050505;
+  color: #ffff;
   font-size: clamp(34px, 3vw, 54px);
   line-height: .98;
   font-weight: 1000;
@@ -853,7 +858,7 @@ button {
 
 .vehicleDashboardInfo p {
   margin: 0 0 20px;
-  color: #333;
+  color: var(--tyre-yellow);
   font-size: 18px;
   font-weight: 900;
 }
