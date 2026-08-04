@@ -1,0 +1,616 @@
+.v2Page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(0, 130, 255, 0.08), transparent 30%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.95), transparent 40%),
+    linear-gradient(180deg, #f8fcff 0%, #edf5fa 46%, #e7f0f7 100%);
+  color: #111;
+  padding-bottom: 50px;
+}
+
+.v2TodayHero {
+  max-width: 1380px;
+  margin: 0 auto;
+  min-height: 220px;
+  border-radius: 0 0 26px 26px;
+  overflow: hidden;
+  padding: 38px 42px;
+  color: #fff;
+  background:
+    linear-gradient(90deg, rgba(7, 12, 24, 0.98), rgba(7, 12, 24, 0.82)),
+    radial-gradient(circle at 88% 50%, rgba(255, 212, 0, 0.3), transparent 28%),
+    linear-gradient(135deg, #09111f, #101827);
+  box-shadow: 0 20px 45px rgba(20, 45, 70, 0.16);
+  position: relative;
+}
+
+.v2TodayHero::after {
+  content: "";
+  position: absolute;
+  right: 36px;
+  top: 0;
+  width: 330px;
+  height: 100%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 45%),
+    linear-gradient(90deg, transparent, rgba(255, 212, 0, 0.26));
+  opacity: 0.8;
+}
+
+.v2TodayHero h1 {
+  margin: 0;
+  font-size: clamp(38px, 4vw, 66px);
+  line-height: 0.95;
+  letter-spacing: -2px;
+  font-weight: 1000;
+}
+
+.v2TodayHero h1 span {
+  color: #ffd400;
+}
+
+.v2TodayHero p {
+  margin: 14px 0 22px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.v2HeroStats {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-weight: 900;
+}
+
+.v2HeroStats div {
+  padding-right: 22px;
+  border-right: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.v2VehicleStrip {
+  max-width: 1320px;
+  margin: -20px auto 28px;
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 280px 1fr 210px;
+  gap: 22px;
+  align-items: center;
+  background: linear-gradient(135deg, #121821, #0b0f15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 4px solid #ffd400;
+  border-radius: 18px;
+  padding: 18px 22px;
+  box-shadow: 0 18px 40px rgba(20, 45, 70, 0.2);
+}
+
+.v2VehicleImage {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #fff, #edf3f7);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.v2VehicleImage img {
+  max-width: 260px;
+  max-height: 112px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.25));
+}
+
+.v2VehicleInfo span {
+  color: #ffd400;
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+}
+
+.v2VehicleInfo h2 {
+  margin: 5px 0;
+  font-size: clamp(26px, 3vw, 42px);
+  line-height: 1;
+  text-transform: uppercase;
+  font-weight: 1000;
+}
+
+.v2VehicleInfo p {
+  margin: 0;
+  font-weight: 900;
+}
+
+.v2VehicleInfo strong {
+  color: #ffd400;
+}
+
+.v2VehicleStrip button {
+  background: #ffd400;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 18px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.v2Loading,
+.v2NoTyres {
+  max-width: 1320px;
+  margin: 16px auto;
+  background: #ffd400;
+  color: #000;
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-weight: 1000;
+}
+
+.v2FilterBar {
+  max-width: 1320px;
+  margin: 0 auto 28px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid #dce8f0;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 18px 38px rgba(20, 45, 70, 0.12);
+}
+
+.v2FilterBar select,
+.v2FilterBar button {
+  min-height: 46px;
+  border: 1px solid #d8e3eb;
+  background: linear-gradient(180deg, #fff, #f4f8fb);
+  color: #000;
+  border-radius: 10px;
+  padding: 0 18px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.v2FilterBar button.active {
+  background: #ffd400;
+  border-color: #111;
+}
+
+.v2FilterBar strong {
+  color: #000;
+  font-weight: 1000;
+}
+
+.v2Sort {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+}
+
+.v2Sort select {
+  background: #0c1118;
+  color: #fff;
+  border-color: #0c1118;
+}
+
+.v2Intro {
+  max-width: 1320px;
+  margin: 0 auto 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.v2Intro h2 {
+  margin: 0;
+  font-size: clamp(26px, 3vw, 42px);
+  font-weight: 1000;
+  font-style: italic;
+  letter-spacing: -1px;
+}
+
+.v2Intro h2 span {
+  color: #ffd400;
+}
+
+.v2Intro p {
+  margin: 8px 0 0;
+  font-weight: 900;
+}
+
+.v2Intro.small {
+  display: block;
+  margin-top: 30px;
+}
+
+.v2List {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+
+.v2TyreCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 110px 210px 1fr 260px 230px;
+  gap: 18px;
+  align-items: center;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 45%, #f3f7fa 100%);
+  border: 1px solid #dce8f0;
+  border-radius: 18px;
+  padding: 16px 22px;
+  box-shadow:
+    0 8px 22px rgba(20, 45, 70, 0.08),
+    0 18px 45px rgba(20, 45, 70, 0.12);
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.v2TyreCard:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 34px rgba(20, 45, 70, 0.12),
+    0 28px 60px rgba(20, 45, 70, 0.18);
+}
+
+.v2TyreCard::before {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #18b957;
+}
+
+.v2TyreCard.supplier::before {
+  background: #ff8500;
+}
+
+.v2StockPanel {
+  min-height: 130px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+  background: linear-gradient(180deg, #edfff3, #dff8e8);
+  color: #159947;
+  box-shadow: inset 0 0 0 1px rgba(22, 184, 78, 0.16);
+  font-weight: 1000;
+  padding: 10px;
+}
+
+.v2TyreCard.supplier .v2StockPanel {
+  background: linear-gradient(180deg, #fff4e3, #ffe7c2);
+  color: #ec7200;
+}
+
+.v2StockPanel span,
+.v2StockPanel em {
+  display: block;
+  width: 100%;
+  color: #fff;
+  background: #1fbf55;
+  border-radius: 7px;
+  padding: 6px 4px;
+  font-size: 11px;
+  font-style: normal;
+}
+
+.v2TyreCard.supplier .v2StockPanel span,
+.v2TyreCard.supplier .v2StockPanel em {
+  background: #f27a00;
+}
+
+.v2StockPanel strong {
+  color: #111;
+  font-size: 31px;
+  line-height: 1;
+  margin-top: 10px;
+}
+
+.v2StockPanel small {
+  color: #555;
+  font-size: 12px;
+}
+
+.v2ImagePanel {
+  height: 145px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #ffffff, #edf4f8);
+  border: 1px solid #dbe7ef;
+  overflow: hidden;
+}
+
+.v2ImagePanel img {
+  max-width: 185px;
+  max-height: 145px;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 14px rgba(0, 0, 0, 0.22));
+}
+
+.v2BrandLogo {
+  max-width: 200px;
+  max-height: 100px;
+  object-fit: contain;
+  background: #fff;
+  border: 0px solid #e2e8ee;
+  border-radius: 8px;
+  padding: 5px 9px;
+  margin-bottom: 5px;
+}
+
+.v2InfoPanel h3 {
+  margin: 0;
+  font-size: 31px;
+  font-weight: 1000;
+  font-style: bold;
+  letter-spacing: -1px;
+  text-shadow: 0px 0px 0 rgba(255, 212, 0, 0.22);
+}
+
+.v2InfoPanel p {
+  margin: 4px 0 10px;
+  font-size: 20px;
+  color: #666;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.v2Chips,
+.v2Labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.v2Chips span {
+  background: linear-gradient(180deg, #fff, #f0f4f7);
+  border: 1px solid #d9e2e8;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+.v2Labels {
+  margin-top: 9px;
+}
+
+.v2Labels span {
+  background: #fff;
+  border: 1px solid #e2e8ee;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.v2Availability {
+  min-height: 115px;
+  border-radius: 14px;
+  display: grid;
+  align-content: center;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, #f7fffb, #eefcf5);
+  border: 1px solid #cfe9d8;
+  color: #159947;
+  font-weight: 900;
+}
+
+.v2TyreCard.supplier .v2Availability {
+  background: linear-gradient(180deg, #fffaf4, #fff2e4);
+  border-color: #ffe0b8;
+  color: #ec7200;
+}
+
+.v2Availability strong {
+  font-size: 18px;
+}
+
+.v2Availability span,
+.v2Availability small,
+.v2Availability em {
+  display: block;
+  margin-top: 4px;
+  font-style: normal;
+  font-size: 13px;
+}
+
+.v2BuyPanel {
+  text-align: center;
+  background: linear-gradient(180deg, #ffffff, #f5f9fc);
+  border-left: 1px solid #e1eaf1;
+  padding-left: 18px;
+}
+
+.v2BuyPanel strong {
+  display: block;
+  font-size: 32px;
+  color: #159947;
+  line-height: 1;
+}
+
+.v2TyreCard.supplier .v2BuyPanel strong {
+  color: #ec7200;
+}
+
+.v2BuyPanel small {
+  display: block;
+  margin: 6px 0 10px;
+  font-size: 12px;
+  font-weight: 1000;
+}
+
+.v2BuyPanel button {
+  width: 100%;
+  margin-top: 7px;
+  border-radius: 8px;
+  padding: 11px;
+  font-weight: 1000;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.v2BuyPanel button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(20, 45, 70, 0.18);
+}
+
+.v2BuyNow {
+  background: #ffd400;
+  color: #000;
+  border: none;
+}
+
+.v2Need,
+.v2Details {
+  background: #fff;
+  color: #000;
+  border: 1px solid #b8c5cf;
+}
+
+.v2LoadMore {
+  text-align: center;
+  margin: 28px auto;
+}
+
+.v2LoadMore button {
+  background: #ffd400;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 26px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.v2Benefits {
+  max-width: 1320px;
+  margin: 30px auto 0;
+  background: linear-gradient(135deg, #09111f, #101827);
+  color: #fff;
+  border-radius: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  box-shadow: 0 18px 40px rgba(20, 45, 70, 0.18);
+  overflow: hidden;
+}
+
+.v2Benefits div {
+  padding: 22px;
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+  font-weight: 900;
+}
+
+@media (max-width: 1150px) {
+  .v2VehicleStrip,
+  .v2TyreCard {
+    grid-template-columns: 1fr;
+  }
+
+  .v2BuyPanel {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .v2Sort {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .v2Page {
+    padding: 0 12px 40px;
+  }
+
+  .v2TodayHero {
+    padding: 28px 22px;
+  }
+
+  .v2VehicleStrip,
+  .v2FilterBar,
+  .v2Intro,
+  .v2List,
+  .v2Benefits {
+    max-width: 100%;
+  }
+
+  .v2FilterBar select,
+  .v2FilterBar button,
+  .v2Sort,
+  .v2Sort select {
+    width: 100%;
+  }
+
+  .v2Benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .v2InfoPanel h3 {
+    font-size: 27px;
+  }
+}
+/* FIX V2 TOP AREA - COMPACT PROFESSIONAL */
+
+.v2TodayHero {
+  max-width: 1320px !important;
+  min-height: 145px !important;
+  margin: 0 auto 18px !important;
+  padding: 28px 42px !important;
+  border-radius: 0 0 22px 22px !important;
+}
+
+.v2TodayHero h1 {
+  font-size: 46px !important;
+}
+
+.v2TodayHero p {
+  font-size: 17px !important;
+  margin: 10px 0 16px !important;
+}
+
+.v2HeroStats {
+  gap: 12px !important;
+  font-size: 14px !important;
+}
+
+.v2VehicleStrip {
+  max-width: 1320px !important;
+  margin: 0 auto 26px !important;
+  grid-template-columns: 230px 1fr 190px !important;
+  padding: 16px 20px !important;
+  border-radius: 18px !important;
+}
+
+.v2VehicleImage {
+  height: 105px !important;
+}
+
+.v2VehicleImage img {
+  max-height: 96px !important;
+  max-width: 220px !important;
+}
+
+.v2VehicleInfo h2 {
+  font-size: 34px !important;
+  line-height: 1.05 !important;
+}
+
+.v2FilterBar {
+  margin-top: 0 !important;
+}
+
+.v2Intro {
+  margin-top: 24px !important;
+}

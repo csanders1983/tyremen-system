@@ -285,8 +285,9 @@ async function getMidasToken(forceRefresh = false) {
     return midasTokenCache.token;
   }
 
-  const login = await axios.post(
-    `${MIDAS_BASE_URL}/api/GetLoginToken`,
+  console.log("Logging into MIDAS...");
+const login = await axios.post(
+  `${MIDAS_BASE_URL}/api/GetLoginToken`,
     {
       username: MIDAS_USERNAME,
       password: MIDAS_PASSWORD,
@@ -300,6 +301,7 @@ async function getMidasToken(forceRefresh = false) {
       },
     }
   );
+  console.log("MIDAS STAGE: login response received");
 
   const token = login.data?.token || login.data;
 
@@ -317,6 +319,9 @@ async function getMidasToken(forceRefresh = false) {
 
 async function midasGet(path, params = {}, allowRetry = true) {
   const token = await getMidasToken();
+
+console.log("MIDAS STAGE: using token cache");
+console.log("MIDAS STAGE: calling endpoint", path);
 
   try {
     return await axios.get(`${MIDAS_BASE_URL}${path}`, {
