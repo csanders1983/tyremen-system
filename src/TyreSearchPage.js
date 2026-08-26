@@ -52,6 +52,11 @@ export default function TyreSearchPage() {
     String(value || "")
       .toUpperCase()
       .replace(/[^A-Z0-9]/g, "");
+  
+  const toTitleCase = (text = "") =>
+  text
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 
  const getSize = (tyre) => {
   if (!tyre) return "";
@@ -129,6 +134,409 @@ const getBrandLogo = (tyre) =>
   tyre?.["Speed Rating"] ||
   "";
 
+const OEM_APPROVALS = {
+  // Alfa Romeo
+  AR: "Alfa Romeo",
+  ARR: "Alfa Romeo",
+
+  // Alpina / Alpine
+  ALP: "Alpina",
+  A11: "Alpine",
+  A29: "Alpine",
+  A39: "Alpine",
+
+  // Aston Martin
+  AML: "Aston Martin",
+  A6A: "Aston Martin",
+  A7A: "Aston Martin",
+  A8A: "Aston Martin",
+  A8B: "Aston Martin",
+  AM4: "Aston Martin",
+  AM8: "Aston Martin",
+  AM9: "Aston Martin",
+  AMP: "Aston Martin",
+  AMS: "Aston Martin",
+
+  // Audi
+  AO: "Audi",
+  AO1: "Audi",
+  AO2: "Audi",
+  AOE: "Audi",
+  AOE1: "Audi",
+  R0: "Audi",
+  RO: "Audi",
+  RO1: "Audi",
+  RO2: "Audi",
+  RE0: "Audi",
+
+  // Bentley
+  B: "Bentley",
+  B1: "Bentley",
+  BC: "Bentley",
+  BL: "Bentley",
+  BH: "Bentley",
+
+  // BMW / MINI
+  "*": "BMW",
+  "★": "BMW",
+  "I*": "BMW",
+  "I★": "BMW",
+  "II*": "BMW",
+  "*1": "BMW",
+  "★1": "BMW",
+  "★S1": "BMW",
+
+  // BMW and Mercedes combined approvals
+  "*MO": "BMW / Mercedes-Benz",
+  "★MO": "BMW / Mercedes-Benz",
+  "*MOE": "BMW / Mercedes-Benz",
+  "★MOE": "BMW / Mercedes-Benz",
+
+  // Bugatti
+  BG: "Bugatti",
+
+  // General Motors
+  TPC: "General Motors",
+
+  // Chery
+  CH: "Chery",
+
+  // Dallara
+  ME2: "Dallara",
+
+  // Ferrari
+  F: "Ferrari",
+  F01: "Ferrari",
+  F02: "Ferrari",
+  F03: "Ferrari",
+  F04: "Ferrari",
+  K1: "Ferrari",
+  K2: "Ferrari",
+  K3: "Ferrari",
+
+  // Ford Performance
+  FP: "Ford Performance",
+
+  // Genesis
+  GOE: "Genesis",
+
+  // Honda
+  H0: "Honda",
+
+  // Hyundai
+  HN: "Hyundai",
+
+  // Jaguar / Land Rover
+  J: "Jaguar",
+  JRS: "Jaguar",
+  JLR: "Jaguar Land Rover",
+  "J LR": "Jaguar Land Rover",
+  LR: "Land Rover",
+  LR1: "Land Rover",
+  LR2: "Land Rover",
+  LR3: "Land Rover",
+  LR5: "Land Rover",
+
+  // Jeep
+  JP: "Jeep",
+
+  // Karma
+  KRM: "Karma",
+
+  // Lamborghini
+  L: "Lamborghini",
+  L1: "Lamborghini",
+
+  // Li Auto
+  LA: "Li Auto",
+
+  // Lotus
+  LTS: "Lotus",
+
+  // Lucid
+  LM1: "Lucid",
+
+  // Lynk & Co
+  LK: "Lynk & Co",
+
+  // Maserati
+  MGT: "Maserati",
+  MGT1: "Maserati",
+  MGT2: "Maserati",
+
+  // McLaren
+  MC: "McLaren",
+  MC1: "McLaren",
+  MC2: "McLaren",
+
+  // Mercedes-Benz / AMG
+  MO: "Mercedes-Benz",
+  MO1: "Mercedes-Benz",
+  MO2: "Mercedes-Benz",
+  MO1A: "Mercedes-AMG",
+  MO1B: "Mercedes-AMG",
+  MO1EXT: "Mercedes-Benz",
+  MOE: "Mercedes-Benz",
+  "MOE-S": "Mercedes-Benz",
+  "MO-P": "Mercedes-Benz",
+  "MO-S": "Mercedes-Benz",
+  "MO-S1": "Mercedes-Benz",
+  "MO-V": "Mercedes-Benz",
+
+  // NIO
+  I: "NIO",
+
+  // Pagani
+  HP: "Pagani",
+
+  // Polestar
+  POL: "Polestar",
+
+  // Porsche
+  N0: "Porsche",
+  N1: "Porsche",
+  N2: "Porsche",
+  N3: "Porsche",
+  N4: "Porsche",
+  N5: "Porsche",
+  N6: "Porsche",
+  NA0: "Porsche",
+  NA1: "Porsche",
+  NA2: "Porsche",
+  NA5: "Porsche",
+  NA6: "Porsche",
+  NC0: "Porsche",
+  ND0: "Porsche",
+  ND1: "Porsche",
+  NE0: "Porsche",
+  NF0: "Porsche",
+  NF1: "Porsche",
+  NG0: "Porsche",
+
+  // Renault
+  R: "Renault",
+
+  // Rivian
+  RIV: "Rivian",
+
+  // Tesla
+  T0: "Tesla",
+  T1: "Tesla",
+  T2: "Tesla",
+
+  // Volkswagen
+  "+": "Volkswagen",
+  "(+)": "Volkswagen",
+  "⊕": "Volkswagen",
+  VW: "Volkswagen",
+
+  // Volvo
+  VOL: "Volvo",
+  VOL1: "Volvo",
+
+  // Zeekr
+  ZK: "Zeekr",
+};
+
+const normaliseOemCode = (value) =>
+  String(value || "")
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, " ")
+    .replace(/^AR\.$/, "AR");
+
+const getRawHomologationCode = (tyre) =>
+  tyre?.oem?.code1 ||
+  tyre?.oem?.code ||
+  tyre?.oemCode ||
+  tyre?.oeCode ||
+  tyre?.homologationCode ||
+  tyre?.homologation_code ||
+  tyre?.approvalCode ||
+  tyre?.manufacturerCode ||
+  tyre?.key4 ||
+  "";
+
+const findOemCodeInText = (tyre) => {
+  const text = [
+    tyre?.descr,
+    tyre?.longdescr,
+    tyre?.description,
+    tyre?.homologation,
+    tyre?.oem?.name,
+    tyre?.oem?.manufacturer,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toUpperCase();
+
+  if (!text) return "";
+
+  // Longest codes first so MO1A is found before MO1 or MO.
+  const codes = Object.keys(OEM_APPROVALS).sort(
+    (a, b) => b.length - a.length
+  );
+
+  const found = codes.find((code) => {
+    if (["*", "★", "+", "(+)", "⊕"].includes(code)) {
+      return text.includes(code);
+    }
+
+    const escaped = code.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(
+      `(^|[^A-Z0-9])${escaped}([^A-Z0-9]|$)`,
+      "i"
+    );
+
+    return pattern.test(text);
+  });
+
+  return found || "";
+};
+
+const getHomologationCode = (tyre) => {
+  const directCode = normaliseOemCode(getRawHomologationCode(tyre));
+
+  if (directCode) return directCode;
+
+  const codeInText = normaliseOemCode(findOemCodeInText(tyre));
+
+  if (codeInText) return codeInText;
+
+  const manufacturerName = cleanText(
+    tyre?.homologation ||
+      tyre?.oem?.name ||
+      tyre?.oem?.manufacturer ||
+      tyre?.manufacturerApproval ||
+      ""
+  );
+
+  const codeByManufacturer = {
+    ALFAROMEO: "AR",
+    AUDI: "AO",
+    BMW: "*",
+    BMWGROUP: "*",
+    MERCEDES: "MO",
+    MERCEDESBENZ: "MO",
+    MERCEDESAMG: "MO1",
+    PORSCHE: "N0",
+    TESLA: "T0",
+    JAGUAR: "J",
+    LANDROVER: "LR",
+    JAGUARLANDROVER: "JLR",
+    FERRARI: "K1",
+    LAMBORGHINI: "L",
+    MASERATI: "MGT",
+    MCLAREN: "MC",
+    ASTONMARTIN: "AML",
+    BENTLEY: "B",
+    VOLVO: "VOL",
+    VOLKSWAGEN: "VW",
+    HYUNDAI: "HN",
+    GENESIS: "GOE",
+    HONDA: "H0",
+    LOTUS: "LTS",
+    POLESTAR: "POL",
+    RIVIAN: "RIV",
+  };
+
+  return codeByManufacturer[manufacturerName] || "";
+};
+
+const formatManufacturerName = (value) => {
+  const text = String(value || "").trim();
+
+  if (!text) return "";
+
+  const knownNames = {
+    ALFAROMEO: "Alfa Romeo",
+    ASTONMARTIN: "Aston Martin",
+    AUDI: "Audi",
+    BENTLEY: "Bentley",
+    BMW: "BMW",
+    BMWGROUP: "BMW",
+    BUGATTI: "Bugatti",
+    FERRARI: "Ferrari",
+    FORDPERFORMANCE: "Ford Performance",
+    GENESIS: "Genesis",
+    HONDA: "Honda",
+    HYUNDAI: "Hyundai",
+    JAGUAR: "Jaguar",
+    JAGUARLANDROVER: "Jaguar Land Rover",
+    JEEP: "Jeep",
+    LAMBORGHINI: "Lamborghini",
+    LANDROVER: "Land Rover",
+    LIAUTO: "Li Auto",
+    LOTUS: "Lotus",
+    LUCID: "Lucid",
+    LYNKCO: "Lynk & Co",
+    MASERATI: "Maserati",
+    MCLAREN: "McLaren",
+    MERCEDES: "Mercedes-Benz",
+    MERCEDESBENZ: "Mercedes-Benz",
+    MERCEDESAMG: "Mercedes-AMG",
+    MINI: "MINI",
+    NIO: "NIO",
+    PAGANI: "Pagani",
+    POLESTAR: "Polestar",
+    PORSCHE: "Porsche",
+    RENAULT: "Renault",
+    RIVIAN: "Rivian",
+    TESLA: "Tesla",
+    VOLKSWAGEN: "Volkswagen",
+    VOLVO: "Volvo",
+    ZEEKR: "Zeekr",
+  };
+
+  const cleaned = cleanText(text);
+
+  if (knownNames[cleaned]) {
+    return knownNames[cleaned];
+  }
+
+  return text
+    .toLowerCase()
+    .replace(/\b\w/g, (letter) => letter.toUpperCase())
+    .replace(/\bBmw\b/g, "BMW")
+    .replace(/\bMini\b/g, "MINI")
+    .replace(/\bNio\b/g, "NIO")
+    .replace(/\bMclaren\b/g, "McLaren");
+};
+
+const getHomologationName = (tyre) => {
+  const code = getHomologationCode(tyre);
+
+  if (code && OEM_APPROVALS[code]) {
+    return OEM_APPROVALS[code];
+  }
+
+  return formatManufacturerName(
+    tyre?.homologation ||
+      tyre?.oem?.name ||
+      tyre?.oem?.manufacturer ||
+      tyre?.manufacturerApproval ||
+      ""
+  );
+};
+
+const getHomologationBadgeText = (tyre) => {
+  const name = getHomologationName(tyre);
+  const code = getHomologationCode(tyre);
+
+  if (name && code) {
+    return `${name} OE Approved (${code})`;
+  }
+
+  if (name) {
+    return `${name} OE Approved`;
+  }
+
+  if (code) {
+    return `Manufacturer OE Approved (${code})`;
+  }
+
+  return "";
+};
   const isLocalTyre = (tyre) => !tyre.pricing;
 
   const getLoadSpeed = (tyre) => {
@@ -562,6 +970,18 @@ const visibleTyres = remainingTyres.slice(0, visibleCount);
     });
   };
 
+const FeatureBadge = ({ colour, icon, text }) => (
+  <span className={`v2FeatureBadge ${colour}`}>
+    {icon && (
+      <span className="v2FeatureBadgeIcon" aria-hidden="true">
+        {icon}
+      </span>
+    )}
+
+    <span>{text}</span>
+  </span>
+);
+
 const FeaturedRecommendation = ({ tyre }) => {
   if (!tyre) return null;
 
@@ -671,19 +1091,24 @@ const FeaturedRecommendation = ({ tyre }) => {
     const brandLogo = getBrandLogo(tyre);
     const image = getImage(tyre);
     const loadSpeed = getLoadSpeed(tyre);
+    const homologation = tyre.homologation || "";
     const season = tyre.season || "Summer";
     const fuel = tyre.labels?.fuel || tyre["Rolling Resistance"] || "-";
     const wet = tyre.labels?.wetGrip || tyre["Wet Grip"] || "-";
-    const noise =
-      tyre.labels?.noise ||
-      (tyre["Noise Performance"]
-        ? `${tyre["Noise Performance"]} dB`
-        : "-");
+    const noiseDb =
+  tyre.labels?.noise ||
+  tyre["Noise Performance db"] ||
+  "";
+
+const noise = noiseDb ? `${noiseDb} ` : "-";
+
+    
 
     const specification = [
       getSize(tyre),
       loadSpeed,
       isExtraLoad(tyre) ? "XL" : "",
+      homologation,
       tyre.runFlat ? "Run Flat" : "",
     ]
       .filter(Boolean)
@@ -713,24 +1138,88 @@ const FeaturedRecommendation = ({ tyre }) => {
         </button>
 
         <div className="v2InfoPanel">
-          {brandLogo && (
-            <img
-              className="v2BrandLogo"
-              src={brandLogo}
-              alt={`${getBrand(tyre)} logo`}
-            />
-          )}
+
+          <div className="v2BrandRow">
+  {brandLogo ? (
+    <img
+      className="v2BrandLogo"
+      src={brandLogo}
+      alt={`${getBrand(tyre)} logo`}
+    />
+  ) : (
+    <strong className="v2BrandText">
+      {getBrand(tyre)}
+    </strong>
+  )}
+
+  {getHomologationCode(tyre) && (
+    <span className="v2OeCodePill">
+      {getHomologationCode(tyre)}
+    </span>
+  )}
+</div>
    
           
 
-          <h3 className="v2TyreTitle">
-            <span className="v2TyreSpecification">{specification}</span>{" "}
-            <span className="v2TyreBrandModel">
-              {getBrand(tyre)}{getModel(tyre) ? `, ${getModel(tyre)}` : ""}
-            </span>
-          </h3>
+          <div className="v2TyreTitle">
+  <div className="v2TyreSpecification">
+    {getSize(tyre)}
+    {loadSpeed && <span> {loadSpeed}</span>}
+    {isExtraLoad(tyre) && <span> XL</span>}
+  </div>
 
-          <div className="v2Labels">
+  <div className="v2TyreBrandModel">
+    <strong>{getBrand(tyre)}</strong>
+
+    {getModel(tyre) && (
+      <span>{getModel(tyre)}</span>
+    )}
+  </div>
+</div>
+
+<div className="v2TyreFeatures">
+  {tyre.runFlat && (
+    <FeatureBadge
+      colour="grey"
+      icon="◉"
+      text="Run Flat"
+    />
+  )}
+
+  {getHomologationBadgeText(tyre) && (
+    <FeatureBadge
+      colour="green"
+      icon="OE"
+      text={getHomologationBadgeText(tyre)}
+    />
+  )}
+
+  {tyre.features?.electricVehicle && (
+    <FeatureBadge
+      colour="blue"
+      icon="⚡"
+      text="EV Ready"
+    />
+  )}
+
+  {tyre.features?.noiseDamper && (
+    <FeatureBadge
+      colour="teal"
+      icon="◖"
+      text="Noise Damper"
+    />
+  )}
+
+  {tyre.features?.selfSeal && (
+    <FeatureBadge
+      colour="purple"
+      icon="◆"
+      text="Self Seal"
+    />
+  )}
+</div>
+
+<div className="v2Labels">
             <span className={`v2SeasonLabel ${getSeasonClass(season)}`}>
               {season}
             </span>

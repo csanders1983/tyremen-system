@@ -409,6 +409,56 @@ function mapMidasTyre(t) {
     season: seasonName(t.season ?? t.Season),
     runFlat: String(t.runFlat ?? t.RunFlat ?? "").toUpperCase() === "Y",
     extraLoad: String(t.extraLoad ?? t.ExtraLoad ?? "").toUpperCase() === "Y",
+   
+    homologation:
+  t.oemDescription && t.oemDescription !== "NONE"
+    ? t.oemDescription
+    : t.OEM1 || t.OEM2 || "",
+
+oem: {
+  description:
+    t.oemDescription && t.oemDescription !== "NONE"
+      ? t.oemDescription
+      : "",
+
+  code1: t.OEM1 || "",
+  code2: t.OEM2 || "",
+
+  logo1: t.oemLogo1 || "",
+  logo2: t.oemLogo2 || "",
+},
+
+    features: {
+  electricVehicle:
+    t.EV_FLAG === 1 ||
+    String(t.ElectricVehicle || "").toUpperCase() === "Y",
+
+  selfSeal:
+    t.SELFSEAL_FLAG === 1 ||
+    String(t.SelfSeal || "").toUpperCase() === "Y",
+
+  lowRollingResistance:
+    t.LRR_FLAG === 1 ||
+    String(t.LLR || "").toUpperCase() === "Y",
+
+  noiseDamper:
+    t.NOISE_DAMPER_FLAG === 1 ||
+    String(t.NoiseDamper || "").toUpperCase() === "Y",
+
+  iceGrip:
+    t.ICE_GRIP_FLAG === 1 ||
+    String(t.IceGrip || "").toUpperCase() === "Y",
+
+  snowGrip:
+    t.SNOW_GRIP_FLAG === 1,
+
+  mudAndSnow:
+    t.MS_FLAG === 1,
+
+  threePeak:
+    t.PEAK3_FLAG === 1 ||
+    String(t.ThreePeaks || "").toUpperCase() === "Y",
+},
 
     labels: {
       fuel: t.rrc_grade ?? t.RrcGrade ?? "",
@@ -571,8 +621,15 @@ exports.midasTyreSearch = functions.https.onRequest((req, res) => {
 
       const rawTyres = Array.isArray(response.data) ? response.data : [];
 
-      const cleanTyres = rawTyres
-        .map(mapMidasTyre)
+rawTyres.slice(0, 5).forEach((tyre, index) => {
+  console.log(
+    `RAW MIDAS TYRE ${index + 1}`,
+    JSON.stringify(tyre, null, 2)
+  );
+});
+
+const cleanTyres = rawTyres
+  .map(mapMidasTyre)
         .filter(
           (tyre) =>
             tyre.stock.available > 0 &&

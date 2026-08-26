@@ -661,21 +661,56 @@
 }
 
 .v2TyreTitle {
-  margin: 0;
-  line-height: 1.18;
-  letter-spacing: -0.6px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  width: 100%;
+  margin: 10px 0 8px;
 }
 
 .v2TyreSpecification {
-  color: #111;
-  font-size: clamp(21px, 2vw, 28px);
-  font-weight: 1000;
+  display: block;
+  color: #070707;
+  font-size: clamp(25px, 2vw, 31px);
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: -0.8px;
+  white-space: nowrap;
 }
 
 .v2TyreBrandModel {
-  color: #555f68;
-  font-size: clamp(17px, 1.55vw, 22px);
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 7px;
+  color: #515b65;
+  font-size: clamp(19px, 1.55vw, 24px);
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.v2TyreBrandModel strong {
+  color: #515b65;
+  font: inherit;
   font-weight: 900;
+}
+
+.v2TyreBrandModel span {
+  color: #515b65;
+  font-weight: 800;
+}
+
+@media (max-width: 800px) {
+  .v2TyreSpecification {
+    white-space: normal;
+    font-size: 24px;
+  }
+
+  .v2TyreBrandModel {
+    font-size: 19px;
+  }
 }
 
 .v2Labels {
@@ -1952,5 +1987,1596 @@
 
   .v2CompactIncluded {
     justify-content: center;
+  }
+}
+.v2BrandRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  min-height: 38px;
+  margin-bottom: 10px;
+}
+
+.v2BrandLogo {
+  display: block;
+  width: auto;
+  max-width: 165px;
+  height: 34px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.v2BrandText {
+  color: #111;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.v2OeCodePill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 30px;
+  padding: 0 12px;
+
+  border: 2px solid #188847;
+  border-radius: 999px;
+
+  background: #eaf8ef;
+  color: #126b38;
+
+  font-size: 14px;
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+/* =========================================================
+   TYREMEN TYRE RESULTS — FINAL POLISH OVERRIDE
+   Paste at the very bottom of TyreSearchPage.css
+   ========================================================= */
+
+/* ---------- PAGE WIDTH AND RESULTS HEADING ---------- */
+
+.v2Intro,
+.v2List,
+.v2FilterBar,
+.v2ActiveFilters,
+.v2ManualSearch,
+.v2Benefits {
+  width: min(1320px, calc(100% - 40px));
+}
+
+.v2Intro {
+  margin-top: 26px !important;
+  margin-bottom: 17px;
+}
+
+.v2Intro h2 {
+  color: #080b10;
+  font-size: clamp(31px, 3vw, 43px);
+  line-height: 1;
+  letter-spacing: -1.2px;
+}
+
+.v2Intro h2 span {
+  color: #ffd000;
+}
+
+.v2Intro p {
+  margin-top: 10px;
+  color: #111;
+  font-size: 15px;
+  font-weight: 850;
+}
+
+
+/* =========================================================
+   MAIN TYRE CARD
+   ========================================================= */
+
+.v2List {
+  gap: 16px;
+}
+
+.v2TyreCard {
+  grid-template-columns:
+    88px
+    190px
+    minmax(390px, 1fr)
+    220px
+    205px;
+
+  gap: 14px;
+  min-height: 246px;
+  padding: 14px 18px;
+
+  border: 1px solid #d8e4ec;
+  border-radius: 19px;
+
+  background:
+    linear-gradient(
+      110deg,
+      #ffffff 0%,
+      #ffffff 38%,
+      #f7fafc 100%
+    );
+
+  box-shadow:
+    0 8px 20px rgba(32, 55, 72, 0.07),
+    0 18px 42px rgba(32, 55, 72, 0.12);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.v2TyreCard:hover {
+  transform: translateY(-2px);
+
+  border-color: #c8d7e1;
+
+  box-shadow:
+    0 12px 26px rgba(32, 55, 72, 0.10),
+    0 24px 52px rgba(32, 55, 72, 0.15);
+}
+
+.v2TyreCard::before {
+  width: 6px;
+}
+
+.v2TyreCard.local::before {
+  background: #18b957;
+}
+
+.v2TyreCard.supplier::before {
+  background: #ff8100;
+}
+
+
+/* =========================================================
+   STOCK PANEL
+   ========================================================= */
+
+.v2StockPanel {
+  min-height: 106px;
+  padding: 9px 6px;
+  gap: 3px;
+
+  border-radius: 15px;
+
+  background: linear-gradient(180deg, #f0fff5, #dcf8e7);
+  box-shadow:
+    inset 0 0 0 1px rgba(22, 184, 78, 0.18),
+    0 5px 12px rgba(21, 153, 71, 0.06);
+}
+
+.v2TyreCard.supplier .v2StockPanel {
+  background: linear-gradient(180deg, #fff7ea, #ffe9c8);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(242, 122, 0, 0.20),
+    0 5px 12px rgba(242, 122, 0, 0.06);
+}
+
+.v2StockPanel .v2StockDot {
+  width: 11px;
+  height: 11px;
+}
+
+.v2StockPanel strong {
+  margin: 4px 0 0;
+  color: #080b10;
+  font-size: 30px;
+  font-weight: 1000;
+  line-height: 0.95;
+}
+
+.v2StockPanel small {
+  color: #080b10;
+  font-size: 10px;
+  font-weight: 1000;
+  line-height: 1.1;
+}
+
+.v2StockPanel em {
+  width: auto;
+  margin-top: 2px;
+  padding: 5px 7px;
+  border-radius: 7px;
+  font-size: 9px;
+  font-weight: 1000;
+}
+
+
+/* =========================================================
+   TYRE IMAGE
+   ========================================================= */
+
+.v2ImagePanel {
+  width: 100%;
+  height: 134px;
+  border: 1px solid #d7e4ec;
+  border-radius: 15px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #f5f9fb 68%,
+      #eaf1f5 100%
+    );
+
+  box-shadow: inset 0 -7px 16px rgba(33, 56, 73, 0.04);
+}
+
+.v2ImagePanel img {
+  max-width: 172px;
+  max-height: 131px;
+
+  filter: drop-shadow(0 13px 12px rgba(0, 0, 0, 0.20));
+
+  transition: transform 0.22s ease;
+}
+
+.v2ImagePanel:hover img {
+  transform: scale(1.035);
+}
+
+.v2ImageHint {
+  right: 7px;
+  bottom: 7px;
+
+  padding: 5px 7px;
+
+  border-radius: 6px;
+  background: rgba(4, 8, 13, 0.88);
+
+  font-size: 9px;
+  letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   INFORMATION PANEL
+   ========================================================= */
+
+.v2InfoPanel {
+  align-self: center;
+  min-width: 0;
+  padding: 2px 0;
+}
+
+
+/* ---------- Brand logo and OE code ---------- */
+
+.v2BrandRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 36px;
+  margin: 0 0 10px;
+
+  gap: 16px;
+}
+
+.v2BrandLogo {
+  display: block;
+  width: auto;
+  height: 31px;
+  max-width: 150px;
+  max-height: 31px;
+
+  margin: 0;
+  padding: 0;
+
+  object-fit: contain;
+  object-position: left center;
+
+  background: transparent;
+  border-radius: 0;
+}
+
+.v2BrandText {
+  color: #111;
+  font-size: 20px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.v2OeCodePill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  min-width: 48px;
+  height: 30px;
+  padding: 0 11px;
+
+  border: 2px solid #15944a;
+  border-radius: 999px;
+
+  background: #f0fff5;
+  color: #087336;
+
+  font-size: 14px;
+  font-weight: 1000;
+  line-height: 1;
+  letter-spacing: 0.25px;
+
+  box-shadow: 0 3px 9px rgba(21, 148, 74, 0.10);
+}
+
+
+/* ---------- Tyre title ---------- */
+
+.v2TyreTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 5px;
+  width: 100%;
+  margin: 0 0 8px;
+}
+
+.v2TyreSpecification {
+  color: #05070a;
+
+  font-size: clamp(27px, 2vw, 32px);
+  font-weight: 1000;
+  line-height: 1;
+  letter-spacing: -0.9px;
+
+  white-space: nowrap;
+}
+
+.v2TyreBrandModel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+
+  gap: 7px;
+
+  color: #4e5963;
+  font-size: clamp(19px, 1.45vw, 23px);
+  font-weight: 850;
+  line-height: 1.12;
+  letter-spacing: -0.2px;
+  text-transform: uppercase;
+}
+
+.v2TyreBrandModel strong {
+  color: #4e5963;
+  font: inherit;
+  font-weight: 1000;
+}
+
+.v2TyreBrandModel span {
+  color: #4e5963;
+  font-weight: 850;
+}
+
+
+/* =========================================================
+   FEATURE BADGES
+   ========================================================= */
+
+.v2TyreFeatures {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 7px;
+  margin: 8px 0 0;
+}
+
+.v2FeatureBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 29px;
+  padding: 5px 10px;
+
+  border: 1px solid #d6dee4;
+  border-radius: 999px;
+
+  background: #f6f8fa;
+  color: #363f47;
+
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.v2FeatureBadge.grey {
+  background: #f1f3f5;
+  border-color: #d6dce1;
+  color: #343b42;
+}
+
+.v2FeatureBadge.green {
+  background: #ecfaf1;
+  border-color: #a6dfb9;
+  color: #16733b;
+}
+
+.v2FeatureBadge.blue {
+  background: #edf6ff;
+  border-color: #a9d2f6;
+  color: #075f9f;
+}
+
+.v2FeatureBadge.teal {
+  background: #eaf8f8;
+  border-color: #abdada;
+  color: #126e70;
+}
+
+.v2FeatureBadge.purple {
+  background: #f5f0ff;
+  border-color: #d2bff4;
+  color: #63389d;
+}
+
+.v2FeatureBadgeIcon {
+  margin-right: 5px;
+}
+
+
+/* =========================================================
+   EU LABELS
+   ========================================================= */
+
+.v2Labels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.v2Labels > span {
+  min-height: 40px;
+
+  border: 0;
+  border-radius: 9px;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 3px 7px rgba(16, 30, 40, 0.05);
+}
+
+.v2SeasonLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 78px;
+  padding: 7px 12px !important;
+
+  color: #111;
+
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.v2PerformanceLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 66px;
+  min-height: 40px;
+  padding: 6px 10px !important;
+
+  gap: 8px;
+}
+
+.v2PerformanceLabel small {
+  color: #111;
+  font-size: 8px;
+  font-weight: 1000;
+  line-height: 1;
+  letter-spacing: 0.35px;
+}
+
+.v2PerformanceLabel strong {
+  color: #111;
+  font-size: 17px;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.v2PerformanceLabel.noise {
+  min-width: 91px;
+}
+
+
+/* =========================================================
+   AVAILABILITY PANEL
+   ========================================================= */
+
+.v2Availability {
+  min-height: 112px;
+  padding: 15px 16px;
+
+  border: 1px solid #cce8d6;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(180deg, #f6fff9 0%, #edf9f2 100%);
+
+  color: #109143;
+
+  box-shadow: inset 0 0 0 1px rgba(21, 153, 71, 0.025);
+}
+
+.v2TyreCard.supplier .v2Availability {
+  border-color: #ffd5a2;
+
+  background:
+    linear-gradient(180deg, #fffaf3 0%, #fff0df 100%);
+
+  color: #ed7200;
+}
+
+.v2Availability strong {
+  margin-bottom: 4px;
+
+  font-size: 19px;
+  font-weight: 1000;
+  line-height: 1.1;
+}
+
+.v2Availability span,
+.v2Availability em,
+.v2Availability small {
+  margin-top: 5px;
+
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+
+/* =========================================================
+   PRICE PANEL
+   ========================================================= */
+
+.v2BuyPanel {
+  align-self: stretch;
+  justify-content: center;
+
+  min-width: 205px;
+  padding: 12px 0 12px 17px;
+
+  border-left: 1px solid #d9e3ea;
+
+  background: transparent;
+}
+
+.v2OnlinePrice {
+  align-self: center;
+
+  margin: 0 0 7px;
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  background: #ffd000;
+  color: #080808;
+
+  font-size: 9px;
+  font-weight: 1000;
+  letter-spacing: 0.2px;
+}
+
+.v2CompactPriceRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+}
+
+.v2CompactPriceRow > div {
+  align-items: center;
+}
+
+.v2WasPrice {
+  color: #777f86;
+
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+
+  text-decoration-thickness: 1.5px;
+}
+
+.v2NowPrice {
+  margin-top: 4px;
+
+  color: #0f9847;
+
+  font-size: 35px;
+  font-weight: 1000;
+  line-height: 0.95;
+  letter-spacing: -0.8px;
+}
+
+.v2TyreCard.supplier .v2NowPrice {
+  color: #ed7000;
+}
+
+.v2Saving {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 50px;
+  padding: 6px 7px;
+
+  border-radius: 8px;
+
+  background: #d9232e;
+  color: #fff;
+
+  font-size: 9px;
+  font-weight: 1000;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+
+  box-shadow: 0 4px 10px rgba(217, 35, 46, 0.16);
+}
+
+.v2CompactIncluded {
+  gap: 4px 8px;
+
+  margin: 9px 0;
+  padding: 7px 2px;
+
+  border-top: 1px solid #e0e7ec;
+  border-bottom: 1px solid #e0e7ec;
+}
+
+.v2CompactIncluded span {
+  color: #303840;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.v2BuyPanel .v2BuyNow {
+  min-height: 40px;
+  padding: 9px 11px;
+
+  border-radius: 8px;
+
+  background: linear-gradient(180deg, #ffd800, #ffc900);
+
+  color: #050505;
+  font-size: 13px;
+  font-weight: 1000;
+
+  box-shadow: 0 4px 10px rgba(255, 208, 0, 0.12);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+}
+
+.v2BuyPanel .v2BuyNow:hover {
+  transform: translateY(-1px);
+
+  filter: brightness(0.98);
+
+  box-shadow: 0 8px 16px rgba(255, 192, 0, 0.22);
+}
+
+.v2FittingStatus {
+  margin-top: 7px;
+
+  color: #5e6972;
+
+  font-size: 9px;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   FILTER BAR — FINAL POLISH
+   ========================================================= */
+
+.v2FilterBar {
+  padding: 12px;
+
+  border-radius: 16px;
+
+  box-shadow: 0 11px 27px rgba(30, 53, 70, 0.09);
+}
+
+.v2FilterBar select,
+.v2FilterBar button {
+  min-height: 43px;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.v2Sort select {
+  background: #111720;
+  color: #fff;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1240px) {
+  .v2TyreCard {
+    grid-template-columns:
+      84px
+      175px
+      minmax(310px, 1fr)
+      205px
+      195px;
+  }
+
+  .v2TyreSpecification {
+    font-size: 27px;
+  }
+
+  .v2TyreBrandModel {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .v2TyreCard {
+    grid-template-columns: 90px 180px minmax(0, 1fr);
+  }
+
+  .v2Availability {
+    grid-column: 2 / 3;
+  }
+
+  .v2BuyPanel {
+    grid-column: 3 / 4;
+
+    padding-top: 14px;
+    padding-left: 17px;
+
+    border-top: 1px solid #d9e3ea;
+  }
+}
+
+@media (max-width: 760px) {
+  .v2Intro,
+  .v2List,
+  .v2FilterBar,
+  .v2ActiveFilters,
+  .v2ManualSearch,
+  .v2Benefits {
+    width: 100%;
+  }
+
+  .v2TyreCard {
+    grid-template-columns: 1fr;
+
+    min-height: 0;
+    padding: 14px;
+  }
+
+  .v2StockPanel {
+    min-height: 65px;
+
+    grid-template-columns: auto auto 1fr auto;
+    justify-content: start;
+
+    gap: 10px;
+  }
+
+  .v2ImagePanel {
+    height: 205px;
+  }
+
+  .v2ImagePanel img {
+    max-width: 230px;
+    max-height: 195px;
+  }
+
+  .v2BrandRow {
+    margin-top: 3px;
+  }
+
+  .v2TyreSpecification {
+    font-size: 25px;
+    white-space: normal;
+  }
+
+  .v2TyreBrandModel {
+    font-size: 19px;
+  }
+
+  .v2Availability,
+  .v2BuyPanel {
+    grid-column: auto;
+  }
+
+  .v2BuyPanel {
+    width: 100%;
+    padding: 15px 0 0;
+
+    border-top: 1px solid #d9e3ea;
+    border-left: 0;
+  }
+}
+/* =========================================================
+   TYREMEN FINAL PREMIUM POLISH
+   ========================================================= */
+
+/* ---------------- FILTER BAR ---------------- */
+
+.v2FilterBar {
+  position: relative;
+  padding: 14px;
+  gap: 10px;
+
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 250, 252, 0.98));
+
+  border: 1px solid #d7e2e9;
+  border-radius: 18px;
+
+  box-shadow:
+    0 7px 18px rgba(29, 50, 66, 0.06),
+    0 18px 42px rgba(29, 50, 66, 0.09);
+}
+
+.v2FilterBar::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: -1px;
+  height: 3px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #ffd000 20%,
+      #ffd000 80%,
+      transparent
+    );
+
+  opacity: 0.8;
+}
+
+.v2FilterBar select,
+.v2FilterBar button {
+  min-height: 46px;
+  padding: 0 16px;
+
+  border: 1px solid #d5e0e7;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f4f7f9 100%);
+
+  color: #15191d;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 5px rgba(34, 53, 67, 0.04);
+
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.v2FilterBar select:hover,
+.v2FilterBar button:hover {
+  transform: translateY(-1px);
+
+  border-color: #b8c7d1;
+
+  box-shadow:
+    0 5px 11px rgba(34, 53, 67, 0.09);
+}
+
+.v2FilterBar select:focus,
+.v2FilterBar button:focus-visible {
+  outline: none;
+
+  border-color: #ffd000;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 208, 0, 0.22);
+}
+
+.v2AdvancedToggle {
+  position: relative;
+}
+
+.v2AdvancedToggle.active {
+  background: #111820 !important;
+  border-color: #111820 !important;
+  color: #ffd000 !important;
+}
+
+.v2Sort {
+  min-height: 46px;
+  padding-left: 12px;
+
+  border-left: 1px solid #e0e7ec;
+}
+
+.v2Sort span {
+  color: #5c6670;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.v2Sort select {
+  min-width: 174px;
+
+  background:
+    linear-gradient(180deg, #171e27, #0c1117);
+
+  border-color: #111820;
+  color: #fff;
+}
+
+
+/* ---------------- CARD ANIMATION ---------------- */
+
+.v2TyreCard {
+  transform: translateZ(0);
+
+  transition:
+    transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.v2TyreCard:hover {
+  transform: translateY(-4px);
+
+  border-color: #c2d1db;
+
+  box-shadow:
+    0 14px 30px rgba(24, 45, 61, 0.11),
+    0 30px 65px rgba(24, 45, 61, 0.15);
+}
+
+.v2TyreCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.28) 48%,
+      transparent 62%
+    );
+
+  opacity: 0;
+  transform: translateX(-35%);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.45s ease;
+}
+
+.v2TyreCard:hover::after {
+  opacity: 0.45;
+  transform: translateX(35%);
+}
+
+
+/* ---------------- IMAGE PANEL ---------------- */
+
+.v2ImagePanel {
+  isolation: isolate;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.v2ImagePanel::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(23, 45, 61, 0.08),
+      transparent 68%
+    );
+
+  opacity: 0;
+
+  transform: scale(0.75);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.3s ease;
+}
+
+.v2ImagePanel img {
+  transform: scale(1);
+
+  transition:
+    transform 0.32s cubic-bezier(0.2, 0.75, 0.25, 1),
+    filter 0.32s ease;
+}
+
+.v2ImagePanel:hover {
+  border-color: #c0d0da;
+
+  background:
+    radial-gradient(circle at center, #ffffff 0%, #f4f8fa 66%, #e7eef3 100%);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+    0 8px 18px rgba(31, 53, 69, 0.10);
+}
+
+.v2ImagePanel:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.v2ImagePanel:hover img {
+  transform: scale(1.075);
+
+  filter:
+    drop-shadow(0 18px 16px rgba(0, 0, 0, 0.24));
+}
+
+.v2ImageHint {
+  transform: translateY(2px);
+  opacity: 0.84;
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.v2ImagePanel:hover .v2ImageHint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ---------------- FEATURE BADGES ---------------- */
+
+.v2TyreFeatures {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.v2FeatureBadge {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 30px;
+  padding: 5px 11px 5px 7px;
+
+  gap: 7px;
+
+  border: 1px solid #d8dfe4;
+  border-radius: 999px;
+
+  background: #f6f8f9;
+  color: #343c43;
+
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.15;
+
+  box-shadow:
+    0 2px 5px rgba(21, 39, 52, 0.04);
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.v2FeatureBadge:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 11px rgba(21, 39, 52, 0.09);
+}
+
+.v2FeatureBadgeIcon {
+  min-width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.07);
+
+  font-size: 9px;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.v2FeatureBadge.grey {
+  background: #f1f3f5;
+  border-color: #d2d9de;
+  color: #30373d;
+}
+
+.v2FeatureBadge.grey .v2FeatureBadgeIcon {
+  background: #dfe4e8;
+  color: #20262b;
+}
+
+.v2FeatureBadge.green {
+  background: #ecfaf1;
+  border-color: #9ddab2;
+  color: #116f37;
+}
+
+.v2FeatureBadge.green .v2FeatureBadgeIcon {
+  background: #169149;
+  color: #fff;
+}
+
+.v2FeatureBadge.blue {
+  background: #edf6ff;
+  border-color: #a3cff5;
+  color: #075e9c;
+}
+
+.v2FeatureBadge.blue .v2FeatureBadgeIcon {
+  background: #1979b7;
+  color: #fff;
+}
+
+.v2FeatureBadge.teal {
+  background: #eaf8f8;
+  border-color: #a5d8d8;
+  color: #116c6e;
+}
+
+.v2FeatureBadge.teal .v2FeatureBadgeIcon {
+  background: #18888a;
+  color: #fff;
+}
+
+.v2FeatureBadge.purple {
+  background: #f5efff;
+  border-color: #ceb9ef;
+  color: #62369b;
+}
+
+.v2FeatureBadge.purple .v2FeatureBadgeIcon {
+  background: #7448aa;
+  color: #fff;
+}
+
+
+/* ---------------- PREMIUM PRICE PANEL ---------------- */
+
+.v2BuyPanel {
+  position: relative;
+
+  min-width: 205px;
+  padding: 14px 0 13px 18px;
+
+  overflow: hidden;
+
+  border-left: 1px solid #d7e1e8;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.68),
+      rgba(246, 249, 251, 0.78)
+    );
+}
+
+.v2BuyPanel::before {
+  content: "";
+  position: absolute;
+  top: -45px;
+  right: -45px;
+
+  width: 105px;
+  height: 105px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 208, 0, 0.15),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+.v2OnlinePrice {
+  position: relative;
+  z-index: 1;
+
+  margin-bottom: 9px;
+  padding: 6px 11px;
+
+  background:
+    linear-gradient(180deg, #ffdc1c, #ffd000);
+
+  border: 1px solid #f1c500;
+  border-radius: 999px;
+
+  color: #080808;
+
+  font-size: 9px;
+  font-weight: 1000;
+  letter-spacing: 0.35px;
+
+  box-shadow:
+    0 3px 8px rgba(255, 190, 0, 0.14);
+}
+
+.v2CompactPriceRow {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+}
+
+.v2CompactPriceRow > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.v2WasPrice {
+  color: #7a8289;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  text-decoration-line: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: #9da4aa;
+}
+
+.v2NowPrice {
+  margin-top: 4px;
+
+  color: #0f9346;
+
+  font-size: 38px;
+  font-weight: 1000;
+  line-height: 0.95;
+  letter-spacing: -1.1px;
+
+  text-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.8);
+}
+
+.v2TyreCard.supplier .v2NowPrice {
+  color: #e96e00;
+}
+
+.v2Saving {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 47px;
+  max-width: 55px;
+  min-height: 34px;
+
+  padding: 5px 7px;
+
+  border: 1px solid #b81923;
+  border-radius: 9px;
+
+  background:
+    linear-gradient(180deg, #e63640, #c91f2a);
+
+  color: #fff;
+
+  font-size: 9px;
+  font-weight: 1000;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+
+  box-shadow:
+    0 5px 11px rgba(201, 31, 42, 0.20);
+}
+
+.v2CompactIncluded {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 5px 9px;
+
+  margin: 10px 0;
+  padding: 8px 3px;
+
+  border-top: 1px solid #dde5ea;
+  border-bottom: 1px solid #dde5ea;
+}
+
+.v2CompactIncluded span {
+  color: #303940;
+
+  font-size: 9px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.v2CompactIncluded span::first-letter {
+  color: #129247;
+}
+
+.v2BuyPanel .v2BuyNow {
+  position: relative;
+  z-index: 1;
+
+  min-height: 43px;
+
+  border: 1px solid #e7b900;
+  border-radius: 9px;
+
+  background:
+    linear-gradient(180deg, #ffdc16, #ffca00);
+
+  color: #050505;
+
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: 0.15px;
+
+  box-shadow:
+    0 5px 12px rgba(255, 191, 0, 0.18);
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    filter 0.16s ease;
+}
+
+.v2BuyPanel .v2BuyNow::after {
+  content: "›";
+
+  display: inline-block;
+
+  margin-left: 8px;
+
+  font-size: 18px;
+  line-height: 0;
+
+  transform: translateY(1px);
+
+  transition: transform 0.16s ease;
+}
+
+.v2BuyPanel .v2BuyNow:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.015);
+
+  box-shadow:
+    0 9px 18px rgba(255, 182, 0, 0.27);
+}
+
+.v2BuyPanel .v2BuyNow:hover::after {
+  transform: translate(3px, 1px);
+}
+
+.v2FittingStatus {
+  position: relative;
+  z-index: 1;
+
+  margin-top: 8px;
+
+  color: #5c6770;
+
+  font-size: 9px;
+  font-weight: 850;
+}
+
+
+/* ---------------- LIGHTBOX SMOOTH ZOOM ---------------- */
+
+@keyframes v2BackdropIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes v2ModalZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes v2TyreImageIn {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.v2ImageModal {
+  animation: v2BackdropIn 0.2s ease both;
+}
+
+.v2ImageModalContent {
+  overflow: hidden;
+
+  animation:
+    v2ModalZoomIn 0.28s cubic-bezier(0.18, 0.8, 0.25, 1) both;
+}
+
+.v2ImageModalContent::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.95),
+      rgba(238, 244, 248, 0.94)
+    );
+}
+
+.v2ImageModalContent img {
+  position: relative;
+  z-index: 1;
+
+  animation:
+    v2TyreImageIn 0.36s 0.05s cubic-bezier(0.18, 0.8, 0.25, 1) both;
+}
+
+.v2ImageModalClose {
+  z-index: 3;
+
+  transition:
+    transform 0.17s ease,
+    background 0.17s ease;
+}
+
+.v2ImageModalClose:hover {
+  transform: rotate(5deg) scale(1.06);
+
+  background: #d6222e;
+}
+
+
+/* ---------------- REDUCED MOTION ACCESSIBILITY ---------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .v2TyreCard,
+  .v2TyreCard::after,
+  .v2ImagePanel,
+  .v2ImagePanel::before,
+  .v2ImagePanel img,
+  .v2ImageHint,
+  .v2FeatureBadge,
+  .v2BuyPanel .v2BuyNow,
+  .v2BuyPanel .v2BuyNow::after,
+  .v2ImageModal,
+  .v2ImageModalContent,
+  .v2ImageModalContent img {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* ---------------- MOBILE FINISH ---------------- */
+
+@media (max-width: 760px) {
+  .v2Sort {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .v2Sort select {
+    width: 100%;
+  }
+
+  .v2FeatureBadge {
+    white-space: normal;
+  }
+
+  .v2BuyPanel {
+    padding: 16px 0 0;
+
+    border-top: 1px solid #d7e1e8;
+    border-left: 0;
+  }
+
+  .v2NowPrice {
+    font-size: 40px;
   }
 }
